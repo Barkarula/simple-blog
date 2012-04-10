@@ -29,10 +29,7 @@ app.get('/', site.home);
 app.get('/about', site.about);
 app.get('/blog/:id?', blog.blog);
 
-app.get('*', function(req, res){
-  res.render('404.jade', 
-  	{ status: 404, message: 'Page not found' });
-});
+app.get('*', site.notFound);
 
 // Fire it up!
 app.listen(3000, function(){

@@ -8,7 +8,13 @@ about = function(req, res) {
 	res.render('about', viewModel);
 }
 
+notFound = function(req, res) {
+  res.render('404.jade', 
+  	{ status: 404, message: 'Page not found' });
+}
+
 module.exports = {
 	home: home,
-	about: about
+	about: about,
+	notFound: notFound
 };

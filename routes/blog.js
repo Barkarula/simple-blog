@@ -1,54 +1,26 @@
 var fs = require("fs");
+var model = require("../models/blog");
 
 blog = function(req, res) {
 	if (req.params.id == undefined) {
-		blogAllTopics(req, res);
+
+		model.getAllTopics(req, res, function(req, res, data) {
+  		res.render('blogs', data);
+		});
+
 	} else {
-		blogSingleTopic(req, res);
+
+		model.getTopicById(req, res, function(req, res, data) { 
+		  if(data.error) {
+		  	// TODO: Call a generic utility for this
+		  	res.render('404.jade', 
+  				{ status: 404, message: data.error });
+		  } else { 
+		  	res.render('blog', data);
+			}
+		});
+
 	}	
-}
-
-blogAllTopics = function(req, res) {
-
-  var dataPath = res.app.settings.datapath;
-	var filePath = dataPath + '/blogs.json';
-	console.log("Reading list of topics: " + filePath);
-
-	fs.readFile(filePath, 'utf8', function(err, text){
-
-		if(err != undefined)
-		{
-			console.log(err);
-		}
-
-  	var viewModel = JSON.parse(text);
-	  res.render('blogs', viewModel);
-	});
-
-}
-
-blogSingleTopic = function(req, res) {
-
-	var id = req.params.id; //TODO: Force to number
-  var dataPath = res.app.settings.datapath;
-	var filePath = dataPath + '/blog.' + id + '.html';
-	console.log("Reading file: " + filePath);
-
-	fs.readFile(filePath, 'utf8', function(err, text){
-		if(err != undefined)
-		{
-			// TODO: redirect to topic not found
-			console.log(err);
-			text = "<p>topic not found</p>";
-		}
-  	var viewModel = { 
-			title: 'blog topic' + req.params.id,
-			content: text,
-			postedOn: "April 3rd, 2012"
-		};
-	  res.render('blog', viewModel);
-	});
-  
 }
 
 module.exports = {
