@@ -6,3 +6,25 @@ At this point there is code to handle a home page, an about page, a way to see a
 
 The data is kept in text files for now.
 
+REQUIREMENTS
+------------
+To run this code you'll need to have installed Node.js and Express.js on your machine.
+
+HOW TO RUN IT
+-------------
+Once Node.js and Express.js are on your system you just need to run:
+
+   node app.js 
+
+Browse to your localhost:3000 and you should see the rather anticlimactic web site with the beginnings of what will eventually be a blog engine.
+
+
+QUESTIONS, COMMENTS, THOUGHTS?
+------------------------------
+This is a very rough work in progress as I learn and play with Node.js.
+
+Feel free to contact me with questions or comments about this project.
+
+
+
+
