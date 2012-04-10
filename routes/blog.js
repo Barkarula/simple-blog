@@ -1,15 +1,4 @@
-var fs = require("fs"); 		// file system
-
-// Blog "controller"  
-index = function(req, res) {
-	var viewModel = { xxx: 'Home Page'};
-	res.render('index', viewModel);
-}
-
-about = function(req, res) {
-	var viewModel = { yyy: 'About'};
-	res.render('about', viewModel);
-}
+var fs = require("fs");
 
 blog = function(req, res) {
 	if (req.params.id == undefined) {
@@ -36,13 +25,6 @@ blogAllTopics = function(req, res) {
 	  res.render('blogs', viewModel);
 	});
 
-	// var viewModel = {
-	// 	blogs: [ 
-	// 		{id: 1, title:"AAA", summary:"aaa"}, 
-	// 		{id: 2, title:"BBB", summary:"bbb"}, 
-	// 		{id: 3, title:"CCC", summary:"ccc"}]
-	// };
- //  res.render('blogs', viewModel);
 }
 
 blogSingleTopic = function(req, res) {
@@ -70,7 +52,5 @@ blogSingleTopic = function(req, res) {
 }
 
 module.exports = {
-	index: index,
-	about: about,
   blog: blog
 };

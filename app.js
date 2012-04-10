@@ -1,14 +1,11 @@
 
-/**
- * Module dependencies.
- */
-
+// Module dependencies.
 var express = require('express');
-var routes = require('./routes'); // aka ./routes/index.js
-
-var app = module.exports = express.createServer();
+var site = require('./routes/site'); 
+var blog = require('./routes/blog'); 
 
 // Configuration
+var app = module.exports = express.createServer();
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('datapath', __dirname + '/data');
@@ -28,15 +25,16 @@ app.configure('production', function(){
 });
 
 // Routes
-app.get('/', routes.blog.index);
-app.get('/about', routes.blog.about);
-app.get('/blog/:id?', routes.blog.blog);
+app.get('/', site.home);
+app.get('/about', site.about);
+app.get('/blog/:id?', blog.blog);
 
 app.get('*', function(req, res){
   res.render('404.jade', 
   	{ status: 404, message: 'Page not found' });
 });
 
+// Fire it up!
 app.listen(3000, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });
