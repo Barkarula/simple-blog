@@ -1,0 +1,40 @@
+
+/*
+ * GET home page.
+ */
+
+exports.index = function(req, res){
+	var viewModel = { xxx: 'Home Page'};
+  res.render('index', viewModel);
+};
+
+exports.about = function(req, res){
+	var viewModel = { yyy: 'About'};
+  res.render('about', viewModel);
+};
+
+exports.blog = function(req, res){
+	var viewModel = null;
+
+
+	if (req.params.id == undefined) {
+
+		viewModel = {
+			blogs: [ 
+				{title:"AAA", summary:"aaa"}, 
+				{title:"BBB", summary:"bbb"}, 
+				{title:"CCC", summary:"ccc"}]
+		};
+	  res.render('blogs', viewModel);
+	
+	} else {
+
+		viewModel = { 
+			title: 'blog topic' + req.params.id,
+			content: "blah blah blah blah",
+			postedOn: "April 3rd, 2012"
+		};
+
+	  res.render('blog', viewModel);
+	}
+};

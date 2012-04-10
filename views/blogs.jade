@@ -1,0 +1,10 @@
+h1 Blogs
+p Random posts about software development
+
+ul#blogs
+	each blog in blogs
+		li 
+			a(href='/blog/#{blog.id}') #{blog.title} #{blog.summary}
+
+p
+	a(href='/') Home Page

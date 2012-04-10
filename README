@@ -1,0 +1,8 @@
+A very simple blog web site using Node.js and Express.js
+
+This is a rough work in progress.
+
+At this point there is code to handle a home page, an about page, a way to see a list of topics, and click on each topic to view the details of the post.
+
+The data is kept in text files for now.
+

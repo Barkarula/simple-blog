@@ -1,0 +1,18 @@
+{
+   "blogs": [
+	  { 
+      "id": 1, 
+		"title": "first blog post", 
+      "url": "first-blog-post", 
+		"file": "blog.1.html",
+      "summary": "Where we talk about the creation of the universe",
+      "postedOn": "2011-10-28 19:30" },
+	  { 
+      "id": 2, 
+		"title": "second blog post", 
+      "url": "second-blog-post", 
+      "file": "blog.2.html",
+      "summary": "Talking about dinosaurs",
+      "postedOn": "2012-04-08 22:10" }
+   ]
+}
