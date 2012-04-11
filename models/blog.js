@@ -106,7 +106,6 @@ getTopicByUrl = function(req, res, next) {
 					data = { error: "Topic content not found" };
 					console.log(err);
 				} else {
-					console.dir(data);
 		  		data = { 
 						title: topic.title,
 						content: text,
