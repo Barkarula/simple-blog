@@ -27,7 +27,7 @@ app.configure('production', function(){
 // Routes
 app.get('/', site.home);
 app.get('/about', site.about);
-app.get('/blog/:id?', blog.blog);
+app.get('/blog/:url?', blog.blog);
 
 app.get('*', site.notFound);
 

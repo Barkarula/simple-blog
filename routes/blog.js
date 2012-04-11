@@ -2,7 +2,7 @@ var fs = require("fs");
 var model = require("../models/blog");
 
 blog = function(req, res) {
-	if (req.params.id == undefined) {
+	if (req.params.url == undefined) {
 
 		model.getAllTopics(req, res, function(req, res, data) {
   		res.render('blogs', data);
@@ -10,7 +10,7 @@ blog = function(req, res) {
 
 	} else {
 
-		model.getTopicById(req, res, function(req, res, data) { 
+		model.getTopicByUrl(req, res, function(req, res, data) { 
 		  if(data.error) {
 		  	// TODO: Call a generic utility for this
 		  	res.render('404.jade', 
