@@ -86,33 +86,36 @@ getTopicByUrl = function(req, res, next) {
 	console.log("URL: " + url);
 
 	getAllTopics(req, res, function(req, res, allTopics) {
+		var topic, data, dataPath, filePath;
 
-		var data = findTopicInListByUrl(allTopics.blogs, url); // synch operation
-		if(data == null)
+	 	topic = findTopicInListByUrl(allTopics.blogs, url); // synch operation
+		if(topic == null)
 		{
-			data = emptyTopic;
-		}
-
-	  var dataPath = res.app.settings.datapath;
-		var filePath = dataPath + '/blog.' + data.id + '.html';
-		var data;
-		console.log("Reading file: " + filePath);
-
-		fs.readFile(filePath, 'utf8', function(err, text){
-			if(err != undefined)
-			{
-				data = { error: "Topic content not found" };
-				console.log(err);
-			} else {
-				console.dir(data);
-	  		data = { 
-					title: data.title,
-					content: text,
-					postedOn: data.postedOn
-				};
-			}
+			data = { error: "Topic not found" };
 			next(req, res, data);
-		});
+		}
+		else {
+
+		  dataPath = res.app.settings.datapath;
+			filePath = dataPath + '/blog.' + topic.id + '.html';
+			console.log("Reading file: " + filePath);
+			
+			fs.readFile(filePath, 'utf8', function(err, text){
+				if(err != undefined)
+				{
+					data = { error: "Topic content not found" };
+					console.log(err);
+				} else {
+					console.dir(data);
+		  		data = { 
+						title: topic.title,
+						content: text,
+						postedOn: topic.postedOn
+					};
+				}
+				next(req, res, data);
+			});
+		}
 
 	});
   
