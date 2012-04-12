@@ -16,9 +16,17 @@ app.configure(function(){
   app.use(express.static(__dirname + '/public'));
 });
 
+app.error(function(err, req, res, next){
+  console.log("Custom error hit");
+  console.dir(err);
+  res.render('500.jade', { status: 500, message: "TBD" });
+});
+
 app.configure('development', function(){
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
+
+
 
 app.configure('production', function(){
   app.use(express.errorHandler());
@@ -27,6 +35,8 @@ app.configure('production', function(){
 // Routes
 app.get('/', site.home);
 app.get('/about', site.about);
+app.get('/blog/edit/:url?', blog.edit);
+app.post('/blog/edit/:url?', blog.save);
 app.get('/blog/:url?', blog.blog);
 
 app.get('*', site.notFound);

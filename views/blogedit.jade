@@ -1,0 +1,19 @@
+h1 Blog 
+p #{title}
+
+form(name="input", action="#{url}", method="post")
+	p Title
+		input(type="text", name="title", value="#{title}")
+
+	p Content
+		textarea(name='content', rows="20", cols="60")
+			#{content}
+
+	p Posted On
+		input(type="date", name="postedOn", value="#{postedOn}")
+
+	p Posted At
+		input(type="time", name="postedAt", value="#{postedOn}")
+
+	input(type="submit", value="Submit")
+
