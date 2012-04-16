@@ -1,6 +1,17 @@
 !!!
 html
-  head
-    title Express Hello World
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body!= body
+	head
+		title Express Hello World
+		link(rel='stylesheet', href='/stylesheets/style.css')
+	
+	p Fancy menu
+	
+	ul
+		li 
+			a(href='/') Home Page
+		li 
+			a(href='/about') About
+		li 
+			a(href='/blog') Blog
+
+	body!= body

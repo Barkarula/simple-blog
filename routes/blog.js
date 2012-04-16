@@ -17,11 +17,11 @@ blog = function(req, res) {
 	if (req.params.url == undefined) {
 		renderAllTopics(req, res);
 	} else {
-		model.getTopicByUrl(req, res, function(req, res, data) { 
-		  if(data.error) {
+		model.getTopicByUrl(req, res, function(req, res, topic) { 
+		  if(topic.error) {
 				throwNotFoundException(res,data.error);
 		  } else { 
-		  	res.render('blog', data);
+		  	res.render('blog', topic);
 			}
 		});
 	}	
@@ -29,7 +29,8 @@ blog = function(req, res) {
 
 edit = function(req, res) {
 	if (req.params.url == undefined) {
-		renderAllTopics(req, res);
+		console.log('Edit without a URL was detected. Redirecting to blog list.');
+		res.redirect('/blog');
 	} else {
 		model.getTopicByUrl(req, res, function(req, res, data) { 
 		  if(data.error) {
@@ -43,12 +44,13 @@ edit = function(req, res) {
 
 save = function(req, res) {
 	if (req.params.url == undefined) {
-		renderAllTopics(req, res);
+		console.log('Save without a URL was detected. Redirecting to blog list.');
+		res.redirect('/blog');
 	} 
 	else {
 		console.log("Saving new content: " + req.body.content);
 
-		model.saveTopicByUrl(req, res, function(req, res, data) { 
+		model.saveTopicByUrl(req, res, function(data) { 
 		  if(data.error) {
 		  	throw "Could not save topic " + req.params.url;
 		  } else { 
