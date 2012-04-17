@@ -5,12 +5,13 @@ _getAllTopics = function(dataPath, next) {
 	console.log("Reading list of topics: " + filePath);
 
 	fs.readFile(filePath, 'utf8', function(err, text) {
-		var data;
+		var data, topics;
 		if(err == undefined)
 		{
   		data = JSON.parse(text);
+  		topics = data.blogs;
   	}
-	  next(data);
+	  next(topics);
 	});
 }
 
@@ -52,7 +53,7 @@ getTopicByUrl = function(req, res, next) {
 
 	getTopicDetailsCallback = function(topics) {
 		var data;
-	 	topic = _findTopicInListByUrlSync(topics.blogs, url); 
+	 	topic = _findTopicInListByUrlSync(topics, url); 
 		if(topic == null)
 		{
 			data = { error: "Topic not found" };
@@ -83,11 +84,11 @@ getTopicByUrl = function(req, res, next) {
 			}
 			next(req, res, data);
 		});
-
 	}
 
 	console.log("Calling getAllTopics...");
 	_getAllTopics(dataPath, getTopicDetailsCallback);
+
 }
 
 saveTopicByUrl = function(req, res, next) {
@@ -97,7 +98,7 @@ saveTopicByUrl = function(req, res, next) {
 
 	getTopicDetailsCallback = function(topics) {
 		var data;
-	 	var topic = _findTopicInListByUrlSync(topics.blogs, url); 
+	 	var topic = _findTopicInListByUrlSync(topics, url); 
 		if(topic == null)
 		{
 			data = { error: "Topic not found" };
@@ -133,3 +134,4 @@ module.exports = {
   getTopicByUrl: getTopicByUrl,
   saveTopicByUrl: saveTopicByUrl
 };
+

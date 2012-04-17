@@ -7,8 +7,8 @@ throwNotFoundException = function(res, error) {
 }
 
 renderAllTopics = function(req, res) {
-	model.getAllTopics(req, res, function(req, res, data) {
-  	res.render('blogs', data);
+	model.getAllTopics(req, res, function(req, res, topics) {
+  	res.render('blogs', {topics: topics});
 	});
 }
 

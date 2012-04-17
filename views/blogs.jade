@@ -2,9 +2,9 @@ h1 Blogs
 p Random posts about software development
 
 ul#blogs
-	each blog in blogs
+	each topic in topics
 		li 
-			a(href='/blog/#{blog.url}') #{blog.title} #{blog.summary}
+			a(href='/blog/#{topic.url}') #{topic.title} #{topic.summary}
 
 p
 	a(href='/') Home Page
