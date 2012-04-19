@@ -1,18 +1,13 @@
 var fs = require("fs");
 
-_getAllTopics = function(dataPath, next) {
+_getAllTopics = function(dataPath) {
 	var filePath = dataPath + '/blogs.json';
-	console.log("ASYNC Reading list of topics: " + filePath);
+	console.log("SYNC Reading list of topics: " + filePath);
 
-	fs.readFile(filePath, 'utf8', function(err, text) {
-		var data, topics;
-		if(err == undefined)
-		{
-  		data = JSON.parse(text);
-  		topics = data.blogs;
-  	}
-	  next(topics);
-	});
+	var text = fs.readFileSync(filePath, 'utf8');
+	var data = JSON.parse(text);
+	var topics = data.blogs;
+	return topics;
 }
 
 _findTopicInListByUrlSync = function(topics, url) {
@@ -37,52 +32,55 @@ _findTopicInListByUrlSync = function(topics, url) {
 // Public Methods 
 // ===================================
 
-getAllTopics = function(req, callback) {
-	_getAllTopics(req.app.settings.datapath, function(topics) {
-		callback(topics);
-	});
+getAllTopics = function(req) {
+	return _getAllTopics(req.app.settings.datapath);
 }
 
 
 
 
 
-getTopicByUrl = function(req, callback) {
+
+
+
+
+
+
+
+getTopicByUrl = function(req) {
 	var dataPath = req.app.settings.datapath;
 	var url = req.params.url;
-	var topic = null;
-	console.log("ASYNC getTopicByUrl: " + url);
+	var topics, topic, data, text, filePath;
+	console.log("SYNC getTopicByUrl: " + url);
 
-	getTopicDetailsCallback = function(topics) {
-		var filePath, data;
-	 	topic = _findTopicInListByUrlSync(topics, url); 
-		if(topic == null)
-		{
-			data = { error: "Topic not found" };
-			callback(data);
-		}
-		else {
-			filePath = dataPath + '/blog.' + topic.id + '.html';			
-			fs.readFile(filePath, 'utf8', function(err, text){
-				if(err != undefined)
-				{
-					data = { error: "Topic content not found" };
-					console.log(err);
-				} else {
-		  		data = { 
-						title: topic.title,
-						content: text,
-						postedOn: topic.postedOn,
-						url: topic.url
-					};
-				}
-				callback(data);
-			});
+ 	topics = _getAllTopics(req.app.settings.datapath);
+
+	topic = _findTopicInListByUrlSync(topics, url);
+	if(topic == null)
+	{
+		data = { error: "Topic not found" };
+	}
+	else {
+		filePath = dataPath + '/blog.' + topic.id + '.html';
+		text = fs.readFileSync(filePath, 'utf8');
+		if (text == null) {
+			data = { error: "Topic content not found" };
+			console.log(err);
+		} else {
+  		data = { 
+				title: topic.title,
+				content: text,
+				postedOn: topic.postedOn,
+				url: topic.url
+			};
 		}
 	}
 
-	_getAllTopics(dataPath, getTopicDetailsCallback);
+	return data;
 }
+
+
+
 
 
 

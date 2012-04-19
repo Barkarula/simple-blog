@@ -1,5 +1,5 @@
 var fs = require("fs");
-var model = require("../models/blog");
+var model = require("../models/blogsync");
 
 throwNotFoundException = function(res, error) {
  	res.render('404.jade', 
@@ -7,25 +7,21 @@ throwNotFoundException = function(res, error) {
 }
 
 renderAllTopics = function(req, res) {
-	model.getAllTopics(req, res, function(req, res, topics) {
-  	res.render('blogs', {topics: topics});
-	});
+	var topics = model.getAllTopics(req);
+  res.render('blogs', {topics: topics});
 }
 
 blog = function(req, res) {
 
 	if (req.params.url == undefined) {
-		model.getAllTopics(req, function(topics) {
-  		res.render('blogs', {topics: topics});
-		});
+		renderAllTopics(req, res);
 	} else {
-		model.getTopicByUrl(req, res, function(req, res, topic) { 
-		  if(topic.error) {
-				throwNotFoundException(res,data.error);
-		  } else { 
-		  	res.render('blog', topic);
-			}
-		});
+		var topic = model.getTopicByUrl(req);
+		if(topic.error) {
+			throwNotFoundException(res,data.error);
+		} else { 
+		 	res.render('blog', topic);
+		}
 	}	
 }
 
