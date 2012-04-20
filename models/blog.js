@@ -56,16 +56,14 @@ getTopicByUrl = function(req, callback) {
 	getTopicDetailsCallback = function(topics) {
 		var filePath, data;
 	 	topic = _findTopicInListByUrlSync(topics, url); 
-		if(topic == null)
-		{
+		if (topic == null) {
 			data = { error: "Topic not found" };
 			callback(data);
 		}
 		else {
 			filePath = dataPath + '/blog.' + topic.id + '.html';			
 			fs.readFile(filePath, 'utf8', function(err, text){
-				if(err != undefined)
-				{
+				if (err != undefined) {
 					data = { error: "Topic content not found" };
 					console.log(err);
 				} else {
