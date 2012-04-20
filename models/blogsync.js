@@ -56,7 +56,7 @@ getTopicByUrl = function(req) {
  	topics = _getAllTopics(req.app.settings.datapath);
 
 	topic = _findTopicInListByUrlSync(topics, url);
-	if(topic == null) {
+	if (topic == null) {
 		data = { error: "Topic not found" };
 	}
 	else {
