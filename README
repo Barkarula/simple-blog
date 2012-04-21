@@ -6,17 +6,31 @@ At this point there is code to handle a home page, an about page, a way to see a
 
 The data is kept in text files for now.
 
+
+
 REQUIREMENTS
 ------------
-To run this code you'll need to have installed Node.js and Express.js on your machine.
+To run this code you need to have Node.js installed on your machine. Get it from here: http://nodejs.org/
+
+After that install Express and Jade by running the following commands from the Terminal/command prompt:
+
+  npm install express
+  npm install jade
+
+Express is JavaScript module that takes care of the boiler plate code to handle HTTP requests and responses. http://expressjs.com
+
+Jade is a template engine for Node.js. A tool to help you build HTML without having to do a bunch of string contatenation. http://jade-lang.com
+
+
 
 HOW TO RUN IT
 -------------
-Once Node.js and Express.js are on your system you just need to run:
+From the Terminal window run the main app.js file: 
 
    node app.js 
 
-Browse to your localhost:3000 and you should see the rather anticlimactic web site with the beginnings of what will eventually be a blog engine.
+...and browse to your localhost:3000 You should see the rather anticlimactic web site with the beginnings of what will eventually be a blog engine. Enjoy it!
+
 
 
 QUESTIONS, COMMENTS, THOUGHTS?
