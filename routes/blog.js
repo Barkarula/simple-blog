@@ -19,7 +19,7 @@ blog = function(req, res) {
   		res.render('blogs', {topics: topics});
 		});
 	} else {
-		model.getTopicByUrl(req, res, function(req, res, topic) { 
+		model.getTopicByUrl(req, function(topic) { 
 		  if(topic.error) {
 				throwNotFoundException(res,data.error);
 		  } else { 
@@ -34,11 +34,11 @@ edit = function(req, res) {
 		console.log('Edit without a URL was detected. Redirecting to blog list.');
 		res.redirect('/blog');
 	} else {
-		model.getTopicByUrl(req, res, function(req, res, data) { 
-		  if(data.error) {
-				throwNotFoundException(res,data.error);
+		model.getTopicByUrl(req, function(topic) { 
+		  if(topic.error) {
+				throwNotFoundException(res,topic.error);
 		  } else { 
-		  	res.render('blogedit', data);
+		  	res.render('blogedit', topic);
 			}
 		});
 	}	

@@ -43,10 +43,6 @@ getAllTopics = function(req, callback) {
 	});
 }
 
-
-
-
-
 getTopicByUrl = function(req, callback) {
 	var dataPath = req.app.settings.datapath;
 	var url = req.params.url;
