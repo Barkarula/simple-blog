@@ -1,13 +1,9 @@
 var fs = require('fs');
-var file = __dirname + '/test.json';
+var file = __dirname + '/data.json';
 
-fs.readFile(file, 'utf8', function (err, data) {
-  if (err) {
-    console.log('Error: ' + err);
-    return;
-  }
+var text = fs.readFileSync(file, 'utf8');
+//console.log("TEXT: " + text);
 
-  data = JSON.parse(data);
-
-  console.dir(data);
-});
+var data = JSON.parse(text);
+console.log("DATA");
+console.log(data.blogs)
