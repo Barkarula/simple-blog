@@ -10,12 +10,18 @@ The data is kept in text files for now.
 
 REQUIREMENTS
 ------------
-To run this code you need to have Node.js installed on your machine. Get it from here: http://nodejs.org/
+To run this code you need to have Node.js installed on your machine. If you don't have Node.js you can get it from http://nodejs.org
 
-After that install Express and Jade by running the following commands from the Terminal/command prompt:
+In addition to Node.js you'll need CoffeeScript. Once you've installed Node.js you can easily install CoffeeScript from the Terminal with the following command: 
+
+	npm install -g coffee-script
+
+Last but not least, you'll need to install Express and Jade by running the following commands from the Terminal:
 
   npm install express
   npm install jade
+
+CoffeeScript is a language that compiles to JavaScript. It allow us to write the code with a cleaner syntax than raw JavaScript. http://coffeescript.org/
 
 Express is JavaScript module that takes care of the boiler plate code to handle HTTP requests and responses. http://expressjs.com
 
@@ -27,7 +33,7 @@ HOW TO RUN IT
 -------------
 From the Terminal window run the main app.js file: 
 
-   node app.js 
+   coffee app 
 
 ...and browse to your localhost:3000 You should see the rather anticlimactic web site with the beginnings of what will eventually be a blog engine. Enjoy it!
 
