@@ -12,7 +12,6 @@ class BlogModel
 				console.log "_getAllTopics error #{err}"
 				callback "Error reading topic list #{err}" 
 			else
-				console.log "_getAllTopics OK"
 				data = JSON.parse text
 				topics = data.blogs
 				callback null, topics
@@ -40,11 +39,13 @@ class BlogModel
 	# ===================================
 
 	getAllTopics: (callback) => 
+		#console.log "getAllTopics"
 		@_getAllTopics (err, topics) -> 
 			callback err, topics
 
 
 	getTopicByUrl: (url, callback) =>
+		#console.log "getTopicByUrl #{url}"
 
 		getTopicDetailsCallback = (err, topics) => 
 			callback err if err
@@ -82,9 +83,7 @@ class BlogModel
 				updateTopicContent topic.id, content
 
 		updateTopicContent = (id, content) => 
-			filePath = @dataPath + '/blog.' + id + '.html'	
-			console.log "Model: rewriting file #{filePath}"
-			
+			filePath = @dataPath + '/blog.' + id + '.html'				
 			fs.writeFile filePath, content, 'utf8', (err) -> 
 				if err 
 					callback "Topic #{url} content could not be saved. Error #{err}"

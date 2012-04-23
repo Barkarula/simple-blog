@@ -10,6 +10,7 @@ app.configure ->
   app.set 'views', __dirname + '/views'
   app.set 'datapath', __dirname + '/data'
   app.set 'view engine', 'jade'
+  #app.use express.logger() # logs HTTP requests
   app.use express.bodyParser()
   app.use express.methodOverride()
   app.use app.router
