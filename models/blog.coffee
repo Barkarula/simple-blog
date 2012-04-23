@@ -7,16 +7,15 @@ class BlogModel
 
 
 	_getAllTopics: (callback) =>
-		console.log "_getAllTopics"
-
 		fs.readFile @blogListFilePath, 'utf8', (err, text) ->
-			topics = null
-			if err is null
-	  		data = JSON.parse text
-	  		topics = data.blogs
-	  	else 
-	  		console.log "Error reading topic list #{err}" 
-		  callback topics
+			if err 
+				console.log "_getAllTopics error #{err}"
+				callback "Error reading topic list #{err}" 
+			else
+				console.log "_getAllTopics OK"
+				data = JSON.parse text
+				topics = data.blogs
+				callback null, topics
 
 
 	_findTopicInListByUrlSync: (topics, url) ->
@@ -41,26 +40,23 @@ class BlogModel
 	# ===================================
 
 	getAllTopics: (callback) => 
-		@_getAllTopics (topics) -> 
-			callback topics
+		@_getAllTopics (err, topics) -> 
+			callback err, topics
 
 
 	getTopicByUrl: (url, callback) =>
-		
-		console.log "GetTopicByUrl #{url}"
-		topic = null
 
-		getTopicDetailsCallback = (topics) => 
+		getTopicDetailsCallback = (err, topics) => 
+			callback err if err
+
 			topic = @_findTopicInListByUrlSync topics, url
 			if topic is null
-				dataNotFound = { error: "Topic not found" }
-				callback dataNotFound 
+				callback "Topic #{url} not found" 
 			else
 				filePath = @dataPath + '/blog.' + topic.id + '.html'	
 				fs.readFile filePath, 'utf8', (err, text) ->
-					if err isnt null
-						data = { error: "Topic content not found" }
-						console.log "Error: #{err}" 
+					if err 
+						callback "Could not retrieve content for topic #{url} (#{err})"
 					else
 						data = { 
 							title: topic.title,
@@ -68,8 +64,7 @@ class BlogModel
 							postedOn: topic.postedOn,
 							url: topic.url
 						}
-						console.log "Topic ok #{data.title}"
-					callback data
+						callback null, data
 
 		@_getAllTopics(getTopicDetailsCallback) 
 
@@ -77,28 +72,24 @@ class BlogModel
 	saveTopicByUrl: (url, content, callback) => 
 		console.log "saveTopicByUrl #{url}"
 
-		getTopicDetailsCallback = (topics) => 
+		getTopicDetailsCallback = (err, topics) => 
+			callback err if err
+
 			topic = @_findTopicInListByUrlSync topics, url 
 			if topic is null
-				data = { error: "Topic not found" }
-				console.log "#{data.error}"
-				callback data
+				callback "Topic not found #{url}"
 			else
 				updateTopicContent topic.id, content
 
 		updateTopicContent = (id, content) => 
 			filePath = @dataPath + '/blog.' + id + '.html'	
-
 			console.log "Model: rewriting file #{filePath}"
 			
 			fs.writeFile filePath, content, 'utf8', (err) -> 
-				if err isnt null
-					data = { error: "Topic content could not be saved" }
-					console.log err
+				if err 
+					callback "Topic #{url} content could not be saved. Error #{err}"
 				else
-					console.log "Model: file was rewritten"
-					data = {}
-				callback data 
+				callback null, "OK"
 
 		@_getAllTopics(getTopicDetailsCallback)
 

@@ -31,7 +31,7 @@ app.get '/', site.home
 app.get '/about', site.about
 app.get '/blog/edit/:url?', blog.edit
 app.post '/blog/edit/:url?', blog.save
-app.get '/blog/:url?', blog.blog
+app.get '/blog/:url?', blog.view
 
 app.get '*', site.notFound
 
