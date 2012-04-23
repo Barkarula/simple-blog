@@ -1,4 +1,4 @@
-A very simple blog web site using Node.js and Express.js
+A very simple blog web site using Node.js, CoffeeScript, and Express.js
 
 This is a rough work in progress.
 
@@ -18,8 +18,8 @@ In addition to Node.js you'll need CoffeeScript. Once you've installed Node.js y
 
 Last but not least, you'll need to install Express and Jade by running the following commands from the Terminal:
 
-  npm install express
-  npm install jade
+	npm install express
+	npm install jade
 
 CoffeeScript is a language that compiles to JavaScript. It allow us to write the code with a cleaner syntax than raw JavaScript. http://coffeescript.org/
 
