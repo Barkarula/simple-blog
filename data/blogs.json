@@ -20,5 +20,13 @@
     "url": "third-blog-post", 
     "summary": "A meteor came and killed the dinosaurs",
     "postedOn": "2012-05-09 22:10" 
-  }]
+  },
+  { 
+    "id": 4, 
+    "title": "unit test topic", 
+    "url": "unit-test-topic", 
+    "summary": "This topic is for the unit tests, don't mess with it",
+    "postedOn": "2012-04-23 22:10" 
+  }
+  ]
 }

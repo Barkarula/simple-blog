@@ -3,11 +3,11 @@ fs = require 'fs'
 
 
 renderNotFound = (res, error) -> 
- 	res.render '404.jade', {status: 404, message: error}
+ 	res.render '404', {status: 404, message: error}
 
 
 renderError = (res, error) ->
-	res.render '500.jade', {status: 404, message: error}
+	res.render '500', {status: 500, message: error}
 
 
 view = (req, res) -> 
@@ -44,6 +44,7 @@ edit = (req, res) ->
 		if err 
 			renderNotFound res, err
 		else 
+			console.log topic
 			res.render 'blogedit', topic
 
 
@@ -56,14 +57,27 @@ save = (req, res) ->
 		return
 
 	dataPath = res.app.settings.datapath
-	content = req.body.content
+	topic = {
+		id: req.body.id
+		title: req.body.title
+		url: url
+		summary: req.body.summary
+		content: req.body.content
+		postedOn: req.body.date
+	}
+
 	model = new BlogModel dataPath 
+	# model.saveTopic topic, (err, data) ->  
+	#   if err
+	#   	renderError res, "Could not save topic #{url}. Error #{err}"
+	#   else
+	#   	res.redirect '/blog/'+ url
+	content = req.body.content
 	model.saveTopicByUrl url, content, (err, data) ->  
 	  if err
 	  	renderError res, "Could not save topic #{url}. Error #{err}"
 	  else
 	  	res.redirect '/blog/'+ url
-
 
 module.exports = {
   view: view,

@@ -1,0 +1,11 @@
+* Support saving the meta-properties (title, summary, dates) of topics back to the blogs.json file
+
+* Adding new topics
+
+* Versioning topics
+
+* A decent editor
+
+* Style the site
+
+
