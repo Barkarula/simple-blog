@@ -9,6 +9,15 @@ renderNotFound = (res, error) ->
 renderError = (res, error) ->
 	res.render '500', {status: 500, message: error}
 
+requestToTopic = (req, url) ->
+	topic = {
+		id: parseInt(req.body.id)
+		title: req.body.title
+		url: url # todo: this value should be recalculated internally, right?
+		summary: req.body.summary
+		content: req.body.content
+		postedOn: req.body.date
+	}
 
 view = (req, res) -> 
 
@@ -57,31 +66,53 @@ save = (req, res) ->
 		return
 
 	dataPath = res.app.settings.datapath
-	topic = {
-		id: req.body.id
-		title: req.body.title
-		url: url
-		summary: req.body.summary
-		content: req.body.content
-		postedOn: req.body.date
-	}
+	topic = requestToTopic req, url
+	if topic.id is NaN
+  	renderError res, "Could not save topic #{url}. Invalid Id was detected."
+  else
+		model = new BlogModel dataPath 
+		model.saveTopic topic, (err, data) ->  
+		  if err
+		  	console.log "saveTopic failed. Error: ", err
+		  	renderError res, "Could not save topic #{url}. Error #{err}"
+		  else
+		  	res.redirect '/blog/'+ url
 
-	model = new BlogModel dataPath 
-	# model.saveTopic topic, (err, data) ->  
-	#   if err
-	#   	renderError res, "Could not save topic #{url}. Error #{err}"
-	#   else
-	#   	res.redirect '/blog/'+ url
-	content = req.body.content
-	model.saveTopicByUrl url, content, (err, data) ->  
-	  if err
-	  	renderError res, "Could not save topic #{url}. Error #{err}"
-	  else
-	  	res.redirect '/blog/'+ url
+
+newBlog = (req, res) ->
+	topic = {
+		title: "Enter blog title"
+		url: ""
+		summary: ""
+		content: ""
+		postedOn: ""
+	}
+	res.render 'blognew', topic
+
+
+add = (req, res) -> 
+
+	topic = requestToTopic req, ""
+	if isNaN topic.id
+		dataPath = res.app.settings.datapath
+		model = new BlogModel dataPath 
+		model.saveNewTopic topic, (err, data) ->
+			if err
+				console.log "saveNewTopic failed. Error: ", err
+				renderError res, "Could not add topic. Error #{err}"
+			else
+				console.log "New topic added. Topic: ", data
+				res.redirect '/blog/'+ data.url
+	else
+		console.log "Unexpected id was found on new topic. Id: ", topic.id
+		renderError res, "Could not save new topic."
+
 
 module.exports = {
   view: view,
   edit: edit,
-  save: save
+  save: save,
+  newBlog: newBlog,
+  add: add
 }
 

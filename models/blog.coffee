@@ -40,7 +40,6 @@ class BlogModel
 
 	_findTopicInListByIdSync: (topics, id) ->
 		topic = null
-
 		for t in topics
 			if t.id is id
 				topic = { 
@@ -51,12 +50,10 @@ class BlogModel
 					url: t.url 
 				}
 				break
-
 		return topic
 
 
 	_updateTopicInListSync: (topics, topic) ->
-
 		for t in topics
 			if t.id is topic.id
 				t.title = topic.title
@@ -64,7 +61,6 @@ class BlogModel
 				t.postedOn = topic.postedOn
 				t.url = topic.url 
 				return true
-
 		return false
 
 
@@ -97,26 +93,26 @@ class BlogModel
 		@_getAllTopics(getTopicDetailsCallback) 
 
 
-	saveTopicByUrl: (url, content, callback) => 
-
-		getTopicDetailsCallback = (err, topics) => 
-			callback err if err
-
-			topic = @_findTopicInListByUrlSync topics, url 
-			if topic is null
-				callback "Topic not found #{url}"
-			else
-				updateTopicContent topic.id, content
-
-		updateTopicContent = (id, content) => 
-			filePath = @dataPath + '/blog.' + id + '.html'				
-			fs.writeFile filePath, content, 'utf8', (err) -> 
-				if err 
-					callback "Topic #{url} content could not be saved. Error #{err}"
-				else
-				callback null, "OK"
-
-		@_getAllTopics(getTopicDetailsCallback)
+	# saveTopicByUrl: (url, content, callback) => 
+	#
+	# 	getTopicDetailsCallback = (err, topics) => 
+	# 		callback err if err
+	#
+	# 		topic = @_findTopicInListByUrlSync topics, url 
+	# 		if topic is null
+	# 			callback "Topic not found #{url}"
+	# 		else
+	# 			updateTopicContent topic.id, content
+	#
+	# 	updateTopicContent = (id, content) => 
+	# 		filePath = @dataPath + '/blog.' + id + '.html'				
+	# 		fs.writeFile filePath, content, 'utf8', (err) -> 
+	# 			if err 
+	# 				callback "Topic #{url} content could not be saved. Error #{err}"
+	# 			else
+	# 			callback null, "OK"
+	#
+	# 	@_getAllTopics(getTopicDetailsCallback)
 
 
 	saveTopic: (topic, callback) => 
@@ -163,6 +159,7 @@ class BlogModel
 			try
 				# todo: validate topic data
 				topic.id = @nextId
+				topic.url = topic.title.toLowerCase().replace(/\s/g, "-")
 				topics.push topic
 				@nextId = @nextId + 1
 				jsonText = JSON.stringify topics, null, "\t"
@@ -178,7 +175,7 @@ class BlogModel
 				if err 
 					callback "Topic #{topic.id} content could not be saved. Error #{err}"
 				else
-					callback null, "OK"
+					callback null, topic
 
 		if topic? is false
 			callback "No topic was received"

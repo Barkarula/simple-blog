@@ -1,6 +1,6 @@
-* Support saving the meta-properties (title, summary, dates) of topics back to the blogs.json file
-
 * Adding new topics
+
+* Topic should be a class!
 
 * Handle corrupted json list
 

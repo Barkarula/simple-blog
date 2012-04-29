@@ -49,15 +49,15 @@ getTopicError = ->
 			console.log "getTopicError ended"
 
 
-editTopicByUrl = ->
-	console.log "editTopicByUrl"
+# editTopicByUrl = ->
+# 	console.log "editTopicByUrl"
 
-	dataPath = __dirname + '/../data' 
-	model = new BlogModel dataPath 
-	url = "unit-test-topic"
-	model.saveTopicByUrl url, "unit test content", (err, data) -> 
-		assert err is null, "Error saving topic #{url}. Error: #{err}"
-		console.log "editTopicByUrl ended"
+# 	dataPath = __dirname + '/../data' 
+# 	model = new BlogModel dataPath 
+# 	url = "unit-test-topic"
+# 	model.saveTopicByUrl url, "unit test content", (err, data) -> 
+# 		assert err is null, "Error saving topic #{url}. Error: #{err}"
+# 		console.log "editTopicByUrl ended"
 
 
 saveExistingTopic = -> 
@@ -102,8 +102,7 @@ saveNewTopic = ->
 	model = new BlogModel dataPath 
 	timeStamp = new Date()
 	topic = {
-		title: "new unit test title #{timeStamp}"
-		url: "unit-test-topic"
+		title: "test one two three"
 		summary: "new unit test summary #{timeStamp}"
 		content: "new unit test content #{timeStamp}"
 		postedOn: timeStamp
@@ -111,7 +110,7 @@ saveNewTopic = ->
 
 	model.saveNewTopic topic, (err, data) -> 
 		assert err is null, "Error saving new topic #{topic.url}. Error: #{err}"
-		console.log "saveNewTopic ended"
+		console.log "saveNewTopic ended. Data:", data
 
 # -----------------
 # Execute the tests
@@ -120,7 +119,7 @@ getAllTopicsOK()
 getAllTopicsError()
 getTopicOK()
 getTopicError()
-editTopicByUrl()
+#editTopicByUrl()
 saveExistingTopic()
 saveTopicError()
 saveNewTopic()

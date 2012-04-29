@@ -30,8 +30,13 @@ app.configure 'production', ->
 # Routes
 app.get '/', site.home
 app.get '/about', site.about
+
+app.get '/newblog', blog.newBlog
+app.post '/newblog', blog.add
+
 app.get '/blog/edit/:url?', blog.edit
 app.post '/blog/edit/:url?', blog.save
+
 app.get '/blog/:url?', blog.view
 
 app.get '*', site.notFound

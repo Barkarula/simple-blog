@@ -1,31 +1,30 @@
-{ "nextId": 11, "blogs":[
+{ "nextId": 19, "blogs":[
 	{
 		"id": 1,
-		"title": "first blog post",
+		"title": "first blog post 111",
 		"url": "first-blog-post",
 		"summary": "Where we talk about the creation of the universe",
-		"postedOn": "2011-10-28 19:30"
+		"content": ""
 	},
 	{
 		"id": 2,
-		"title": "second blog post",
+		"title": "second blog post 222",
 		"url": "second-blog-post",
 		"summary": "Talking about dinosaurs",
-		"postedOn": "2012-04-08 22:10"
+		"content": ""
 	},
 	{
 		"id": 3,
-		"title": "third blog post",
+		"title": "third blog post 333",
 		"url": "third-blog-post",
 		"summary": "A meteor came and killed the dinosaurs",
-		"postedOn": "2012-05-09 22:10"
+		"content": ""
 	},
 	{
 		"id": 4,
-		"title": "unit test title Sat Apr 28 2012 19:13:57 GMT-0400 (EDT)",
+		"title": "aaa bbbb 444",
 		"url": "unit-test-topic",
 		"summary": "This topic is for the unit tests, don't mess with it",
-		"postedOn": "2012-04-28T23:13:57.615Z",
 		"content": ""
 	},
 	{
@@ -75,5 +74,61 @@
 		"content": "new unit test content Sun Apr 29 2012 14:42:51 GMT-0400 (EDT)",
 		"postedOn": "2012-04-29T18:42:51.385Z",
 		"id": 10
+	},
+	{
+		"title": "new unit test title Sun Apr 29 2012 15:33:37 GMT-0400 (EDT)",
+		"url": "unit-test-topic",
+		"summary": "new unit test summary Sun Apr 29 2012 15:33:37 GMT-0400 (EDT)",
+		"content": "new unit test content Sun Apr 29 2012 15:33:37 GMT-0400 (EDT)",
+		"postedOn": "2012-04-29T19:33:37.493Z",
+		"id": 11
+	},
+	{
+		"title": "test one two three",
+		"summary": "new unit test summary Sun Apr 29 2012 15:59:58 GMT-0400 (EDT)",
+		"content": "new unit test content Sun Apr 29 2012 15:59:58 GMT-0400 (EDT)",
+		"postedOn": "2012-04-29T19:59:58.241Z",
+		"id": 12,
+		"url": "test-one two three"
+	},
+	{
+		"title": "test one two three",
+		"summary": "new unit test summary Sun Apr 29 2012 16:00:59 GMT-0400 (EDT)",
+		"content": "new unit test content Sun Apr 29 2012 16:00:59 GMT-0400 (EDT)",
+		"postedOn": "2012-04-29T20:00:59.430Z",
+		"id": 13,
+		"url": "test-one two three"
+	},
+	{
+		"title": "test one two three",
+		"summary": "new unit test summary Sun Apr 29 2012 16:06:07 GMT-0400 (EDT)",
+		"content": "new unit test content Sun Apr 29 2012 16:06:07 GMT-0400 (EDT)",
+		"postedOn": "2012-04-29T20:06:07.807Z",
+		"id": 14,
+		"url": "test-one-two-three"
+	},
+	{
+		"id": 15,
+		"title": "brand new",
+		"url": "brand-new",
+		"content": "brand new content xxx"
+	},
+	{
+		"id": 16,
+		"title": "brand new",
+		"url": "brand-new",
+		"content": "brand new content qqq"
+	},
+	{
+		"id": 17,
+		"title": "final test of new topic",
+		"url": "final-test-of-new-topic",
+		"content": ""
+	},
+	{
+		"id": 18,
+		"title": "another final test updated",
+		"url": "another-final-test",
+		"content": ""
 	}
 ]}
