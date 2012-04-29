@@ -2,20 +2,23 @@ fs = require 'fs'
 
 class BlogModel
 
-	constructor: (@dataPath) -> 
-		@blogListFilePath = "#{dataPath}/blogs.json"
+	constructor: (@dataPath, blogList = "blogs.json") -> 
+		@blogListFilePath = "#{dataPath}/#{blogList}"
+		@nextId = null
 
 
 	_getAllTopics: (callback) =>
-		fs.readFile @blogListFilePath, 'utf8', (err, text) ->
+		fs.readFile @blogListFilePath, 'utf8', (err, text) =>
 			if err 
-				console.trace "_getAllTopics error"
-				console.log "_getAllTopics error #{err}"
 				callback "Error reading topic list #{err}" 
 			else
-				data = JSON.parse text
-				topics = data.blogs
-				callback null, topics
+				try
+					data = JSON.parse text
+					@nextId = data.nextId
+					topics = data.blogs
+					callback null, topics
+				catch error
+					callback error
 
 
 	_findTopicInListByUrlSync: (topics, url) ->
@@ -52,18 +55,29 @@ class BlogModel
 		return topic
 
 
+	_updateTopicInListSync: (topics, topic) ->
+
+		for t in topics
+			if t.id is topic.id
+				t.title = topic.title
+				t.content= ""
+				t.postedOn = topic.postedOn
+				t.url = topic.url 
+				return true
+
+		return false
+
+
 	# ===================================
 	# Public Methods 
 	# ===================================
 
 	getAllTopics: (callback) => 
-		#console.log "getAllTopics"
 		@_getAllTopics (err, topics) -> 
 			callback err, topics
 
 
 	getTopicByUrl: (url, callback) =>
-		#console.log "getTopicByUrl #{url}"
 
 		getTopicDetailsCallback = (err, topics) => 
 			callback err if err
@@ -84,7 +98,6 @@ class BlogModel
 
 
 	saveTopicByUrl: (url, content, callback) => 
-		console.log "saveTopicByUrl #{url}"
 
 		getTopicDetailsCallback = (err, topics) => 
 			callback err if err
@@ -107,47 +120,75 @@ class BlogModel
 
 
 	saveTopic: (topic, callback) => 
-		console.log "dataPath", @dataPath
-		console.log "blogList", @blogListFilePath 
-		console.log "saveTopic #{topic.id}"
-		callback "Topic Id is null", null if topic.id is null
 
-		getTopicDetailsCallback = (err, topics) => 
+		updateTopic = (err, topics) =>
 			callback err if err
 
-			topicMeta = @_findTopicInListByIdSync topics, topic.id 
-			if topicMeta is null
-				callback "Topic not found, id=#{topic.id}"
-			else
-				updateTopic topicMeta
+			if @_updateTopicInListSync(topics, topic) is false
+				callback "Could not find topic #{topic.id}"
+				return
 
-		updateTopic = (topicMeta) =>
-			updateTopicMetaData topicMeta, (err, data) ->
-				if err
-					console.log "update topic error. Bailing out. Error: #{err}"
-					callback err
-				else
-					updateTopicContent topic.id, topic.content 
+			try
+				jsonText = JSON.stringify topics, null, "\t"
+				jsonText = '{ "nextId": ' + @nextId + ', "blogs":' + jsonText + '}'
+				fs.writeFileSync @blogListFilePath, jsonText, 'utf8'		  
+				updateTopicContent()
+			catch error
+				callback error
 
-		updateTopicMetaData = (topicMeta) =>
-			console.log "TODO: update topic metadata"
-			err = null
-			if err
-				callback err
-			else
-				updateTopicContent topicMeta.id, topic.content 
-
-		updateTopicContent = (id, content) => 
-			console.log "Updating topic content #{content}..."
-			filePath = @dataPath + '/blog.' + id + '.html'				
-			fs.writeFile filePath, content, 'utf8', (err) -> 
+		updateTopicContent = => 
+			filePath = @dataPath + '/blog.' + topic.id + '.html'	
+			fs.writeFile filePath, topic.content, 'utf8', (err) -> 
 				if err 
-					callback "Topic #{url} content could not be saved. Error #{err}"
+					callback "Topic #{topic.id} content could not be saved. Error #{err}"
 				else
 					callback null, "OK"
 
+		if topic? is false
+			callback "No topic was received"
+			return
 
-		@_getAllTopics(getTopicDetailsCallback)
+		if topic.id? is false
+			callback "Topic Id is null" 
+			return
+
+		@_getAllTopics(updateTopic)
+
+
+	saveNewTopic: (topic, callback) => 
+
+		addTopic = (err, topics) =>
+			callback err if err
+
+			try
+				# todo: validate topic data
+				topic.id = @nextId
+				topics.push topic
+				@nextId = @nextId + 1
+				jsonText = JSON.stringify topics, null, "\t"
+				jsonText = '{ "nextId": ' + @nextId + ', "blogs":' + jsonText + '}'
+				fs.writeFileSync @blogListFilePath, jsonText, 'utf8'		  
+				updateTopicContent()
+			catch error
+				callback error
+
+		updateTopicContent = => 
+			filePath = @dataPath + '/blog.' + topic.id + '.html'	
+			fs.writeFile filePath, topic.content, 'utf8', (err) -> 
+				if err 
+					callback "Topic #{topic.id} content could not be saved. Error #{err}"
+				else
+					callback null, "OK"
+
+		if topic? is false
+			callback "No topic was received"
+			return
+
+		# if topic.id? is false
+		# 	callback "Topic Id is null" 
+		# 	return
+
+		@_getAllTopics(addTopic)
 
 
 exports.BlogModel = BlogModel

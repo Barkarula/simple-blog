@@ -1,32 +1,79 @@
-{
-  "blogs": [
-  { 
-    "id": 1, 
-    "title": "first blog post", 
-    "url": "first-blog-post", 
-    "summary": "Where we talk about the creation of the universe",
-    "postedOn": "2011-10-28 19:30"
-  },
-  { 
-    "id": 2, 
-    "title": "second blog post",
-    "url": "second-blog-post", 
-    "summary": "Talking about dinosaurs",
-    "postedOn": "2012-04-08 22:10" 
-  },
-  { 
-    "id": 3, 
-    "title": "third blog post", 
-    "url": "third-blog-post", 
-    "summary": "A meteor came and killed the dinosaurs",
-    "postedOn": "2012-05-09 22:10" 
-  },
-  { 
-    "id": 4, 
-    "title": "unit test topic", 
-    "url": "unit-test-topic", 
-    "summary": "This topic is for the unit tests, don't mess with it",
-    "postedOn": "2012-04-23 22:10" 
-  }
-  ]
-}
+{ "nextId": 11, "blogs":[
+	{
+		"id": 1,
+		"title": "first blog post",
+		"url": "first-blog-post",
+		"summary": "Where we talk about the creation of the universe",
+		"postedOn": "2011-10-28 19:30"
+	},
+	{
+		"id": 2,
+		"title": "second blog post",
+		"url": "second-blog-post",
+		"summary": "Talking about dinosaurs",
+		"postedOn": "2012-04-08 22:10"
+	},
+	{
+		"id": 3,
+		"title": "third blog post",
+		"url": "third-blog-post",
+		"summary": "A meteor came and killed the dinosaurs",
+		"postedOn": "2012-05-09 22:10"
+	},
+	{
+		"id": 4,
+		"title": "unit test title Sat Apr 28 2012 19:13:57 GMT-0400 (EDT)",
+		"url": "unit-test-topic",
+		"summary": "This topic is for the unit tests, don't mess with it",
+		"postedOn": "2012-04-28T23:13:57.615Z",
+		"content": ""
+	},
+	{
+		"title": "new unit test title Sun Apr 29 2012 14:35:44 GMT-0400 (EDT)",
+		"url": "unit-test-topic",
+		"summary": "new unit test summary Sun Apr 29 2012 14:35:44 GMT-0400 (EDT)",
+		"content": "new unit test content Sun Apr 29 2012 14:35:44 GMT-0400 (EDT)",
+		"postedOn": "2012-04-29T18:35:44.914Z",
+		"id": 5
+	},
+	{
+		"title": "new unit test title Sun Apr 29 2012 14:36:00 GMT-0400 (EDT)",
+		"url": "unit-test-topic",
+		"summary": "new unit test summary Sun Apr 29 2012 14:36:00 GMT-0400 (EDT)",
+		"content": "new unit test content Sun Apr 29 2012 14:36:00 GMT-0400 (EDT)",
+		"postedOn": "2012-04-29T18:36:00.186Z",
+		"id": 6
+	},
+	{
+		"title": "new unit test title Sun Apr 29 2012 14:40:56 GMT-0400 (EDT)",
+		"url": "unit-test-topic",
+		"summary": "new unit test summary Sun Apr 29 2012 14:40:56 GMT-0400 (EDT)",
+		"content": "new unit test content Sun Apr 29 2012 14:40:56 GMT-0400 (EDT)",
+		"postedOn": "2012-04-29T18:40:56.282Z",
+		"id": 7
+	},
+	{
+		"title": "new unit test title Sun Apr 29 2012 14:41:21 GMT-0400 (EDT)",
+		"url": "unit-test-topic",
+		"summary": "new unit test summary Sun Apr 29 2012 14:41:21 GMT-0400 (EDT)",
+		"content": "new unit test content Sun Apr 29 2012 14:41:21 GMT-0400 (EDT)",
+		"postedOn": "2012-04-29T18:41:21.167Z",
+		"id": 8
+	},
+	{
+		"title": "new unit test title Sun Apr 29 2012 14:41:28 GMT-0400 (EDT)",
+		"url": "unit-test-topic",
+		"summary": "new unit test summary Sun Apr 29 2012 14:41:28 GMT-0400 (EDT)",
+		"content": "new unit test content Sun Apr 29 2012 14:41:28 GMT-0400 (EDT)",
+		"postedOn": "2012-04-29T18:41:28.069Z",
+		"id": 9
+	},
+	{
+		"title": "new unit test title Sun Apr 29 2012 14:42:51 GMT-0400 (EDT)",
+		"url": "unit-test-topic",
+		"summary": "new unit test summary Sun Apr 29 2012 14:42:51 GMT-0400 (EDT)",
+		"content": "new unit test content Sun Apr 29 2012 14:42:51 GMT-0400 (EDT)",
+		"postedOn": "2012-04-29T18:42:51.385Z",
+		"id": 10
+	}
+]}

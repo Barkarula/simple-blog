@@ -1,8 +1,4 @@
 a = 1
-b = 2
-console.log "Hello World"
-debugger
+b = null
 
-c = a + b
-console.log "#{a} + #{b} = #{c}"
-
+console.log "b is null" if b is null
