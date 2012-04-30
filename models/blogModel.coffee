@@ -27,6 +27,9 @@ class BlogModel
 			if topic.url is url
 				return topic
 
+		# Possible simplification
+		# return topic for topic in topics when topic.url is url
+
 		return null
 
 
@@ -38,9 +41,10 @@ class BlogModel
 
 
 	_updateTopicInListSync: (topics, updatedTopic) ->
-		for topic in topics
+		for topic, i in topics
 			if topic.id is updatedTopic.id
-				topic = updatedTopic 
+				#console.log "found at position: ", i
+				topics[i] = updatedTopic 
 				return true
 		return false
 
@@ -85,6 +89,8 @@ class BlogModel
 				return
 
 			try
+				# console.log "topic: ", topic
+				# console.log "topic[0]: ", topics[0]
 				jsonText = JSON.stringify topics, null, "\t"
 				jsonText = '{ "nextId": ' + @nextId + ', "blogs":' + jsonText + '}'
 				fs.writeFileSync @blogListFilePath, jsonText, 'utf8'		  
@@ -98,7 +104,7 @@ class BlogModel
 				if err 
 					callback "Topic #{topic.id} content could not be saved. Error #{err}"
 				else
-					callback null, "OK"
+					callback null, topic
 
 		if topic? is false
 			callback "No topic was received"

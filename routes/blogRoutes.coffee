@@ -1,5 +1,5 @@
 fs = require 'fs'
-{BlogModel}  = require '../models/blog'
+{BlogModel}  = require '../models/blogModel'
 {BlogTopic}  = require '../models/blogTopic'
 
 
@@ -10,17 +10,18 @@ renderNotFound = (res, error) ->
 renderError = (res, error) ->
 	res.render '500', {status: 500, message: error}
 
-requestToTopic = (req, url) ->
-	topic = {
-		id: parseInt(req.body.id)
-		title: req.body.title
-		url: url # todo: this value should be recalculated internally, right?
-		summary: req.body.summary
-		content: req.body.content
-		postedOn: req.body.date
-	}
+
+requestToTopic = (req) ->
+	topic = new BlogTopic(req.body.title)
+	topic.id = parseInt(req.body.id)
+	topic.summary = req.body.summary
+	topic.content = req.body.content
+	topic.postedOn = req.body.postedOn
+	return topic
+
 
 view = (req, res) -> 
+	console.log "blogRoutes:view"
 
 	dataPath = res.app.settings.datapath
 	model = new BlogModel dataPath 
@@ -41,6 +42,7 @@ view = (req, res) ->
 
 
 edit = (req, res) -> 
+	console.log "blogRoutes:edit"
 
 	url = req.params.url
 	if url is undefined
@@ -54,11 +56,12 @@ edit = (req, res) ->
 		if err 
 			renderNotFound res, err
 		else 
-			console.log topic
+			#console.log topic
 			res.render 'blogedit', topic
 
 
 save = (req, res) -> 
+	console.log "blogRoutes:save"
 
 	url = req.params.url
 	if url is undefined
@@ -67,7 +70,7 @@ save = (req, res) ->
 		return
 
 	dataPath = res.app.settings.datapath
-	topic = requestToTopic req, url
+	topic = requestToTopic req
 	if topic.id is NaN
   	renderError res, "Could not save topic #{url}. Invalid Id was detected."
   else
@@ -77,17 +80,18 @@ save = (req, res) ->
 		  	console.log "saveTopic failed. Error: ", err
 		  	renderError res, "Could not save topic #{url}. Error #{err}"
 		  else
-		  	res.redirect '/blog/'+ url
+		  	res.redirect '/blog/'+ data.url
 
 
 newBlog = (req, res) ->
+	console.log "blogRoutes:newBlog"
 	topic = new BlogTopic("Enter blog title")
 	res.render 'blognew', topic
 
 
 add = (req, res) -> 
-
-	topic = requestToTopic req, ""
+	console.log "blogRoutes:add"
+	topic = requestToTopic req
 	if isNaN topic.id
 		dataPath = res.app.settings.datapath
 		model = new BlogModel dataPath 
@@ -96,7 +100,7 @@ add = (req, res) ->
 				console.log "saveNewTopic failed. Error: ", err
 				renderError res, "Could not add topic. Error #{err}"
 			else
-				console.log "New topic added. Topic: ", data
+				console.log "New topic added. Topic: ", data.url
 				res.redirect '/blog/'+ data.url
 	else
 		console.log "Unexpected id was found on new topic. Id: ", topic.id

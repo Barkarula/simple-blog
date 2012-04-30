@@ -1,30 +1,39 @@
-{ "nextId": 30, "blogs":[
+{ "nextId": 35, "blogs":[
 	{
 		"id": 1,
-		"title": "first blog post 111",
-		"url": "first-blog-post",
-		"summary": "Where we talk about the creation of the universe",
-		"content": ""
+		"title": "one title updated",
+		"content": "content one one one",
+		"createdOn": "",
+		"updatedOn": "",
+		"postedOn": "2012-04-24",
+		"url": "one-title-updated"
 	},
 	{
 		"id": 2,
-		"title": "second blog post 222",
-		"url": "second-blog-post",
-		"summary": "Talking about dinosaurs",
-		"content": ""
+		"title": "second blog post",
+		"content": "<p>This is the <b>second</b> blog post</p>\r\n\r\n<p>Some changes to this topic </p>\r\n\r\n\r\n\r\n",
+		"createdOn": "",
+		"updatedOn": "",
+		"postedOn": "2012-04-30T02:28:50.870Z",
+		"url": "second-blog-post"
 	},
 	{
 		"id": 3,
-		"title": "third blog post 333",
-		"url": "third-blog-post",
-		"summary": "A meteor came and killed the dinosaurs",
-		"content": ""
+		"title": "third time is a charm",
+		"content": "<p>This is the <b>third</b> blog post</p>\r\n\r\n<p>Something in the third blog post</p>\r\n\r\n<p>33333</p>",
+		"createdOn": "",
+		"updatedOn": "",
+		"postedOn": "2012-04-30T02:28:50.870Z",
+		"url": "third-time-is-a-charm"
 	},
 	{
 		"id": 4,
 		"title": "aaa bbbb 444",
 		"url": "unit-test-topic",
 		"summary": "This topic is for the unit tests, don't mess with it",
-		"content": ""
+		"content": "",
+		"createdOn": "",
+		"updatedOn": "",
+		"postedOn": "2012-04-30T02:28:50.870Z"
 	}
 ]}

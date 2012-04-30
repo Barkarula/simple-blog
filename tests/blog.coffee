@@ -1,5 +1,5 @@
 assert = require 'assert' 
-{BlogModel}  = require '../models/blog'
+{BlogModel}  = require '../models/blogModel'
 {BlogTopic}  = require '../models/blogTopic'
 
 getAllTopicsOK = ->

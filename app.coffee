@@ -1,7 +1,7 @@
 # Module dependencies.
 express = require 'express'
 site = require './routes/site'
-blog = require './routes/blog' 
+blogRoutes = require './routes/blogRoutes' 
 
 # Configuration
 app = module.exports = express.createServer()
@@ -31,13 +31,13 @@ app.configure 'production', ->
 app.get '/', site.home
 app.get '/about', site.about
 
-app.get '/newblog', blog.newBlog
-app.post '/newblog', blog.add
+app.get '/newblog', blogRoutes.newBlog
+app.post '/newblog', blogRoutes.add
 
-app.get '/blog/edit/:url?', blog.edit
-app.post '/blog/edit/:url?', blog.save
+app.get '/blog/edit/:url?', blogRoutes.edit
+app.post '/blog/edit/:url?', blogRoutes.save
 
-app.get '/blog/:url?', blog.view
+app.get '/blog/:url?', blogRoutes.view
 
 app.get '*', site.notFound
 
