@@ -1,4 +1,5 @@
 fs = require 'fs'
+{BlogTopic}  = require './blogTopic'
 
 class BlogModel
 
@@ -22,44 +23,24 @@ class BlogModel
 
 
 	_findTopicInListByUrlSync: (topics, url) ->
-		topic = null
+		for topic in topics
+			if topic.url is url
+				return topic
 
-		for t in topics
-			if t.url is url
-				topic = { 
-					id: t.id,
-					title: t.title, 
-					content: "", # needs to be read from disk
-					postedOn: t.postedOn,
-					url: t.url 
-				}
-				break
-
-		return topic
+		return null
 
 
 	_findTopicInListByIdSync: (topics, id) ->
-		topic = null
-		for t in topics
+		for topic in topics
 			if t.id is id
-				topic = { 
-					id: t.id,
-					title: t.title, 
-					content: "", # needs to be read from disk
-					postedOn: t.postedOn,
-					url: t.url 
-				}
-				break
-		return topic
+				return topic
+		return null
 
 
-	_updateTopicInListSync: (topics, topic) ->
-		for t in topics
-			if t.id is topic.id
-				t.title = topic.title
-				t.content= ""
-				t.postedOn = topic.postedOn
-				t.url = topic.url 
+	_updateTopicInListSync: (topics, updatedTopic) ->
+		for topic in topics
+			if topic.id is updatedTopic.id
+				topic = updatedTopic 
 				return true
 		return false
 
@@ -93,33 +74,12 @@ class BlogModel
 		@_getAllTopics(getTopicDetailsCallback) 
 
 
-	# saveTopicByUrl: (url, content, callback) => 
-	#
-	# 	getTopicDetailsCallback = (err, topics) => 
-	# 		callback err if err
-	#
-	# 		topic = @_findTopicInListByUrlSync topics, url 
-	# 		if topic is null
-	# 			callback "Topic not found #{url}"
-	# 		else
-	# 			updateTopicContent topic.id, content
-	#
-	# 	updateTopicContent = (id, content) => 
-	# 		filePath = @dataPath + '/blog.' + id + '.html'				
-	# 		fs.writeFile filePath, content, 'utf8', (err) -> 
-	# 			if err 
-	# 				callback "Topic #{url} content could not be saved. Error #{err}"
-	# 			else
-	# 			callback null, "OK"
-	#
-	# 	@_getAllTopics(getTopicDetailsCallback)
-
-
 	saveTopic: (topic, callback) => 
 
 		updateTopic = (err, topics) =>
 			callback err if err
 
+			topic.setUrl()
 			if @_updateTopicInListSync(topics, topic) is false
 				callback "Could not find topic #{topic.id}"
 				return
@@ -153,39 +113,31 @@ class BlogModel
 
 	saveNewTopic: (topic, callback) => 
 
-		addTopic = (err, topics) =>
-			callback err if err
+			addTopic = (err, topics) =>
+				callback err if err
 
-			try
-				# todo: validate topic data
-				topic.id = @nextId
-				topic.url = topic.title.toLowerCase().replace(/\s/g, "-")
-				topics.push topic
-				@nextId = @nextId + 1
-				jsonText = JSON.stringify topics, null, "\t"
-				jsonText = '{ "nextId": ' + @nextId + ', "blogs":' + jsonText + '}'
-				fs.writeFileSync @blogListFilePath, jsonText, 'utf8'		  
-				updateTopicContent()
-			catch error
-				callback error
+				try
+					# todo: validate topic data
+					topic.id = @nextId
+					topic.setUrl()
+					topics.push topic
+					@nextId = @nextId + 1
+					jsonText = JSON.stringify topics, null, "\t"
+					jsonText = '{ "nextId": ' + @nextId + ', "blogs":' + jsonText + '}'
+					fs.writeFileSync @blogListFilePath, jsonText, 'utf8'		  
+					updateTopicContent()
+				catch error
+					callback error
 
-		updateTopicContent = => 
-			filePath = @dataPath + '/blog.' + topic.id + '.html'	
-			fs.writeFile filePath, topic.content, 'utf8', (err) -> 
-				if err 
-					callback "Topic #{topic.id} content could not be saved. Error #{err}"
-				else
-					callback null, topic
+			updateTopicContent = => 
+				filePath = @dataPath + '/blog.' + topic.id + '.html'	
+				fs.writeFile filePath, topic.content, 'utf8', (err) -> 
+					if err 
+						callback "Topic #{topic.id} content could not be saved. Error #{err}"
+					else
+						callback null, topic
 
-		if topic? is false
-			callback "No topic was received"
-			return
-
-		# if topic.id? is false
-		# 	callback "Topic Id is null" 
-		# 	return
-
-		@_getAllTopics(addTopic)
+			@_getAllTopics(addTopic)
 
 
 exports.BlogModel = BlogModel

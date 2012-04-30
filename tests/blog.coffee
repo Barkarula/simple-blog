@@ -1,5 +1,6 @@
 assert = require 'assert' 
 {BlogModel}  = require '../models/blog'
+{BlogTopic}  = require '../models/blogTopic'
 
 getAllTopicsOK = ->
 	console.log "getAllTopicsOK"
@@ -43,21 +44,9 @@ getTopicError = ->
 	
 	model.getAllTopics (err, topics) -> 
 		url = topics[0].url + "-xxx"
-		#console.log "bad url #{url}"
 		model.getTopicByUrl url, (err, topic) ->
 			assert err isnt null, "Should have gotten an error retrieving topic #{url}. Error #{err}"
 			console.log "getTopicError ended"
-
-
-# editTopicByUrl = ->
-# 	console.log "editTopicByUrl"
-
-# 	dataPath = __dirname + '/../data' 
-# 	model = new BlogModel dataPath 
-# 	url = "unit-test-topic"
-# 	model.saveTopicByUrl url, "unit test content", (err, data) -> 
-# 		assert err is null, "Error saving topic #{url}. Error: #{err}"
-# 		console.log "editTopicByUrl ended"
 
 
 saveExistingTopic = -> 
@@ -66,14 +55,11 @@ saveExistingTopic = ->
 	dataPath = __dirname + '/../data' 
 	model = new BlogModel dataPath 
 	timeStamp = new Date()
-	topic = {
-		id: 4
-		title: "unit test title #{timeStamp}"
-		url: "unit-test-topic"
-		summary: "unit test summary #{timeStamp}"
-		content: "unit test content #{timeStamp}"
-		postedOn: timeStamp
-	}
+	topic = new BlogTopic("unit test title")
+	topic.id = 4
+	topic.summary = "unit test summary #{timeStamp}"
+	topic.content = "unit test content #{timeStamp}"
+	topic.postedOn = timeStamp
 
 	model.saveTopic topic, (err, data) -> 
 		assert err is null, "Error saving topic #{topic.url}. Error: #{err}"
@@ -91,26 +77,26 @@ saveTopicError = ->
 	model.saveTopic {}, (err, data) -> 
 		assert err isnt null, "Should have gotten an error saving a topic with null id"
 
-	model.saveTopic {id: -1}, (err, data) -> 
+	topic = new BlogTopic()
+	topic.id = -1
+	model.saveTopic topic, (err, data) -> 
 		assert err isnt null, "Should have gotten an error saving a non-existing topic id"
 
 
 saveNewTopic = ->
 	console.log "saveNewTopic"
 
+	timeStamp = new Date()
+	topic = new BlogTopic("test one two three")
+	topic.summary = "new unit test summary #{timeStamp}"
+	topic.content = "new unit test content #{timeStamp}"
+	topic.postedOn = timeStamp
+
 	dataPath = __dirname + '/../data' 
 	model = new BlogModel dataPath 
-	timeStamp = new Date()
-	topic = {
-		title: "test one two three"
-		summary: "new unit test summary #{timeStamp}"
-		content: "new unit test content #{timeStamp}"
-		postedOn: timeStamp
-	}
-
 	model.saveNewTopic topic, (err, data) -> 
 		assert err is null, "Error saving new topic #{topic.url}. Error: #{err}"
-		console.log "saveNewTopic ended. Data:", data
+		console.log "saveNewTopic ended."
 
 # -----------------
 # Execute the tests
@@ -119,7 +105,6 @@ getAllTopicsOK()
 getAllTopicsError()
 getTopicOK()
 getTopicError()
-#editTopicByUrl()
 saveExistingTopic()
 saveTopicError()
 saveNewTopic()

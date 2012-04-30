@@ -1,5 +1,6 @@
 fs = require 'fs'
 {BlogModel}  = require '../models/blog'
+{BlogTopic}  = require '../models/blogTopic'
 
 
 renderNotFound = (res, error) -> 
@@ -80,13 +81,7 @@ save = (req, res) ->
 
 
 newBlog = (req, res) ->
-	topic = {
-		title: "Enter blog title"
-		url: ""
-		summary: ""
-		content: ""
-		postedOn: ""
-	}
+	topic = new BlogTopic("Enter blog title")
 	res.render 'blognew', topic
 
 

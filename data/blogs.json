@@ -1,4 +1,4 @@
-{ "nextId": 19, "blogs":[
+{ "nextId": 30, "blogs":[
 	{
 		"id": 1,
 		"title": "first blog post 111",
@@ -25,110 +25,6 @@
 		"title": "aaa bbbb 444",
 		"url": "unit-test-topic",
 		"summary": "This topic is for the unit tests, don't mess with it",
-		"content": ""
-	},
-	{
-		"title": "new unit test title Sun Apr 29 2012 14:35:44 GMT-0400 (EDT)",
-		"url": "unit-test-topic",
-		"summary": "new unit test summary Sun Apr 29 2012 14:35:44 GMT-0400 (EDT)",
-		"content": "new unit test content Sun Apr 29 2012 14:35:44 GMT-0400 (EDT)",
-		"postedOn": "2012-04-29T18:35:44.914Z",
-		"id": 5
-	},
-	{
-		"title": "new unit test title Sun Apr 29 2012 14:36:00 GMT-0400 (EDT)",
-		"url": "unit-test-topic",
-		"summary": "new unit test summary Sun Apr 29 2012 14:36:00 GMT-0400 (EDT)",
-		"content": "new unit test content Sun Apr 29 2012 14:36:00 GMT-0400 (EDT)",
-		"postedOn": "2012-04-29T18:36:00.186Z",
-		"id": 6
-	},
-	{
-		"title": "new unit test title Sun Apr 29 2012 14:40:56 GMT-0400 (EDT)",
-		"url": "unit-test-topic",
-		"summary": "new unit test summary Sun Apr 29 2012 14:40:56 GMT-0400 (EDT)",
-		"content": "new unit test content Sun Apr 29 2012 14:40:56 GMT-0400 (EDT)",
-		"postedOn": "2012-04-29T18:40:56.282Z",
-		"id": 7
-	},
-	{
-		"title": "new unit test title Sun Apr 29 2012 14:41:21 GMT-0400 (EDT)",
-		"url": "unit-test-topic",
-		"summary": "new unit test summary Sun Apr 29 2012 14:41:21 GMT-0400 (EDT)",
-		"content": "new unit test content Sun Apr 29 2012 14:41:21 GMT-0400 (EDT)",
-		"postedOn": "2012-04-29T18:41:21.167Z",
-		"id": 8
-	},
-	{
-		"title": "new unit test title Sun Apr 29 2012 14:41:28 GMT-0400 (EDT)",
-		"url": "unit-test-topic",
-		"summary": "new unit test summary Sun Apr 29 2012 14:41:28 GMT-0400 (EDT)",
-		"content": "new unit test content Sun Apr 29 2012 14:41:28 GMT-0400 (EDT)",
-		"postedOn": "2012-04-29T18:41:28.069Z",
-		"id": 9
-	},
-	{
-		"title": "new unit test title Sun Apr 29 2012 14:42:51 GMT-0400 (EDT)",
-		"url": "unit-test-topic",
-		"summary": "new unit test summary Sun Apr 29 2012 14:42:51 GMT-0400 (EDT)",
-		"content": "new unit test content Sun Apr 29 2012 14:42:51 GMT-0400 (EDT)",
-		"postedOn": "2012-04-29T18:42:51.385Z",
-		"id": 10
-	},
-	{
-		"title": "new unit test title Sun Apr 29 2012 15:33:37 GMT-0400 (EDT)",
-		"url": "unit-test-topic",
-		"summary": "new unit test summary Sun Apr 29 2012 15:33:37 GMT-0400 (EDT)",
-		"content": "new unit test content Sun Apr 29 2012 15:33:37 GMT-0400 (EDT)",
-		"postedOn": "2012-04-29T19:33:37.493Z",
-		"id": 11
-	},
-	{
-		"title": "test one two three",
-		"summary": "new unit test summary Sun Apr 29 2012 15:59:58 GMT-0400 (EDT)",
-		"content": "new unit test content Sun Apr 29 2012 15:59:58 GMT-0400 (EDT)",
-		"postedOn": "2012-04-29T19:59:58.241Z",
-		"id": 12,
-		"url": "test-one two three"
-	},
-	{
-		"title": "test one two three",
-		"summary": "new unit test summary Sun Apr 29 2012 16:00:59 GMT-0400 (EDT)",
-		"content": "new unit test content Sun Apr 29 2012 16:00:59 GMT-0400 (EDT)",
-		"postedOn": "2012-04-29T20:00:59.430Z",
-		"id": 13,
-		"url": "test-one two three"
-	},
-	{
-		"title": "test one two three",
-		"summary": "new unit test summary Sun Apr 29 2012 16:06:07 GMT-0400 (EDT)",
-		"content": "new unit test content Sun Apr 29 2012 16:06:07 GMT-0400 (EDT)",
-		"postedOn": "2012-04-29T20:06:07.807Z",
-		"id": 14,
-		"url": "test-one-two-three"
-	},
-	{
-		"id": 15,
-		"title": "brand new",
-		"url": "brand-new",
-		"content": "brand new content xxx"
-	},
-	{
-		"id": 16,
-		"title": "brand new",
-		"url": "brand-new",
-		"content": "brand new content qqq"
-	},
-	{
-		"id": 17,
-		"title": "final test of new topic",
-		"url": "final-test-of-new-topic",
-		"content": ""
-	},
-	{
-		"id": 18,
-		"title": "another final test updated",
-		"url": "another-final-test",
 		"content": ""
 	}
 ]}
