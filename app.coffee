@@ -1,6 +1,6 @@
 # Module dependencies.
 express = require 'express'
-site = require './routes/site'
+siteRoutes = require './routes/siteRoutes'
 blogRoutes = require './routes/blogRoutes' 
 
 # Configuration
@@ -28,8 +28,8 @@ app.configure 'production', ->
   app.use express.errorHandler()
 
 # Routes
-app.get '/', site.home
-app.get '/about', site.about
+app.get '/', siteRoutes.home
+app.get '/about', siteRoutes.about
 
 app.get '/newblog', blogRoutes.newBlog
 app.post '/newblog', blogRoutes.add
@@ -39,7 +39,7 @@ app.post '/blog/edit/:url?', blogRoutes.save
 
 app.get '/blog/:url?', blogRoutes.view
 
-app.get '*', site.notFound
+app.get '*', siteRoutes.notFound
 
 # Fire it up!
 app.listen 3000, ->

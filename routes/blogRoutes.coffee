@@ -32,7 +32,6 @@ view = (req, res) ->
 			if err
 				renderNotFound res, err
 			else
-				console.log topic
 				res.render 'blog', topic
 	else
 		model.getAllTopics (err, topics) -> 
@@ -72,7 +71,6 @@ save = (req, res) ->
 
 	dataPath = res.app.settings.datapath
 	topic = requestToTopic req
-	console.log "postedAt: ", topic.postedOn
 	if topic.id is NaN
   	renderError res, "Could not save topic #{url}. Invalid Id was detected."
   else
