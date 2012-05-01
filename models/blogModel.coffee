@@ -14,9 +14,18 @@ class BlogModel
 				callback "Error reading topic list #{err}" 
 			else
 				try
+					topics = []
 					data = JSON.parse text
 					@nextId = data.nextId
-					topics = data.blogs
+					for t in data.blogs
+						topic = new BlogTopic(t.title)
+						topic.id = t.id
+						topic.content = t.content
+						topic.createdOn = new Date(t.createdOn)
+						topic.updatedOn = new Date(t.updatedOn)
+						topic.postedOn = new Date(t.postedOn)
+						topic.url = t.url
+						topics.push topic
 					callback null, topics
 				catch error
 					callback error
@@ -84,6 +93,7 @@ class BlogModel
 			callback err if err
 
 			topic.setUrl()
+			topic.updatedOn = new Date()
 			if @_updateTopicInListSync(topics, topic) is false
 				callback "Could not find topic #{topic.id}"
 				return
@@ -126,6 +136,7 @@ class BlogModel
 					# todo: validate topic data
 					topic.id = @nextId
 					topic.setUrl()
+					topic.createdOn = new Date()
 					topics.push topic
 					@nextId = @nextId + 1
 					jsonText = JSON.stringify topics, null, "\t"

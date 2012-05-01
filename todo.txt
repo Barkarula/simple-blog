@@ -1,7 +1,5 @@
 * Adding new topics
 
-* Topic should be a class!
-
 * Handle corrupted json list
 
 * Session & authentication
@@ -11,7 +9,3 @@
 * A decent editor
 
 * Style the site
-
-* How can I change the color of the prompt in terminal? I would help to identify where the last program run started.
-
-

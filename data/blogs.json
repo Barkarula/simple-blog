@@ -1,39 +1,38 @@
-{ "nextId": 35, "blogs":[
+{ "nextId": 45, "blogs":[
 	{
 		"id": 1,
-		"title": "one title updated",
-		"content": "content one one one",
-		"createdOn": "",
-		"updatedOn": "",
-		"postedOn": "2012-04-24",
-		"url": "one-title-updated"
+		"title": "first blog post 111",
+		"content": "this is the content of the first topic",
+		"createdOn": "1970-01-01T00:00:00.000Z",
+		"updatedOn": "2012-05-01T03:19:04.865Z",
+		"postedOn": "2012-05-01T03:19:00.000Z",
+		"url": "first-blog-post-111"
 	},
 	{
 		"id": 2,
-		"title": "second blog post",
-		"content": "<p>This is the <b>second</b> blog post</p>\r\n\r\n<p>Some changes to this topic </p>\r\n\r\n\r\n\r\n",
-		"createdOn": "",
-		"updatedOn": "",
+		"title": "second topic",
+		"content": "This is the content of the second topic\r\n\r\n\r\n",
+		"createdOn": "1970-01-01T00:00:00.000Z",
+		"updatedOn": "1970-01-01T00:00:00.000Z",
 		"postedOn": "2012-04-30T02:28:50.870Z",
-		"url": "second-blog-post"
+		"url": "second-topic"
 	},
 	{
 		"id": 3,
-		"title": "third time is a charm",
-		"content": "<p>This is the <b>third</b> blog post</p>\r\n\r\n<p>Something in the third blog post</p>\r\n\r\n<p>33333</p>",
+		"title": "third topic",
+		"content": "This is the content of the third topic",
 		"createdOn": "",
-		"updatedOn": "",
-		"postedOn": "2012-04-30T02:28:50.870Z",
-		"url": "third-time-is-a-charm"
+		"updatedOn": "2012-05-01T03:19:42.985Z",
+		"postedOn": "2012-05-01T03:20:00.000Z",
+		"url": "third-topic"
 	},
 	{
 		"id": 4,
-		"title": "aaa bbbb 444",
-		"url": "unit-test-topic",
-		"summary": "This topic is for the unit tests, don't mess with it",
-		"content": "",
-		"createdOn": "",
-		"updatedOn": "",
-		"postedOn": "2012-04-30T02:28:50.870Z"
+		"title": "unit test topic",
+		"content": "this is the content of the unit test topic",
+		"createdOn": "1970-01-01T00:00:00.000Z",
+		"updatedOn": "1970-01-01T00:00:00.000Z",
+		"postedOn": "2012-04-30T02:28:50.870Z",
+		"url": "unit-test-topic"
 	}
 ]}

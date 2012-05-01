@@ -5,7 +5,7 @@ p #{title}
 
 !{content}
 
-p Posted on #{postedOn}
+p Posted on #{postedOn.toDateString()} at #{postedOn.toLocaleTimeString()}
 
 p
 	a(href='/blog/edit/#{url}') Edit 

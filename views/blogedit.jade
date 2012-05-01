@@ -10,10 +10,10 @@ form(name="input", action="#{url}", method="post")
 			#{content}
 
 	p Posted On
-		input(type="date", name="postedOn", value="#{postedOn}")
+		input(type="date", name="postedOn", value="#{postedOn.toDateString()}")
 
 	p Posted At
-		input(type="time", name="postedAt", value="#{postedOn}")
+		input(type="time", name="postedAt", value="#{postedOn.toLocaleTimeString()}")
 
 	input(type="submit", value="Submit")
 

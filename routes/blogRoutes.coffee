@@ -16,7 +16,7 @@ requestToTopic = (req) ->
 	topic.id = parseInt(req.body.id)
 	topic.summary = req.body.summary
 	topic.content = req.body.content
-	topic.postedOn = req.body.postedOn
+	topic.postedOn = new Date(req.body.postedOn + ' ' + req.body.postedAt)
 	return topic
 
 
@@ -32,6 +32,7 @@ view = (req, res) ->
 			if err
 				renderNotFound res, err
 			else
+				console.log topic
 				res.render 'blog', topic
 	else
 		model.getAllTopics (err, topics) -> 
@@ -71,6 +72,7 @@ save = (req, res) ->
 
 	dataPath = res.app.settings.datapath
 	topic = requestToTopic req
+	console.log "postedAt: ", topic.postedOn
 	if topic.id is NaN
   	renderError res, "Could not save topic #{url}. Invalid Id was detected."
   else
