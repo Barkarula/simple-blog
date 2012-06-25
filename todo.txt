@@ -1,4 +1,8 @@
-* Adding new topics
+* Topic validation on save
+  X title must not be empty
+  X content must not be empty
+  - title must not be duplicate
+  - dates
 
 * Handle corrupted json list
 

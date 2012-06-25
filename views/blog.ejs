@@ -1,0 +1,9 @@
+<h1>Blog</h1>
+<p>Random posts about software development</p>
+<p>{{= title }}</p>
+
+{{- content }}
+
+<p>Posted on {{= postedOn.toDateString() }} at {{= postedOn.toLocaleTimeString() }}</p>
+
+<p><a href='/blog/edit/{{= url }}'>Edit</a> 

@@ -98,15 +98,15 @@ class BlogModel
 				callback "Could not find topic #{topic.id}"
 				return
 
-			try
+			if topic.isValid()
 				# console.log "topic: ", topic
 				# console.log "topic[0]: ", topics[0]
 				jsonText = JSON.stringify topics, null, "\t"
 				jsonText = '{ "nextId": ' + @nextId + ', "blogs":' + jsonText + '}'
 				fs.writeFileSync @blogListFilePath, jsonText, 'utf8'		  
 				updateTopicContent()
-			catch error
-				callback error
+			else
+				callback topic.getErrors().join('-')
 
 		updateTopicContent = => 
 			filePath = @dataPath + '/blog.' + topic.id + '.html'	
@@ -132,19 +132,18 @@ class BlogModel
 			addTopic = (err, topics) =>
 				callback err if err
 
-				try
-					# todo: validate topic data
-					topic.id = @nextId
-					topic.setUrl()
-					topic.createdOn = new Date()
+				topic.id = @nextId
+				topic.setUrl()
+				topic.createdOn = new Date()
+				if topic.isValid()
 					topics.push topic
 					@nextId = @nextId + 1
 					jsonText = JSON.stringify topics, null, "\t"
 					jsonText = '{ "nextId": ' + @nextId + ', "blogs":' + jsonText + '}'
 					fs.writeFileSync @blogListFilePath, jsonText, 'utf8'		  
 					updateTopicContent()
-				catch error
-					callback error
+				else
+					callback topic.getErrors().join('-')
 
 			updateTopicContent = => 
 				filePath = @dataPath + '/blog.' + topic.id + '.html'	

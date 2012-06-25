@@ -13,12 +13,12 @@ class BlogTopic
 
 	getErrors: =>
 		errors = []
-		errors.push "Title is null or empty" if title? and @title.trim() 
-		errors.push "Content is null or empty" if content? and @content.trim() 
+		errors.push "Title is null or empty" if @title.trim().length is 0 
+		errors.push "Content is null or empty" if @content.trim().length is 0
 		return errors
 
 	isValid: =>
-		return @getErrors.length is 0
+		return @getErrors().length is 0
 
 	setUrl: =>
 		@url = @getUrl(@title)

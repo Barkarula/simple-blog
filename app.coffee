@@ -2,6 +2,7 @@
 express = require 'express'
 siteRoutes = require './routes/siteRoutes'
 blogRoutes = require './routes/blogRoutes' 
+ejs = require 'ejs'
 
 # Configuration
 app = module.exports = express.createServer()
@@ -9,7 +10,29 @@ app = module.exports = express.createServer()
 app.configure -> 
   app.set 'views', __dirname + '/views'
   app.set 'datapath', __dirname + '/data'
-  app.set 'view engine', 'jade'
+
+  ejs.open = '{{'
+  ejs.close = '}}'
+  app.set 'view engine', 'ejs'
+
+  # Use this to render plain old HTML files through the JADE engine
+  # but without substitutions
+  # app.set 'view options', {layout: false}
+  # app.register '.html', require('jade')
+
+  # app.register '.html', require 'ejs'
+
+  # options = {
+  #   call: (scope, options) -> 
+  #     return "xxx"
+  #   compile: (str, options) -> 
+  #     html = str
+  #     return str
+  #     # return (locals) -> 
+  #       # return html.replace /\{([^}]+)\}/g, (_, name) -> locals[name]
+  # }
+  # app.register '.md', options
+
   #app.use express.logger() # logs HTTP requests
   app.use express.bodyParser()
   app.use express.methodOverride()

@@ -33,6 +33,10 @@ view = (req, res) ->
 				renderNotFound res, err
 			else
 				res.render 'blog', topic
+				#res.render 'simple.ejs', { layout: true, name: "hector" }
+				# res.render 'simple.html', {name: 'hector'}
+				#res.render 'simple.md'
+				# res.send '<html><body><b>bold and simple</b></body></html>'
 	else
 		model.getAllTopics (err, topics) -> 
 			if err

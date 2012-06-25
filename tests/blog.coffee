@@ -82,6 +82,20 @@ saveTopicError = ->
 	model.saveTopic topic, (err, data) -> 
 		assert err isnt null, "Should have gotten an error saving a non-existing topic id"
 
+	topic = new BlogTopic()
+	topic.id = 1
+	model.saveTopic topic, (err, data) -> 
+		assert err isnt null, "Should have gotten an error saving topic with empty title"
+
+	topic = new BlogTopic('')
+	topic.id = 1
+	model.saveTopic topic, (err, data) -> 
+		assert err isnt null, "Should have gotten an error saving topic with empty title"
+
+	topic = new BlogTopic('some title')
+	topic.id = 1
+	model.saveTopic topic, (err, data) -> 
+		assert err isnt null, "Should have gotten an error saving topic with empty content"
 
 saveNewTopic = ->
 	console.log "saveNewTopic"

@@ -1,0 +1,12 @@
+<h1>Blogs</h1>
+<p>Random posts about software development</p>
+
+<ul>
+  {{ for (var i=0; i<topics.length; i++) { var topic=topics[i] }}
+    <li><a href='/blog/{{= topic.url }}'>{{= topic.title }}</a></li>
+  {{ } }}
+</ul>
+
+<p><a href='/'>Home Page</a></p>
+<p><a href='/newblog'>New Blog Post</a></p>
+
