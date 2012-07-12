@@ -39,7 +39,7 @@ Once you've downloaded the source code and installed the requirements listed abo
 
 
 
-QUESTIONS, COMMENTS, THOUGHTS?
+Questions, comments, thoughts?
 ------------------------------
 This is a very rough work in progress as I learn and play with Node.js.
 
