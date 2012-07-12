@@ -51,6 +51,7 @@ class BlogModel
 
 	_updateTopicInListSync: (topics, updatedTopic) ->
 		for topic, i in topics
+			#console.log topic.id, updatedTopic.id
 			if topic.id is updatedTopic.id
 				#console.log "found at position: ", i
 				topics[i].update(updatedTopic)
@@ -92,19 +93,15 @@ class BlogModel
 		updateTopic = (err, topics) =>
 			callback err if err
 
-			#topic.setUrl()
-			#topic.updatedOn = new Date()
-			if @_updateTopicInListSync(topics, topic) is false
-				callback "Could not find topic #{topic.id}"
-				return
-
 			if topic.isValid()
-				# console.log "topic: ", topic
-				# console.log "topic[0]: ", topics[0]
-				jsonText = JSON.stringify topics, null, "\t"
-				jsonText = '{ "nextId": ' + @nextId + ', "blogs":' + jsonText + '}'
-				fs.writeFileSync @blogListFilePath, jsonText, 'utf8'		  
-				updateTopicContent()
+				if @_updateTopicInListSync(topics, topic)
+					jsonText = JSON.stringify topics, null, "\t"
+					jsonText = '{ "nextId": ' + @nextId + ', "blogs":' + jsonText + '}'
+					fs.writeFileSync @blogListFilePath, jsonText, 'utf8'		  
+					updateTopicContent()
+				else
+					callback "Could not find topic #{topic.id}"
+					return
 			else
 				callback topic.getErrors().join('-')
 

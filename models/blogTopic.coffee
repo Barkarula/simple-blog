@@ -13,6 +13,7 @@ class BlogTopic
 
 	getErrors: =>
 		errors = []
+		errors.push "Invalid (or empty) Posted On date" if isNaN(Date.parse(@postedOn))
 		errors.push "Title is null or empty" if @title.trim().length is 0 
 		errors.push "Content is null or empty" if @content.trim().length is 0
 		return errors

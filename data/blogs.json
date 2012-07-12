@@ -13,8 +13,8 @@
 		"title": "new second topic",
 		"content": "new second topic content",
 		"createdOn": "2011-02-01T12:31:36.710Z",
-		"updatedOn": "2012-07-12T02:36:59.900Z",
-		"postedOn": "2012-07-11T13:00:00.000Z",
+		"updatedOn": "2012-07-12T03:48:46.094Z",
+		"postedOn": "1969-12-31T14:00:00.000Z",
 		"url": "new-second-topic"
 	},
 	{
@@ -67,9 +67,8 @@
 		"title": "test one two three",
 		"content": "new unit test content Wed Jul 11 2012 22:37:29 GMT-0400 (EDT)",
 		"createdOn": "2012-07-12T02:37:29.135Z",
-		"updatedOn": "",
+		"updatedOn": "1970-01-01T00:00:00.000Z",
 		"postedOn": "2012-07-12T02:37:29.128Z",
-		"url": "test-one-two-three",
-		"summary": "new unit test summary Wed Jul 11 2012 22:37:29 GMT-0400 (EDT)"
+		"url": "test-one-two-three"
 	}
 ]}
