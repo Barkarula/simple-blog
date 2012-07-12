@@ -24,4 +24,15 @@ class BlogTopic
 		@url = @getUrl(@title)
 		return
 
+	update: (newData) =>
+		#@id = don't change
+		@title = newData.title
+		@content = newData.content
+		#@createdOn = don't change
+		@updatedOn = new Date()
+		@postedOn = newData.postedOn
+		@url = @getUrl(newData.title)
+		return  
+
+
 exports.BlogTopic = BlogTopic

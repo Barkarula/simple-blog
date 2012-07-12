@@ -1,27 +1,27 @@
-{ "nextId": 60, "blogs":[
+{ "nextId": 61, "blogs":[
 	{
 		"id": 1,
 		"title": "first topic edited",
-		"content": "edited in ejs and more stuff blah blah blah ",
-		"createdOn": "",
-		"updatedOn": "2012-07-10T15:40:11.459Z",
-		"postedOn": "1970-01-01T00:00:00.000Z",
+		"content": "the first topic",
+		"createdOn": "2011-01-01T12:31:36.710Z",
+		"updatedOn": "2012-07-12T02:34:02.789Z",
+		"postedOn": "2012-07-12T02:33:00.000Z",
 		"url": "first-topic-edited"
 	},
 	{
 		"id": 2,
-		"title": "second topic",
-		"content": "second content",
-		"createdOn": "1970-01-01T00:00:00.000Z",
-		"updatedOn": "2012-06-21T02:17:12.946Z",
-		"postedOn": "2012-04-30T02:28:50.000Z",
-		"url": "second-topic"
+		"title": "new second topic",
+		"content": "new second topic content",
+		"createdOn": "2011-02-01T12:31:36.710Z",
+		"updatedOn": "2012-07-12T02:36:59.900Z",
+		"postedOn": "2012-07-11T13:00:00.000Z",
+		"url": "new-second-topic"
 	},
 	{
 		"id": 3,
 		"title": "vvv",
 		"content": "This is the content of the third topic vvv",
-		"createdOn": "1970-01-01T00:00:00.000Z",
+		"createdOn": "2011-03-01T12:31:36.710Z",
 		"updatedOn": "2012-06-21T02:38:04.085Z",
 		"postedOn": "2012-05-01T03:20:00.000Z",
 		"url": "vvv"
@@ -30,7 +30,7 @@
 		"id": 4,
 		"title": "unit test title",
 		"content": "unit test content Wed Jun 20 2012 22:13:34 GMT-0400 (EDT)",
-		"createdOn": "1970-01-01T00:00:00.000Z",
+		"createdOn": "2011-04-01T12:31:36.710Z",
 		"updatedOn": "2012-06-21T02:13:34.810Z",
 		"postedOn": "2012-06-21T02:13:34.806Z",
 		"url": "unit-test-title"
@@ -39,7 +39,7 @@
 		"id": 57,
 		"title": "vvv",
 		"content": "vvvv",
-		"createdOn": "2012-06-21T02:24:22.664Z",
+		"createdOn": "2011-05-01T12:31:36.710Z",
 		"updatedOn": "1970-01-01T00:00:00.000Z",
 		"postedOn": "1970-01-01T00:00:00.000Z",
 		"url": "vvv"
@@ -48,7 +48,7 @@
 		"id": 58,
 		"title": "new ejs",
 		"content": "totally added with ejs",
-		"createdOn": "2012-06-25T02:48:44.549Z",
+		"createdOn": "2011-06-01T12:31:36.710Z",
 		"updatedOn": "1970-01-01T00:00:00.000Z",
 		"postedOn": "1970-01-01T00:00:00.000Z",
 		"url": "new-ejs"
@@ -57,9 +57,19 @@
 		"id": 59,
 		"title": "test one two three",
 		"content": "new unit test content Sun Jun 24 2012 22:49:17 GMT-0400 (EDT)",
-		"createdOn": "2012-06-25T02:49:17.517Z",
+		"createdOn": "2011-07-01T12:31:36.710Z",
 		"updatedOn": "1970-01-01T00:00:00.000Z",
 		"postedOn": "2012-06-25T02:49:17.508Z",
 		"url": "test-one-two-three"
+	},
+	{
+		"id": 60,
+		"title": "test one two three",
+		"content": "new unit test content Wed Jul 11 2012 22:37:29 GMT-0400 (EDT)",
+		"createdOn": "2012-07-12T02:37:29.135Z",
+		"updatedOn": "",
+		"postedOn": "2012-07-12T02:37:29.128Z",
+		"url": "test-one-two-three",
+		"summary": "new unit test summary Wed Jul 11 2012 22:37:29 GMT-0400 (EDT)"
 	}
 ]}

@@ -53,7 +53,7 @@ class BlogModel
 		for topic, i in topics
 			if topic.id is updatedTopic.id
 				#console.log "found at position: ", i
-				topics[i] = updatedTopic 
+				topics[i].update(updatedTopic)
 				return true
 		return false
 
@@ -92,8 +92,8 @@ class BlogModel
 		updateTopic = (err, topics) =>
 			callback err if err
 
-			topic.setUrl()
-			topic.updatedOn = new Date()
+			#topic.setUrl()
+			#topic.updatedOn = new Date()
 			if @_updateTopicInListSync(topics, topic) is false
 				callback "Could not find topic #{topic.id}"
 				return

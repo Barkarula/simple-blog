@@ -19,8 +19,9 @@ In addition to Node.js you'll need **CoffeeScript**. Once you've installed Node.
 
 CoffeeScript is a language that compiles to JavaScript. It allow us to write the code with a cleaner syntax than raw JavaScript. [More info](http://coffeescript.org)
 
-Last but not least, you'll need to install **Express** and **EJS** by running the following command from the Terminal:
+Last but not least, you'll need to install **Express** and **EJS** by running the following command from the Terminal *from inside the folder where you downloaded the source code*
 
+    cd ~/dev/simple-blog
     npm install 
 
 Express is MVC-like JavaScript framework that takes care of the boiler plate code to handle HTTP requests and responses. [More info](http://expressjs.com)
@@ -37,13 +38,8 @@ Once you've downloaded the source code and installed the requirements listed abo
 ...and browse to your *http://localhost:3000* You should see the rather anti-climactic web site with the beginnings of what will eventually be a blog engine. Enjoy it!
 
 
-
 Questions, comments, thoughts?
 ------------------------------
 This is a very rough work in progress as I learn and play with Node.js.
 
 Feel free to contact me with questions or comments about this project.
-
-
-
-

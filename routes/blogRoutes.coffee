@@ -32,6 +32,7 @@ view = (req, res) ->
 			if err
 				renderNotFound res, err
 			else
+				debugger
 				res.render 'blog', topic
 				#res.render 'simple.ejs', { layout: true, name: "hector" }
 				# res.render 'simple.html', {name: 'hector'}
