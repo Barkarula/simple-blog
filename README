@@ -16,20 +16,16 @@ In addition to Node.js you'll need CoffeeScript. Once you've installed Node.js y
 
 	npm install -g coffee-script
 
-Last but not least, you'll need to install Express, Jade, and EJS by running the following commands from the Terminal:
+Last but not least, you'll need to install Express and EJS by running the following commands from the Terminal:
 
 	npm install express
-	npm install jade
   npm install ejs
 
 CoffeeScript is a language that compiles to JavaScript. It allow us to write the code with a cleaner syntax than raw JavaScript. http://coffeescript.org/
 
 Express is JavaScript module that takes care of the boiler plate code to handle HTTP requests and responses. http://expressjs.com
 
-Jade is a template engine for Node.js. A tool to help you build HTML without having to do a bunch of string contatenation. http://jade-lang.com
-
-EJS is a template engine for Node.js. The syntax in this engine is plain HTML (plus a few tokens to insert tokens to be replaced) and much simpler to understand that Jade for those coming from a pure HTML background.
-
+EJS is a template engine for Node.js that allows you to embed JavaScript when generating HTML web pages.
 
 
 HOW TO RUN IT
@@ -38,7 +34,7 @@ From the Terminal window run the main app.js file:
 
    coffee app 
 
-...and browse to your localhost:3000 You should see the rather anticlimactic web site with the beginnings of what will eventually be a blog engine. Enjoy it!
+...and browse to your http://localhost:3000 You should see the rather anticlimactic web site with the beginnings of what will eventually be a blog engine. Enjoy it!
 
 
 

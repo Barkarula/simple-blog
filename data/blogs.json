@@ -2,9 +2,9 @@
 	{
 		"id": 1,
 		"title": "first topic edited",
-		"content": "edited in ejs",
-		"createdOn": "1970-01-01T00:00:00.000Z",
-		"updatedOn": "2012-06-25T02:42:30.875Z",
+		"content": "edited in ejs and more stuff blah blah blah ",
+		"createdOn": "",
+		"updatedOn": "2012-07-10T15:40:11.459Z",
 		"postedOn": "1970-01-01T00:00:00.000Z",
 		"url": "first-topic-edited"
 	},
@@ -49,7 +49,7 @@
 		"title": "new ejs",
 		"content": "totally added with ejs",
 		"createdOn": "2012-06-25T02:48:44.549Z",
-		"updatedOn": null,
+		"updatedOn": "1970-01-01T00:00:00.000Z",
 		"postedOn": "1970-01-01T00:00:00.000Z",
 		"url": "new-ejs"
 	},
@@ -58,9 +58,8 @@
 		"title": "test one two three",
 		"content": "new unit test content Sun Jun 24 2012 22:49:17 GMT-0400 (EDT)",
 		"createdOn": "2012-06-25T02:49:17.517Z",
-		"updatedOn": "",
+		"updatedOn": "1970-01-01T00:00:00.000Z",
 		"postedOn": "2012-06-25T02:49:17.508Z",
-		"url": "test-one-two-three",
-		"summary": "new unit test summary Sun Jun 24 2012 22:49:17 GMT-0400 (EDT)"
+		"url": "test-one-two-three"
 	}
 ]}

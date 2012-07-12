@@ -66,5 +66,6 @@ app.get '*', siteRoutes.notFound
 
 # Fire it up!
 app.listen 3000, ->
-  console.log "Express server listening on port %d in %s mode", app.address().port, app.settings.env
+  address = "http://localhost:#{app.address().port}"
+  console.log "Express server listening on #{address} in #{app.settings.env} mode"
 
