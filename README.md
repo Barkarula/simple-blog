@@ -19,18 +19,17 @@ In addition to Node.js you'll need **CoffeeScript**. Once you've installed Node.
 
 CoffeeScript is a language that compiles to JavaScript. It allow us to write the code with a cleaner syntax than raw JavaScript. [More info](http://coffeescript.org)
 
-Last but not least, you'll need to install **Express** and **EJS** by running the following commands from the Terminal:
+Last but not least, you'll need to install **Express** and **EJS** by running the following command from the Terminal:
 
-    npm install express
-    npm install ejs
+    npm install 
 
 Express is MVC-like JavaScript framework that takes care of the boiler plate code to handle HTTP requests and responses. [More info](http://expressjs.com)
 
 EJS is a template engine for Node.js used to generate HTML pages with dynamic content. [More info](https://github.com/visionmedia/ejs)
 
 
-How to run it
--------------
+How to run the site
+-------------------
 Once you've downloaded the source code and installed the requirements listed above, just run the following command from the Terminal window: 
 
     coffee app 
