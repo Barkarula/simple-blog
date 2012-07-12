@@ -26,7 +26,7 @@ Last but not least, you'll need to install **Express** and **EJS** by running th
 
 Express is MVC-like JavaScript framework that takes care of the boiler plate code to handle HTTP requests and responses. [More info](http://expressjs.com)
 
-EJS is a template engine for Node.js that allows you to embed JavaScript when generating HTML web pages. [More info](https://github.com/visionmedia/ejs)
+EJS is a template engine for Node.js used to generate HTML pages with dynamic content. [More info](https://github.com/visionmedia/ejs)
 
 
 How to run it

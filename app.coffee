@@ -15,24 +15,6 @@ app.configure ->
   ejs.close = '}}'
   app.set 'view engine', 'ejs'
 
-  # Use this to render plain old HTML files through the JADE engine
-  # but without substitutions
-  # app.set 'view options', {layout: false}
-  # app.register '.html', require('jade')
-
-  # app.register '.html', require 'ejs'
-
-  # options = {
-  #   call: (scope, options) -> 
-  #     return "xxx"
-  #   compile: (str, options) -> 
-  #     html = str
-  #     return str
-  #     # return (locals) -> 
-  #       # return html.replace /\{([^}]+)\}/g, (_, name) -> locals[name]
-  # }
-  # app.register '.md', options
-
   #app.use express.logger() # logs HTTP requests
   app.use express.bodyParser()
   app.use express.methodOverride()
