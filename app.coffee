@@ -11,6 +11,7 @@ app.configure ->
   app.set 'views', __dirname + '/views'
   app.set 'datapath', __dirname + '/data'
 
+  # Configure view engine options
   ejs.open = '{{'
   ejs.close = '}}'
   app.set 'view engine', 'ejs'
@@ -18,13 +19,13 @@ app.configure ->
   #app.use express.logger() # logs HTTP requests
   app.use express.bodyParser()
   app.use express.methodOverride()
+  app.use express.static(__dirname + '/public') # must come before app.router!
   app.use app.router
-  app.use express.static(__dirname + '/public')
 
 app.error (err, req, res, next) ->
   console.log "Custom error hit"
   console.dir err
-  res.render '500.jade', { status: 500, message: "TBD" }
+  res.render '500.ejs', { status: 500, message: "TBD" }
 
 app.configure 'development', -> 
   app.use express.errorHandler({ dumpExceptions: true, showStack: true })
@@ -50,4 +51,11 @@ app.get '*', siteRoutes.notFound
 app.listen 3000, ->
   address = "http://localhost:#{app.address().port}"
   console.log "Express server listening on #{address} in #{app.settings.env} mode"
+
+
+
+
+
+
+
 

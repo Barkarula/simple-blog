@@ -7,7 +7,7 @@ about = (req, res) ->
 	res.render 'about', viewModel
 
 notFound = (req, res) ->
-  res.render '404.jade', { status: 404, message: 'Page not found' }
+  res.render '404.ejs', { status: 404, message: 'Page not found' }
 
 module.exports = {
 	home: home,

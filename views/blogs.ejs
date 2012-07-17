@@ -1,12 +1,28 @@
-<h1>Blogs</h1>
-<p>Random posts about software development</p>
+<div class="row">
+  <div class="eight columns">
+    <h3>Blog</h3>
+    <p>Random posts about software development.</p>
 
-<ul>
-  {{ for (var i=0; i<topics.length; i++) { var topic=topics[i] }}
-    <li><a href='/blog/{{= topic.url }}'>{{= topic.title }}</a></li>
-  {{ } }}
-</ul>
+    <p>And even more information goes here.</p>
 
-<p><a href='/'>Home Page</a></p>
-<p><a href='/newblog'>New Blog Post</a></p>
+    <ul>
+      {{ for (var i=0; i<topics.length; i++) { var topic=topics[i] }}
+        <li><a href='/blog/{{= topic.url }}'>{{= topic.title }}</a></li>
+      {{ } }}
+    </ul>
 
+    <p><a href='/'>Home Page</a></p>
+    <p><a href='/newblog'>New Blog Post</a></p>
+
+  </div>
+<!--   <div class="four columns">
+    <h4>Sidebar</h4>
+    <ul class="disc">
+      <li><a href="#">Link to a Category</a></li>
+      <li><a href="#">Link to a Category</a></li>
+      <li><a href="#">Link to a Category</a></li>
+      <li><a href="#">Link to a Category</a></li>
+      <li><a href="http://en.wikipedia.org/wiki/The_Legend_of_Zelda:_A_Link_to_the_Past">Link to the Past</a></li>
+    </ul>
+  </div> -->
+</div>
