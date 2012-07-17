@@ -34,16 +34,12 @@ view = (req, res) ->
 			else
 				debugger
 				res.render 'blog', topic
-				#res.render 'simple.ejs', { layout: true, name: "hector" }
-				# res.render 'simple.html', {name: 'hector'}
-				#res.render 'simple.md'
-				# res.send '<html><body><b>bold and simple</b></body></html>'
 	else
 		model.getAllTopics (err, topics) -> 
 			if err
 				renderError res, err
 			else
-				res.render 'blogs', {topics: topics}
+				res.render 'blogs', {title: "Hector's Blog", topics: topics}
 
 
 edit = (req, res) -> 

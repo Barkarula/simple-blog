@@ -1,9 +1,9 @@
 home = (req, res) ->  
-	viewModel = { xxx: 'Home Page'}
+	viewModel = {}
 	res.render 'home', viewModel
 
 about = (req, res) -> 
-	viewModel = { yyy: 'About'}
+	viewModel = { title: "About Hector"}
 	res.render 'about', viewModel
 
 notFound = (req, res) ->
