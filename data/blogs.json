@@ -1,4 +1,58 @@
-{ "nextId": 61, "blogs":[
+{ "nextId": 63, "blogs":[
+	{
+		"id": 61,
+		"title": "A blog engine with Node.js and Express.js 3",
+		"content": "When I started learning node.js qqq www eee err",
+		"createdOn": "2012-07-18T00:21:36.844Z",
+		"updatedOn": "2012-07-18T02:31:22.275Z",
+		"postedOn": "2012-07-19T00:23:00.000Z",
+		"url": "a-blog-engine-with-node-js-and-express-js-3"
+	},
+	{
+		"id": 58,
+		"title": "new ejs",
+		"content": "totally added with ejs",
+		"createdOn": "2011-06-01T12:31:36.710Z",
+		"updatedOn": "2012-07-18T02:03:17.831Z",
+		"postedOn": "2012-07-18T13:00:00.000Z",
+		"url": "new-ejs"
+	},
+	{
+		"id": 2,
+		"title": "Drawing a Binary Tree in CoffeeScript",
+		"content": "<p><img align=\"left\" src=\"http://hectorcorrea.com/images/binarytreecoffee.png\" alt=\"Binary Tree\" style=\"margin-right:15px\"/>\r\n\r\nA few months ago I wrote a small <b>CoffeeScript program to draw binary trees on a web page page</b> using the HTML 5 Canvas element and was very pleased with clarity and structure of the resulting code. This blog post elaborates on the code structure and how it compares to previous implementations of the same idea that I have done in other languages. </p>\r\n\r\n<p>I’ve written programs to draw binary trees before in C# and Ruby and I wasn’t sure how a CoffeeScript implementation would compare against implementations in more traditional object oriented programming languages. Thanks to CoffeeScript’s support for classes the structure of this implementation is pretty much as you would expect: a BinaryNode class to hold node data, a BinaryTree class to implement the basic binary tree operations (add, walk), and a BinaryTreeDrawer to calculate the coordinates where each of the nodes should be drawn.</p>\r\n\r\n<p>In addition, since this project requires only client-side code (I don’t store the binary tree data in a server database) it’s was very pleasant not having to deal with a context switching between a “client side” mental model and a “server side” one. This is uncommon in real life projects but it was a nice bonus for a pet project like this.</p>\r\n\r\n<p>You can see a <b>running version of this project <a href=\"http://hectorcorrea.com/binary-tree-coffee/index.html\" target=\"_blank\">here</a></b>.</p>\r\n\r\n<p>The full CoffeeScript (and JavaScript) <b>source code</b> is available on <a  href=\"https://github.com/hectorcorrea/binary-tree-coffee\" target=\"_blank\">github</a>.</p>\r\n\r\n<h3>Basic Structure of the Code</h3>\r\n<p>The main classes that I used to implement the binary tree drawer functionality are BinaryNode, a BinaryTree, and a BinaryTreeDrawer. </p>\r\n\r\n<p>The <b>BinaryNode</b> class is just a small “data class” that stores the information about each node, namely the value of the node and pointers to the node to the left and right of it. </p>\r\n\r\n<p>\r\n<script src=\"https://gist.github.com/2772787.js?file=binary_node.coffee\"></script>\r\n<noscript><a href=\"https://gist.github.com/2772787.js?file=binary_node.coffee\" target=\"_blank\">(click to view code)</a></noscript>\r\n</p>\r\n\r\n<p>The <b>BinaryTree</b> class implements the functionality to add nodes to the tree and walk the tree. The <i>add</i> method takes care of adding each new value to the tree and updating the other nodes accordingly. The <i>walk</i> method goes through each node of the tree in-order and calls another function to allow you to decide what to do on each node (e.g. print it to the screen.) </p>\r\n\r\n<p>The code for this class is shown below. Notice that this is just a partial implementation of a binary tree since it only implements the add and walk methods but is missing functionality to remove nodes, search for values, find the min and max values in the tree, et cetera. </p>\r\n\r\n<p>\r\n<script src=\"https://gist.github.com/2772787.js?file=binary_tree.coffee\"></script>\r\n<noscript><a href=\"https://gist.github.com/2772787.js?file=binary_node.coffee\" target=\"_blank\">(click to view code)</a></noscript>\r\n</p>\r\n\r\n<p>The <b>BinaryTreeDrawer</b> class walks through the nodes of the tree and calculates the coordinates where each of them should be drawn. This class does not draws the tree per-se, rather it calls a function of your choosing with the coordinates where the node should be drawn.</p>\r\n\r\n<p>\r\n<script src=\"https://gist.github.com/2772787.js?file=binary_tree_drawer.coffee\"></script>\r\n<noscript><a href=\"https://gist.github.com/2772787.js?file=binary_node.coffee\" target=\"_blank\">(click to view code)</a></noscript>\r\n</p>\r\n\r\n<h3>Console Application</h3>\r\n<p>File binary_console.coffee shows a very sample of usage of the BinaryTree and BinaryTreeDrawer classes. This console application creates a binary tree, adds a few nodes to it, and outputs to the console the coordinates where each of these nodes should be drawn. </p>\r\n\r\n<p>\r\n<script src=\"https://gist.github.com/2772787.js?file=binary_console.coffee\"></script>\r\n<noscript><a href=\"https://gist.github.com/2772787.js?file=binary_node.coffee\" target=\"_blank\">(click to view code)</a></noscript>\r\n</p>\r\n\r\n<p>If you have CoffeeScript installed on your box you can just run “coffee binary_console” and you’ll see an output similar to this:</p>\r\n\r\n<p><img src=\"http://hectorcorrea.com/images/binarytreeconsole.png\"/></p>\r\n\r\n<h3>The Demo Web Page</h3> \r\n<p>Once I implemented the BinaryTreeDrawer it was easy to hook this to a web page and actually draw a binary tree using the HTML 5 Canvas element. The callback passed to the drawer code in this case actually draws circles and lines for each node rather than just outputting the result to the console. Below is a snippet of the code found in binary_web.coffee that shows the basic code to draw the tree:</p>\r\n\r\n<p>\r\n<script src=\"https://gist.github.com/2772787.js?file=binary_web.coffee\"></script>\r\n<noscript><a href=\"https://gist.github.com/2772787.js?file=binary_node.coffee\" target=\"_blank\">(click to view code)</a></noscript>\r\n</p>\r\n\r\n<h3>Final Thoughts</h3>\r\n<p>As I said at the beginning of this blog post, I was very pleased with how succinct the code in CoffeeScript to implement a binary tree drawer ended. The clear and concise CoffeeScript syntax aided with CoffeeScript support for a traditional way of defining classes (while behind the scenes using JavaScript prototypes) resulted in code that is both easy to write, test, and maintain.  </p>\r\n\r\n<b>Related posts</b>\r\n<ul><li><a href=\"http://hectorcorrea.com/Blog/Drawing-a-Binary-Tree-in-Ruby\" target=\"_blank\">Drawing a Binary Tree in Ruby</a> (2011)</li>\r\n<li><a href=\"http://hectorcorrea.com/Blog/Binary-Tree-in-C-Sharp\" target=\"_blank\">Binary Tree in C#</a>(2006)</li></ul>",
+		"createdOn": "2011-02-01T12:31:36.710Z",
+		"updatedOn": "2012-07-18T00:13:01.083Z",
+		"postedOn": "2012-07-18T13:00:00.000Z",
+		"url": "drawing-a-binary-tree-in-coffeescript"
+	},
+	{
+		"id": 3,
+		"title": "third again",
+		"content": "<p>Editing the third topic again</p>\r\n\r\n<blockquote>\r\n“Sometimes you get lucky in JavaScript, you always get lucky in C#”\r\n<cite>Anders Hejlsberg</cite>\r\n</blockquote>\r\n\r\n<p>and more stuff goes here</p>",
+		"createdOn": "2011-03-01T12:31:36.710Z",
+		"updatedOn": "2012-07-18T01:51:47.832Z",
+		"postedOn": "2012-07-18T02:24:00.000Z",
+		"url": "third-again"
+	},
+	{
+		"id": 57,
+		"title": "vvv",
+		"content": "vvvv\r\n",
+		"createdOn": "2011-05-01T12:31:36.710Z",
+		"updatedOn": "2012-07-18T02:02:49.163Z",
+		"postedOn": "2012-07-17T23:01:00.000Z",
+		"url": "vvv"
+	},
+	{
+		"id": 60,
+		"title": "test one two three",
+		"content": "new unit test content Wed Jul 11 2012 22:37:29 GMT-0400 (EDT)",
+		"createdOn": "2012-07-12T02:37:29.135Z",
+		"updatedOn": "1970-01-01T00:00:00.000Z",
+		"postedOn": "2012-07-12T02:37:29.128Z",
+		"url": "test-one-two-three"
+	},
 	{
 		"id": 1,
 		"title": "Compiling CoffeeScript from Sublime Text 2 ",
@@ -7,51 +61,6 @@
 		"updatedOn": "2012-07-17T02:28:23.700Z",
 		"postedOn": "2012-07-12T02:33:00.000Z",
 		"url": "compiling-coffeescript-from-sublime-text-2-"
-	},
-	{
-		"id": 2,
-		"title": "Drawing a Binary Tree in CoffeeScript",
-		"content": "<p><img align=\"left\" src=\"http://hectorcorrea.com/images/binarytreecoffee.png\" alt=\"Binary Tree\" style=\"margin-right:15px\"/>\r\n\r\nA few months ago I wrote a small <b>CoffeeScript program to draw binary trees on a web page page</b> using the HTML 5 Canvas element and was very pleased with clarity and structure of the resulting code. This blog post elaborates on the code structure and how it compares to previous implementations of the same idea that I have done in other languages. </p>\r\n\r\n<p>I’ve written programs to draw binary trees before in C# and Ruby and I wasn’t sure how a CoffeeScript implementation would compare against implementations in more traditional object oriented programming languages. Thanks to CoffeeScript’s support for classes the structure of this implementation is pretty much as you would expect: a BinaryNode class to hold node data, a BinaryTree class to implement the basic binary tree operations (add, walk), and a BinaryTreeDrawer to calculate the coordinates where each of the nodes should be drawn.</p>\r\n\r\n<p>In addition, since this project requires only client-side code (I don’t store the binary tree data in a server database) it’s was very pleasant not having to deal with a context switching between a “client side” mental model and a “server side” one. This is uncommon in real life projects but it was a nice bonus for a pet project like this.</p>\r\n\r\n<p>You can see a <b>running version of this project <a href=\"http://hectorcorrea.com/binary-tree-coffee/index.html\" target=\"_blank\">here</a></b>.</p>\r\n\r\n<p>The full CoffeeScript (and JavaScript) <b>source code</b> is available on <a  href=\"https://github.com/hectorcorrea/binary-tree-coffee\" target=\"_blank\">github</a>.</p>\r\n\r\n<h3>Basic Structure of the Code</h3>\r\n<p>The main classes that I used to implement the binary tree drawer functionality are BinaryNode, a BinaryTree, and a BinaryTreeDrawer. </p>\r\n\r\n<p>The <b>BinaryNode</b> class is just a small “data class” that stores the information about each node, namely the value of the node and pointers to the node to the left and right of it. </p>\r\n\r\n<p>\r\n<script src=\"https://gist.github.com/2772787.js?file=binary_node.coffee\"></script>\r\n<noscript><a href=\"https://gist.github.com/2772787.js?file=binary_node.coffee\" target=\"_blank\">(click to view code)</a></noscript>\r\n</p>\r\n\r\n<p>The <b>BinaryTree</b> class implements the functionality to add nodes to the tree and walk the tree. The <i>add</i> method takes care of adding each new value to the tree and updating the other nodes accordingly. The <i>walk</i> method goes through each node of the tree in-order and calls another function to allow you to decide what to do on each node (e.g. print it to the screen.) </p>\r\n\r\n<p>The code for this class is shown below. Notice that this is just a partial implementation of a binary tree since it only implements the add and walk methods but is missing functionality to remove nodes, search for values, find the min and max values in the tree, et cetera. </p>\r\n\r\n<p>\r\n<script src=\"https://gist.github.com/2772787.js?file=binary_tree.coffee\"></script>\r\n<noscript><a href=\"https://gist.github.com/2772787.js?file=binary_node.coffee\" target=\"_blank\">(click to view code)</a></noscript>\r\n</p>\r\n\r\n<p>The <b>BinaryTreeDrawer</b> class walks through the nodes of the tree and calculates the coordinates where each of them should be drawn. This class does not draws the tree per-se, rather it calls a function of your choosing with the coordinates where the node should be drawn.</p>\r\n\r\n<p>\r\n<script src=\"https://gist.github.com/2772787.js?file=binary_tree_drawer.coffee\"></script>\r\n<noscript><a href=\"https://gist.github.com/2772787.js?file=binary_node.coffee\" target=\"_blank\">(click to view code)</a></noscript>\r\n</p>\r\n\r\n<h3>Console Application</h3>\r\n<p>File binary_console.coffee shows a very sample of usage of the BinaryTree and BinaryTreeDrawer classes. This console application creates a binary tree, adds a few nodes to it, and outputs to the console the coordinates where each of these nodes should be drawn. </p>\r\n\r\n<p>\r\n<script src=\"https://gist.github.com/2772787.js?file=binary_console.coffee\"></script>\r\n<noscript><a href=\"https://gist.github.com/2772787.js?file=binary_node.coffee\" target=\"_blank\">(click to view code)</a></noscript>\r\n</p>\r\n\r\n<p>If you have CoffeeScript installed on your box you can just run “coffee binary_console” and you’ll see an output similar to this:</p>\r\n\r\n<p><img src=\"http://hectorcorrea.com/images/binarytreeconsole.png\"/></p>\r\n\r\n<h3>The Demo Web Page</h3> \r\n<p>Once I implemented the BinaryTreeDrawer it was easy to hook this to a web page and actually draw a binary tree using the HTML 5 Canvas element. The callback passed to the drawer code in this case actually draws circles and lines for each node rather than just outputting the result to the console. Below is a snippet of the code found in binary_web.coffee that shows the basic code to draw the tree:</p>\r\n\r\n<p>\r\n<script src=\"https://gist.github.com/2772787.js?file=binary_web.coffee\"></script>\r\n<noscript><a href=\"https://gist.github.com/2772787.js?file=binary_node.coffee\" target=\"_blank\">(click to view code)</a></noscript>\r\n</p>\r\n\r\n<h3>Final Thoughts</h3>\r\n<p>As I said at the beginning of this blog post, I was very pleased with how succinct the code in CoffeeScript to implement a binary tree drawer ended. The clear and concise CoffeeScript syntax aided with CoffeeScript support for a traditional way of defining classes (while behind the scenes using JavaScript prototypes) resulted in code that is both easy to write, test, and maintain.  </p>\r\n\r\n<b>Related posts</b>\r\n<ul><li><a href=\"http://hectorcorrea.com/Blog/Drawing-a-Binary-Tree-in-Ruby\" target=\"_blank\">Drawing a Binary Tree in Ruby</a> (2011)</li>\r\n<li><a href=\"http://hectorcorrea.com/Blog/Binary-Tree-in-C-Sharp\" target=\"_blank\">Binary Tree in C#</a>(2006)</li></ul>",
-		"createdOn": "2011-02-01T12:31:36.710Z",
-		"updatedOn": "2012-07-17T02:30:36.684Z",
-		"postedOn": "1969-12-31T14:00:00.000Z",
-		"url": "drawing-a-binary-tree-in-coffeescript"
-	},
-	{
-		"id": 3,
-		"title": "vvv",
-		"content": "This is the content of the third topic vvv",
-		"createdOn": "2011-03-01T12:31:36.710Z",
-		"updatedOn": "2012-06-21T02:38:04.085Z",
-		"postedOn": "2012-05-01T03:20:00.000Z",
-		"url": "vvv"
-	},
-	{
-		"id": 4,
-		"title": "unit test title",
-		"content": "unit test content Wed Jun 20 2012 22:13:34 GMT-0400 (EDT)",
-		"createdOn": "2011-04-01T12:31:36.710Z",
-		"updatedOn": "2012-06-21T02:13:34.810Z",
-		"postedOn": "2012-06-21T02:13:34.806Z",
-		"url": "unit-test-title"
-	},
-	{
-		"id": 57,
-		"title": "vvv",
-		"content": "vvvv",
-		"createdOn": "2011-05-01T12:31:36.710Z",
-		"updatedOn": "1970-01-01T00:00:00.000Z",
-		"postedOn": "1970-01-01T00:00:00.000Z",
-		"url": "vvv"
-	},
-	{
-		"id": 58,
-		"title": "new ejs",
-		"content": "totally added with ejs",
-		"createdOn": "2011-06-01T12:31:36.710Z",
-		"updatedOn": "1970-01-01T00:00:00.000Z",
-		"postedOn": "1970-01-01T00:00:00.000Z",
-		"url": "new-ejs"
 	},
 	{
 		"id": 59,
@@ -63,12 +72,22 @@
 		"url": "test-one-two-three"
 	},
 	{
-		"id": 60,
+		"id": 4,
+		"title": "unit test title",
+		"content": "unit test content Wed Jun 20 2012 22:13:34 GMT-0400 (EDT)",
+		"createdOn": "2011-04-01T12:31:36.710Z",
+		"updatedOn": "2012-06-21T02:13:34.810Z",
+		"postedOn": "2012-06-21T02:13:34.806Z",
+		"url": "unit-test-title"
+	},
+	{
+		"id": 62,
 		"title": "test one two three",
-		"content": "new unit test content Wed Jul 11 2012 22:37:29 GMT-0400 (EDT)",
-		"createdOn": "2012-07-12T02:37:29.135Z",
-		"updatedOn": "1970-01-01T00:00:00.000Z",
-		"postedOn": "2012-07-12T02:37:29.128Z",
-		"url": "test-one-two-three"
+		"content": "new unit test content Tue Jul 17 2012 22:54:30 GMT-0400 (EDT)",
+		"createdOn": "2012-07-18T02:54:30.680Z",
+		"updatedOn": "",
+		"postedOn": "2012-07-18T02:54:30.665Z",
+		"url": "test-one-two-three",
+		"summary": "new unit test summary Tue Jul 17 2012 22:54:30 GMT-0400 (EDT)"
 	}
 ]}

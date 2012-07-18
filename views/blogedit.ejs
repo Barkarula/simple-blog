@@ -1,26 +1,41 @@
 <h1>Blog</h1>
 <p>{{= title }}</p>
 
+<div class="alert-box alert">
+  Oops! Couldn't save this blog post. Take a look at the error(s) indicated below.
+  <a href="" class="close">&times;</a>
+</div>
+
 <form name="input", action="/blog/edit/{{= url }}", method="post">
-  <p>Title 
-  <input type="text", name="title", value="{{= title }}" />
+  <p>
+  <label class="error">Title</label> 
+  <input class="error" type="text", name="title", value="{{= title }}" />
+  <small class="error">Enter a title for the blog post</small>
   </p>
 
-  <p>Content 
-  <textarea name='content', rows="20", cols="60">{{- content }}</textarea>
+  <p>
+  <label>Content<label> 
+  <textarea name="content", rows="20", cols="60">{{- content }}</textarea>
+  <small style="display:none">bla blah </small>
   </p>
 
-  <p>Posted On 
-  <input type="date", name="postedOn", value="{{= postedOn.toDateString() }}" />
+  <p>
+  <label class="error">Posted On<label>
+  <input type="date" class="error" name="postedOn" value="{{= postedOn.toDateString() }}" />
+  <small class="error">Invalid entry</small>
   </p>
 
   <p>Posted At
   <input type="time", name="postedAt", value="{{= postedOn.toLocaleTimeString() }}" />
   </p>
 
-  <input type="submit", value="Submit" />
 
-  <input type="text", name="id", value="{{= id }}" />
+  <p>
+    <a href="/blog/{{= url }}" class="alert button">Cancel</a>
+    <input type="submit" class="button" value="Save" />
+  </p>
+  
+  <input type="hidden", name="id", value="{{= id }}" />
+  <p>ID {{= id }} <p/>
 
-  <a href='/blog/{{= url }}'>Cancel</a> 
 </form>

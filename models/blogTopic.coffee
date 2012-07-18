@@ -9,7 +9,12 @@ class BlogTopic
 		@url = ""
 
 	getUrl: (title) -> 
-		title.toLowerCase().replace(/\s/g, "-")
+		cleanTitle = title.toLowerCase()
+		cleanTitle = cleanTitle.replace(/\s/g, "-")
+		cleanTitle = cleanTitle.replace(/\./g, "-")
+		cleanTitle = cleanTitle.replace(/\//g, "-")
+		cleanTitle = cleanTitle.replace(/#/g, "-")
+		cleanTitle
 
 	getErrors: =>
 		errors = []

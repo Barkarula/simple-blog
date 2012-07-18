@@ -81,6 +81,7 @@ save = (req, res) ->
 		  	console.log "saveTopic failed. Error: ", err
 		  	renderError res, "Could not save topic #{url}. Error #{err}"
 		  else
+		  	console.log "Saved, redirecting to /blog/#{data.url}"
 		  	res.redirect '/blog/'+ data.url
 
 

@@ -17,6 +17,7 @@ class BlogModel
 					topics = []
 					data = JSON.parse text
 					@nextId = data.nextId
+
 					for t in data.blogs
 						topic = new BlogTopic(t.title)
 						topic.id = t.id
@@ -26,6 +27,13 @@ class BlogModel
 						topic.postedOn = new Date(t.postedOn)
 						topic.url = t.url
 						topics.push topic
+
+					topics.sort (x, y) ->
+						# by date descending
+						return -1 if x.postedOn > y.postedOn
+						return 1 if x.postedOn < y.postedOn
+						return 0
+
 					callback null, topics
 				catch error
 					callback error
@@ -44,7 +52,7 @@ class BlogModel
 
 	_findTopicInListByIdSync: (topics, id) ->
 		for topic in topics
-			if t.id is id
+			if topic.id is id
 				return topic
 		return null
 
@@ -95,6 +103,9 @@ class BlogModel
 
 			if topic.isValid()
 				if @_updateTopicInListSync(topics, topic)
+					# console.log "Topic to save"
+					# console.dir topic
+					topic = @_findTopicInListByIdSync(topics, topic.id)
 					jsonText = JSON.stringify topics, null, "\t"
 					jsonText = '{ "nextId": ' + @nextId + ', "blogs":' + jsonText + '}'
 					fs.writeFileSync @blogListFilePath, jsonText, 'utf8'		  
@@ -111,6 +122,8 @@ class BlogModel
 				if err 
 					callback "Topic #{topic.id} content could not be saved. Error #{err}"
 				else
+					# console.log "Topic saved"
+					# console.dir topic
 					callback null, topic
 
 		if topic? is false

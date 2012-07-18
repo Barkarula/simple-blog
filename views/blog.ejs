@@ -2,8 +2,14 @@
   <div class="twelve columns">
     <h3>{{= title }}</h3>
     {{- content }}
-    <p>Posted on {{= postedOn.toDateString() }} at {{= postedOn.toLocaleTimeString() }}</p>
-    <p><a href='/blog/edit/{{= url }}'>Edit</a>   
+    <p>
+      <b>Posted on:</b> {{= postedOn.toDateString() }} at {{= postedOn.toLocaleTimeString() }}
+      / 
+      <b>Created on:</b> {{= createdOn.toDateString() }} at {{= createdOn.toLocaleTimeString() }}
+      /
+      <b>Updated on:</b> {{= updatedOn.toDateString() }} at {{= updatedOn.toLocaleTimeString() }}
+    </p>
+    <p><a href='/blog/edit/{{= url }}' class="button">Edit</a></p>  
   </div>
 </div>
 
