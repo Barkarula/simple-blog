@@ -37,13 +37,17 @@ app.configure 'production', ->
 app.get '/', siteRoutes.home
 app.get '/about', siteRoutes.about
 
-app.get '/newblog', blogRoutes.newBlog
-app.post '/newblog', blogRoutes.add
+app.get '/blog/new', blogRoutes.newBlog
+app.post '/blog/new', blogRoutes.add
 
-app.get '/blog/edit/:url?', blogRoutes.edit
-app.post '/blog/edit/:url?', blogRoutes.save
+app.get '/blog/edit/:topicUrl', blogRoutes.edit
+app.post '/blog/save/:id', blogRoutes.save
 
-app.get '/blog/:url?', blogRoutes.view
+app.get '/blog/list', blogRoutes.viewAll
+
+app.get '/blog', blogRoutes.viewRecent
+
+app.get '/blog/:topicUrl', blogRoutes.viewOne
 
 app.get '*', siteRoutes.notFound
 

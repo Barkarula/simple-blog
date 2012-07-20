@@ -1,17 +1,15 @@
 <div class="row">
   <div class="eight columns">
-    <h3>Blog</h3>
-    <p>Random posts about software development.</p>
-
-    <p>And even more information goes here.</p>
+    <h3>Recent Blog Posts</h3>
 
     <ul>
-      {{ for (var i=0; i<topics.length; i++) { var topic=topics[i] }}
+      {{ for (var i=0; i<topics.length; i++) { 
+        var topic=topics[i] }}
         <li><a href='/blog/{{= topic.url }}'>{{= topic.title }}</a>{{= topic.postedOn }}</li>
       {{ } }}
     </ul>
 
-    <p><a href="/newblog" class="button">New Blog Post</a></p>
+    <p><a href="/blog/new" class="button">New Blog Post</a></p>
 
   </div>
 <!--   <div class="four columns">

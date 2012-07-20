@@ -9,7 +9,17 @@ getAllTopicsOK = ->
 	
 	model.getAllTopics (err, topics) -> 
 		assert err is null, "Error retrieving all topics. Error: #{err}" 
-		console.log "getAllTopicsOK ended"
+		console.log "getAllTopicsOK ended #{topics.length}"
+
+
+getRecentTopicsOK = ->
+	console.log "getAllTopicsOK"
+	dataPath = __dirname + '/../data' 
+	model = new BlogModel dataPath 
+
+	model.getRecentTopics (err, topics) -> 
+		assert err is null, "Error retrieving all topics. Error: #{err}" 
+		console.log "getRecentTopicsOK ended #{topics.length}"
 
 
 getAllTopicsError = ->
@@ -116,6 +126,7 @@ saveNewTopic = ->
 # Execute the tests
 # -----------------
 getAllTopicsOK()
+getRecentTopicsOK()
 getAllTopicsError()
 getTopicOK()
 getTopicError()

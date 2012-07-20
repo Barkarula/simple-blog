@@ -57,7 +57,7 @@ class BlogModel
 		return null
 
 
-	_updateTopicInListSync: (topics, updatedTopic) ->
+	_updateTopicInListByIdSync: (topics, updatedTopic) ->
 		for topic, i in topics
 			#console.log topic.id, updatedTopic.id
 			if topic.id is updatedTopic.id
@@ -75,6 +75,11 @@ class BlogModel
 		@_getAllTopics (err, topics) -> 
 			callback err, topics
 
+	getRecentTopics: (callback) => 
+		@_getAllTopics (err, topics) -> 
+			howMany = 10
+			topics = topics.slice(0, howMany) if topics.length > howMany
+			callback err, topics
 
 	getTopicByUrl: (url, callback) =>
 
@@ -101,10 +106,12 @@ class BlogModel
 		updateTopic = (err, topics) =>
 			callback err if err
 
+			# console.log "Topic to update"
+			# console.dir topic
+			# console.log "---"
+			
 			if topic.isValid()
-				if @_updateTopicInListSync(topics, topic)
-					# console.log "Topic to save"
-					# console.dir topic
+				if @_updateTopicInListByIdSync(topics, topic)
 					topic = @_findTopicInListByIdSync(topics, topic.id)
 					jsonText = JSON.stringify topics, null, "\t"
 					jsonText = '{ "nextId": ' + @nextId + ', "blogs":' + jsonText + '}'
@@ -114,7 +121,7 @@ class BlogModel
 					callback "Could not find topic #{topic.id}"
 					return
 			else
-				callback topic.getErrors().join('-')
+				callback topic.errors
 
 		updateTopicContent = => 
 			filePath = @dataPath + '/blog.' + topic.id + '.html'	
@@ -153,7 +160,7 @@ class BlogModel
 					fs.writeFileSync @blogListFilePath, jsonText, 'utf8'		  
 					updateTopicContent()
 				else
-					callback topic.getErrors().join('-')
+					callback topic.errors
 
 			updateTopicContent = => 
 				filePath = @dataPath + '/blog.' + topic.id + '.html'	

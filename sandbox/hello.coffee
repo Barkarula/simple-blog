@@ -1,20 +1,8 @@
-topic1 = 
-  name: "T1"
-  id: 100
+test = ->
+  a = {}
+  a.a = 'a'
+  # a.b = 'b'
+  a.hasErrors = if a.a or a.b then true else false
+  return a.hasErrors
 
-topic2 =
-  name: "aT2"
-  id: 20
-
-topics = []
-topics.push topic1
-topics.push topic2
-
-topics.sort (x, y) ->
-  titleA = x.name.toLowerCase()
-  titleB = y.name.toLowerCase()
-  return -1 if titleA < titleB
-  return 1 if titleA > titleB
-  return 0
-
-console.log topics
+console.log test()

@@ -3,10 +3,11 @@ class BlogTopic
 		@id = NaN
 		@title = title
 		@content = ""
-		@createdOn = ""
-		@updatedOn = ""
-		@postedOn = ""
+		@createdOn = new Date()
+		@updatedOn = new Date()
+		@postedOn = new Date()
 		@url = ""
+		@errors = {}
 
 	getUrl: (title) -> 
 		cleanTitle = title.toLowerCase()
@@ -16,15 +17,13 @@ class BlogTopic
 		cleanTitle = cleanTitle.replace(/#/g, "-")
 		cleanTitle
 
-	getErrors: =>
-		errors = []
-		errors.push "Invalid (or empty) Posted On date" if isNaN(Date.parse(@postedOn))
-		errors.push "Title is null or empty" if @title.trim().length is 0 
-		errors.push "Content is null or empty" if @content.trim().length is 0
-		return errors
-
 	isValid: =>
-		return @getErrors().length is 0
+		@errors = {}
+		@errors.postedOn = "Invalid (or empty) Posted On date" if isNaN(Date.parse(@postedOn))
+		@errors.title = "Title is null or empty" if @title.trim().length is 0 
+		@errors.content = "Content is null or empty" if @content.trim().length is 0
+		@errors.hasErrors = if @errors.postedOn or @errors.title or @errors.content then true else false
+		return !@errors.hasErrors 
 
 	setUrl: =>
 		@url = @getUrl(@title)

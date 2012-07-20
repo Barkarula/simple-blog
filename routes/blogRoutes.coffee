@@ -1,51 +1,74 @@
 fs = require 'fs'
-{BlogModel}  = require '../models/blogModel'
-{BlogTopic}  = require '../models/blogTopic'
+{BlogModel} = require '../models/blogModel'
+{BlogTopic} = require '../models/blogTopic'
 
 
 renderNotFound = (res, error) -> 
- 	res.render '404', {status: 404, message: error}
+	res.render '404', {status: 404, message: error}
 
 
 renderError = (res, error) ->
 	res.render '500', {status: 500, message: error}
 
 
-requestToTopic = (req) ->
+requestToTopic = (req, id) ->
 	topic = new BlogTopic(req.body.title)
-	topic.id = parseInt(req.body.id)
+	topic.id = parseInt(id)
 	topic.summary = req.body.summary
 	topic.content = req.body.content
 	topic.postedOn = new Date(req.body.postedOn + ' ' + req.body.postedAt)
 	return topic
 
 
-view = (req, res) -> 
-	console.log "blogRoutes:view"
+viewOne = (req, res) -> 
+	console.log "blogRoutes:viewOne"
 
 	dataPath = res.app.settings.datapath
 	model = new BlogModel dataPath 
-	url = req.params.url
+	url = req.params.topicUrl
 
 	if url
 		model.getTopicByUrl url, (err, topic) ->  
 			if err
 				renderNotFound res, err
 			else
-				debugger
-				res.render 'blog', topic
+				res.render 'blogOne', topic
 	else
-		model.getAllTopics (err, topics) -> 
-			if err
-				renderError res, err
-			else
-				res.render 'blogs', {title: "Hector's Blog", topics: topics}
+		# we shouldn't get here
+		console.log "viewOne without a URL was detected"
+		viewRecent()
+
+
+viewRecent = (req, res) -> 
+	console.log "blogRoutes:viewRecent"
+
+	dataPath = res.app.settings.datapath
+	model = new BlogModel dataPath 
+
+	model.getRecentTopics (err, topics) -> 
+		if err
+			renderError res, err
+		else
+			res.render 'blogRecent', {title: "Recent Posts", topics: topics}
+
+viewAll = (req, res) -> 
+	console.log "blogRoutes:viewAll"
+
+	dataPath = res.app.settings.datapath
+	model = new BlogModel dataPath 
+	url = req.params.topicUrl
+
+	model.getAllTopics (err, topics) -> 
+		if err
+			renderError res, err
+		else
+			res.render 'blogAll', {title: "All Posts", topics: topics}
 
 
 edit = (req, res) -> 
 	console.log "blogRoutes:edit"
 
-	url = req.params.url
+	url = req.params.topicUrl
 	if url is undefined
 		console.log 'Edit without a URL was detected. Redirecting to blog list.'
 		res.redirect '/blog'
@@ -58,37 +81,39 @@ edit = (req, res) ->
 			renderNotFound res, err
 		else 
 			#console.log topic
-			res.render 'blogedit', topic
+			res.render 'blogEdit', topic
 
 
 save = (req, res) -> 
 	console.log "blogRoutes:save"
 
-	url = req.params.url
-	if url is undefined
-		console.log 'Save without a URL was detected. Redirecting to blog list.'
+	debugger
+	id = req.params.id
+	if id is undefined
+		console.log 'Save without an Id was detected. Redirecting to blog list.'
 		res.redirect '/blog'
 		return
 
 	dataPath = res.app.settings.datapath
-	topic = requestToTopic req
+	topic = requestToTopic req, id
 	if topic.id is NaN
-  	renderError res, "Could not save topic #{url}. Invalid Id was detected."
-  else
+		renderError res, "Could not save topic #{id}. Invalid Id was detected."
+	else
 		model = new BlogModel dataPath 
-		model.saveTopic topic, (err, data) ->  
-		  if err
-		  	console.log "saveTopic failed. Error: ", err
-		  	renderError res, "Could not save topic #{url}. Error #{err}"
-		  else
-		  	console.log "Saved, redirecting to /blog/#{data.url}"
-		  	res.redirect '/blog/'+ data.url
+		model.saveTopic topic, (err, savedTopic) -> 
+			debugger 
+			if err
+				console.log "saveTopic failed. Error: ", err
+				res.render 'blogEdit', topic
+			else
+				console.log "Saved, redirecting to /blog/#{savedTopic.url}"
+				res.redirect '/blog/'+ savedTopic.url
 
 
 newBlog = (req, res) ->
 	console.log "blogRoutes:newBlog"
 	topic = new BlogTopic("Enter blog title")
-	res.render 'blognew', topic
+	res.render 'blogEdit', topic
 
 
 add = (req, res) -> 
@@ -98,6 +123,7 @@ add = (req, res) ->
 		dataPath = res.app.settings.datapath
 		model = new BlogModel dataPath 
 		model.saveNewTopic topic, (err, data) ->
+			debugger 
 			if err
 				console.log "saveNewTopic failed. Error: ", err
 				renderError res, "Could not add topic. Error #{err}"
@@ -110,10 +136,12 @@ add = (req, res) ->
 
 
 module.exports = {
-  view: view,
-  edit: edit,
-  save: save,
-  newBlog: newBlog,
-  add: add
+	viewOne: viewOne,
+	viewRecent: viewRecent,
+	viewAll: viewAll,
+	edit: edit,
+	save: save,
+	newBlog: newBlog,
+	add: add
 }
 
