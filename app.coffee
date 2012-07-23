@@ -37,7 +37,8 @@ app.configure 'production', ->
 app.get '/', siteRoutes.home
 app.get '/about', siteRoutes.about
 
-if app.settings.env is "development"
+app.set "isReadOnly", if app.settings.env is "production" then true else false
+if not app.settings.isReadOnly
   # Only enable edits when in development (local)
   # until I integrate an authentication process
   app.get '/blog/new', blogRoutes.newBlog
