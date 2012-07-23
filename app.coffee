@@ -38,6 +38,8 @@ app.get '/', siteRoutes.home
 app.get '/about', siteRoutes.about
 
 if app.settings.env is "development"
+  # Only enable edits when in development (local)
+  # until I integrate an authentication process
   app.get '/blog/new', blogRoutes.newBlog
   app.post '/blog/new', blogRoutes.add
 
