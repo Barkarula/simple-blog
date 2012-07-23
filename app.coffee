@@ -52,7 +52,7 @@ app.get '/blog/:topicUrl', blogRoutes.viewOne
 app.get '*', siteRoutes.notFound
 
 # Fire it up!
-app.listen 3000, ->
+app.listen process.env.PORT || 3000, ->
   address = "http://localhost:#{app.address().port}"
   console.log "Express server listening on #{address} in #{app.settings.env} mode"
 

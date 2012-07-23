@@ -1,8 +1,8 @@
-* Topic validation on save
-  X title must not be empty
-  X content must not be empty
-  - title must not be duplicate
-  - dates
+* Topic validation: title must not be duplicate
+
+* Revisit blogModel and blogTopic
+
+* RSS feed
 
 * Handle corrupted json list
 
@@ -12,4 +12,3 @@
 
 * A decent editor
 
-* Style the site
