@@ -10,7 +10,10 @@
     </ul>
 
     <p><a href="/blog/list" class="button">View All Blog Posts</a> 
-      <a href="/blog/new" class="button">New Blog Post</a></p>
+      {{ if (!page.isReadOnly) { }} 
+      <a href="/blog/new" class="button">New Blog Post</a>
+      {{ } }}
+    </p>
 
   </div>
 </div>
