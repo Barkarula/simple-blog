@@ -21,11 +21,11 @@ requestToTopic = (req, id) ->
 
 
 viewOne = (req, res) -> 
-	console.log "blogRoutes:viewOne"
 
 	dataPath = res.app.settings.datapath
 	model = new BlogModel dataPath 
 	url = req.params.topicUrl
+	console.log "blogRoutes:viewOne #{url}"
 
 	if url
 		model.getTopicByUrl url, (err, topic) ->  
@@ -49,7 +49,12 @@ viewRecent = (req, res) ->
 		if err
 			renderError res, err
 		else
-			res.render 'blogRecent', {title: "Recent Posts", topics: topics}
+			res.render 'blogRecent', {
+				topics: topics
+				page:
+					title: "Recent Blog Posts" 
+					isReadOnly: req.app.settings.isReadOnly
+			}
 
 viewAll = (req, res) -> 
 	console.log "blogRoutes:viewAll"
@@ -66,13 +71,13 @@ viewAll = (req, res) ->
 
 
 edit = (req, res) -> 
-	console.log "blogRoutes:edit"
 
 	url = req.params.topicUrl
 	if url is undefined
 		console.log 'Edit without a URL was detected. Redirecting to blog list.'
 		res.redirect '/blog'
 		return
+	console.log "blogRoutes:edit #{url}"
 
 	dataPath = res.app.settings.datapath
 	model = new BlogModel dataPath 
@@ -85,14 +90,13 @@ edit = (req, res) ->
 
 
 save = (req, res) -> 
-	console.log "blogRoutes:save"
 
-	debugger
 	id = req.params.id
 	if id is undefined
 		console.log 'Save without an Id was detected. Redirecting to blog list.'
 		res.redirect '/blog'
 		return
+	console.log "blogRoutes:save #{id}"
 
 	dataPath = res.app.settings.datapath
 	topic = requestToTopic req, id
@@ -110,12 +114,14 @@ save = (req, res) ->
 				res.redirect '/blog/'+ savedTopic.url
 
 
+# Edit a new blog
 newBlog = (req, res) ->
 	console.log "blogRoutes:newBlog"
 	topic = new BlogTopic("Enter blog title")
 	res.render 'blogEdit', topic
 
 
+# Save a new blog (add it)
 add = (req, res) -> 
 	console.log "blogRoutes:add"
 	topic = requestToTopic req
