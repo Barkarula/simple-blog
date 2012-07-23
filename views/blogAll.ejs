@@ -9,7 +9,10 @@
       {{ } }}
     </ul>
 
-    <p><a href="/blog/new" class="button">New Blog Post</a></p>
-
+    {{ if (!page.isReadOnly) { }} 
+    <p>
+    <a href="/blog/new" class="button">New Blog Post</a>
+    </p>
+    {{ } }}
   </div>
 </div>
