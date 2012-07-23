@@ -11,7 +11,8 @@
   <!-- Set the viewport width to device width for mobile -->
   <meta name="viewport" content="width=device-width" />
 
-  <title>{{= typeof(title) === 'undefined' ? "HectorCorrea.com" : title }}</title>
+  {{ if (typeof(page) === 'undefined') page = {}; }}
+  <title>{{= typeof(page.title) === 'undefined' ? "HectorCorrea.com" : page.title }}</title>
   
   <!-- Included CSS Files -->
   <link rel="stylesheet" href="/css/foundation.css">
@@ -32,7 +33,7 @@
   <!-- Wire up Google Analytics -->
   <script type="text/javascript">
       var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-22762001-1']);
+      _gaq.push(['_setAccount', 'UA-22762001-2']);
       _gaq.push(['_trackPageview']);
   </script>
 
