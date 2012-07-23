@@ -32,7 +32,12 @@ viewOne = (req, res) ->
 			if err
 				renderNotFound res, err
 			else
-				res.render 'blogOne', topic
+				res.render 'blogOne', {
+					topic: topic
+					page:
+						title: topic.title 
+						isReadOnly: req.app.settings.isReadOnly
+				}
 	else
 		# we shouldn't get here
 		console.log "viewOne without a URL was detected"
@@ -67,8 +72,12 @@ viewAll = (req, res) ->
 		if err
 			renderError res, err
 		else
-			res.render 'blogAll', {title: "All Posts", topics: topics}
-
+			res.render 'blogAll', {
+				topics: topics
+				page:
+					title: "All Blog Posts" 
+					isReadOnly: req.app.settings.isReadOnly
+			}
 
 edit = (req, res) -> 
 
