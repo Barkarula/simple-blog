@@ -8,6 +8,7 @@ class BlogTopic
 		@postedOn = new Date()
 		@url = ""
 		@errors = {}
+		@summary = ""
 
 	getUrl: (title) -> 
 		cleanTitle = title.toLowerCase()
@@ -29,14 +30,15 @@ class BlogTopic
 		@url = @getUrl(@title)
 		return
 
-	update: (newData) =>
+	update: (newData, updateContent) =>
 		#@id = don't change
 		@title = newData.title
-		@content = newData.content
+		@content = if updateContent then newData.content else "" 
 		#@createdOn = don't change
 		@updatedOn = new Date()
 		@postedOn = newData.postedOn
 		@url = @getUrl(newData.title)
+		@summary = newData.summary ? "(No summary indicated)"
 		return  
 
 

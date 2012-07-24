@@ -8,7 +8,12 @@ class BlogModel
 		@nextId = null
 
 
-	_getAllTopics: (callback) =>
+	# http://stackoverflow.com/a/7153486/446681
+	_isInt: (n) =>
+		(typeof(n) is 'number') and (Math.round(n) % 1 == 0)
+
+
+	_getAllTopicsMetaData: (callback) =>
 		fs.readFile @blogListFilePath, 'utf8', (err, text) =>
 			if err 
 				callback "Error reading topic list #{err}" 
@@ -21,11 +26,12 @@ class BlogModel
 					for t in data.blogs
 						topic = new BlogTopic(t.title)
 						topic.id = t.id
-						topic.content = t.content
+						topic.content = "" # not considered meta-data
 						topic.createdOn = new Date(t.createdOn)
 						topic.updatedOn = new Date(t.updatedOn)
 						topic.postedOn = new Date(t.postedOn)
 						topic.url = t.url
+						topic.summary = t.summary
 						topics.push topic
 
 					topics.sort (x, y) ->
@@ -36,35 +42,36 @@ class BlogModel
 
 					callback null, topics
 				catch error
+					console.log "Error reading all topics #{error}"
 					callback error
 
 
-	_findTopicInListByUrlSync: (topics, url) ->
-		for topic in topics
+	_getTopicMetaDataByUrlSync: (topicsMeta, url) ->
+		for topic in topicsMeta
 			if topic.url is url
 				return topic
-
-		# Possible simplification
-		# return topic for topic in topics when topic.url is url
-
 		return null
 
 
-	_findTopicInListByIdSync: (topics, id) ->
-		for topic in topics
+	_getTopicMetaDataByIdSync: (topicsMeta, id) ->
+		for topic in topicsMeta
 			if topic.id is id
 				return topic
 		return null
 
 
-	_updateTopicInListByIdSync: (topics, updatedTopic) ->
-		for topic, i in topics
-			#console.log topic.id, updatedTopic.id
+	_updateTopicMetaDataByIdSync: (topicsMeta, updatedTopic) ->
+		for topic, i in topicsMeta
 			if topic.id is updatedTopic.id
-				#console.log "found at position: ", i
-				topics[i].update(updatedTopic)
+				topicsMeta[i].update(updatedTopic, false)
 				return true
 		return false
+
+
+	_saveTopicsMetaSync: (topicsMeta) =>
+		jsonText = JSON.stringify topicsMeta, null, "\t"
+		jsonText = '{ "nextId": ' + @nextId + ', "blogs":' + jsonText + '}'
+		fs.writeFileSync @blogListFilePath, jsonText, 'utf8'		  
 
 
 	# ===================================
@@ -72,21 +79,23 @@ class BlogModel
 	# ===================================
 
 	getAllTopics: (callback) => 
-		@_getAllTopics (err, topics) -> 
-			callback err, topics
+		@_getAllTopicsMetaData (err, topicsMeta) -> 
+			callback err, topicsMeta
+
 
 	getRecentTopics: (callback) => 
-		@_getAllTopics (err, topics) -> 
+		@_getAllTopicsMetaData (err, topicsMeta) -> 
 			howMany = 10
-			topics = topics.slice(0, howMany) if topics.length > howMany
-			callback err, topics
+			topicsMeta = topicsMeta.slice(0, howMany) if topicsMeta.length > howMany
+			callback err, topicsMeta
+
 
 	getTopicByUrl: (url, callback) =>
 
-		getTopicDetailsCallback = (err, topics) => 
+		getTopicDetailsCallback = (err, topicsMeta) => 
 			callback err if err
 
-			topic = @_findTopicInListByUrlSync topics, url
+			topic = @_getTopicMetaDataByUrlSync topicsMeta, url
 			if topic is null
 				callback "Topic #{url} not found" 
 			else
@@ -98,79 +107,83 @@ class BlogModel
 						topic.content = text
 						callback null, topic
 
-		@_getAllTopics(getTopicDetailsCallback) 
+		@_getAllTopicsMetaData(getTopicDetailsCallback) 
 
 
-	saveTopic: (topic, callback) => 
+	saveTopic: (topicToSave, callback) => 
 
-		updateTopic = (err, topics) =>
+		topicAllData = null
+
+		updateTopic = (err, topicsMeta) =>
 			callback err if err
 
-			# console.log "Topic to update"
-			# console.dir topic
-			# console.log "---"
-			
-			if topic.isValid()
-				if @_updateTopicInListByIdSync(topics, topic)
-					topic = @_findTopicInListByIdSync(topics, topic.id)
-					jsonText = JSON.stringify topics, null, "\t"
-					jsonText = '{ "nextId": ' + @nextId + ', "blogs":' + jsonText + '}'
-					fs.writeFileSync @blogListFilePath, jsonText, 'utf8'		  
+			if topicToSave.isValid()
+				if @_updateTopicMetaDataByIdSync(topicsMeta, topicToSave)
+					@_saveTopicsMetaSync topicsMeta
+
+					# This is needed because the topic that we received (topicToSave)
+					# might not have all the fields (e.g. created on, updated on)
+					topicAllData = @_getTopicMetaDataByIdSync(topicsMeta, topicToSave.id)
+					topicAllData.content = topicToSave.content
+
 					updateTopicContent()
 				else
-					callback "Could not find topic #{topic.id}"
+					callback "Could not find topic #{topicToSave.id}"
 					return
 			else
-				callback topic.errors
+				callback topicToSave.errors
 
 		updateTopicContent = => 
-			filePath = @dataPath + '/blog.' + topic.id + '.html'	
-			fs.writeFile filePath, topic.content, 'utf8', (err) -> 
+			filePath = @dataPath + '/blog.' + topicToSave.id + '.html'	
+			fs.writeFile filePath, topicToSave.content, 'utf8', (err) -> 
 				if err 
-					callback "Topic #{topic.id} content could not be saved. Error #{err}"
+					callback "Topic #{topicToSave.id} content could not be saved. Error #{err}"
 				else
-					# console.log "Topic saved"
-					# console.dir topic
-					callback null, topic
+					callback null, topicAllData
 
-		if topic? is false
+		if topicToSave? is false
 			callback "No topic was received"
 			return
 
-		if topic.id? is false
+		if topicToSave.id? is false
 			callback "Topic Id is null" 
 			return
 
-		@_getAllTopics(updateTopic)
+		if @_isInt(topicToSave.id) is false
+			callback "Topic Id is not an integer" 
+			return			
+
+		@_getAllTopicsMetaData(updateTopic)
 
 
-	saveNewTopic: (topic, callback) => 
+	saveNewTopic: (topicToSave, callback) => 
 
-			addTopic = (err, topics) =>
-				callback err if err
+		newTopic = null
 
-				topic.id = @nextId
-				topic.setUrl()
-				topic.createdOn = new Date()
-				if topic.isValid()
-					topics.push topic
-					@nextId = @nextId + 1
-					jsonText = JSON.stringify topics, null, "\t"
-					jsonText = '{ "nextId": ' + @nextId + ', "blogs":' + jsonText + '}'
-					fs.writeFileSync @blogListFilePath, jsonText, 'utf8'		  
-					updateTopicContent()
+		addTopic = (err, topics) =>
+			callback err if err
+
+			newTopic = new BlogTopic()
+			newTopic.id = @nextId
+			newTopic.createdOn = new Date()
+			newTopic.update(topicToSave, true)
+			if newTopic.isValid()
+				@nextId = @nextId + 1
+				topics.push newTopic
+				@_saveTopicsMetaSync topics
+				updateTopicContent()
+			else
+				callback newTopic.errors
+
+		updateTopicContent = => 
+			filePath = @dataPath + '/blog.' + newTopic.id + '.html'	
+			fs.writeFile filePath, topicToSave.content, 'utf8', (err) -> 
+				if err 
+					callback "Topic #{newTopic.id} content could not be saved. Error #{err}"
 				else
-					callback topic.errors
+					callback null, newTopic
 
-			updateTopicContent = => 
-				filePath = @dataPath + '/blog.' + topic.id + '.html'	
-				fs.writeFile filePath, topic.content, 'utf8', (err) -> 
-					if err 
-						callback "Topic #{topic.id} content could not be saved. Error #{err}"
-					else
-						callback null, topic
-
-			@_getAllTopics(addTopic)
+		@_getAllTopicsMetaData(addTopic)
 
 
 exports.BlogModel = BlogModel

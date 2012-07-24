@@ -21,6 +21,11 @@
   </p>
 
   <p>
+  <label>Summary (raw HTML)<label> 
+  <textarea name="summary", rows="4", cols="60" placeholder="Enter blog post summary">{{- summary }}</textarea>
+  </p>
+
+  <p>
   <label>Content (raw HTML)<label> 
   <textarea name="content", rows="20", cols="60" placeholder="Enter blog post content">{{- content }}</textarea>
   {{ if(errors.content) { }}

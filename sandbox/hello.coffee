@@ -1,8 +1,6 @@
-test = ->
-  a = {}
-  a.a = 'a'
-  # a.b = 'b'
-  a.hasErrors = if a.a or a.b then true else false
-  return a.hasErrors
+readOnly = false
 
-console.log test()
+if not readOnly 
+  console.log 'yes'
+else
+  console.log 'no'

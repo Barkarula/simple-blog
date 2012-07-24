@@ -1,19 +1,31 @@
 <div class="row">
+
   <div class="eight columns">
     <h3>Recent Blog Posts</h3>
+  </div>
+</div>
 
-    <ul>
-      {{ for (var i=0; i<topics.length; i++) { 
-        var topic=topics[i] }}
-        <li><a href='/blog/{{= topic.url }}'>{{= topic.title }}</a>{{= topic.postedOn }}</li>
-      {{ } }}
-    </ul>
+{{ for (r=0; r<matrix.length; r++) { }}
+  
+  <div class="row">
+  {{ for(c=0; c<matrix[r].length; c++) { }}
+      {{ topic = matrix[r][c]; }}
+      {{ if(typeof(topic)==='undefined') continue; }}
+      <div class="four columns">
+      <h3><a href='/blog/{{= topic.url }}'>{{= topic.title }}</a></h3>
+      <p>{{= topic.summary }}</p>
+      <p><i>{{= topic.postedOn }}</i></p>
+      </div>
+  {{ } }}
+  </div>
+{{ } }}
 
+<div class="row">
+  <div class="eight columns">
     <p><a href="/blog/list" class="button">View All Blog Posts</a> 
       {{ if (!page.isReadOnly) { }} 
       <a href="/blog/new" class="button">New Blog Post</a>
       {{ } }}
     </p>
-
   </div>
 </div>

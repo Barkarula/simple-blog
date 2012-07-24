@@ -10,6 +10,16 @@ renderNotFound = (res, error) ->
 renderError = (res, error) ->
 	res.render '500', {status: 500, message: error}
 
+topicsToMatrix = (topics, cols) ->
+	rows = Math.ceil(topics.length / cols)
+	matrix = new Array(rows)
+	for r in [0..rows-1]
+		matrix[r] = new Array(cols)
+		for c in [0..cols-1]
+			i = (r * cols) + c
+			if i < topics.length
+				matrix[r][c] = topics[i]
+	matrix
 
 requestToTopic = (req, id) ->
 	topic = new BlogTopic(req.body.title)
@@ -54,8 +64,13 @@ viewRecent = (req, res) ->
 		if err
 			renderError res, err
 		else
+			matrix = topicsToMatrix(topics, 3)
+			# console.log "Matrix"
+			# console.dir matrix
+			# console.log "------"
 			res.render 'blogRecent', {
-				topics: topics
+				topics: topics,
+				matrix: matrix,
 				page:
 					title: "Recent Blog Posts" 
 					isReadOnly: req.app.settings.isReadOnly

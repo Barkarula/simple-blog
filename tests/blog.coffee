@@ -119,6 +119,8 @@ saveNewTopic = ->
 	dataPath = __dirname + '/../data' 
 	model = new BlogModel dataPath 
 	model.saveNewTopic topic, (err, data) -> 
+		console.dir err
+		console.log "data #{data}"
 		assert err is null, "Error saving new topic #{topic.url}. Error: #{err}"
 		console.log "saveNewTopic ended."
 
