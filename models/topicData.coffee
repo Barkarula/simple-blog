@@ -1,28 +1,35 @@
 {TopicMeta}  = require './topicMeta'
 
+# This class handles saving and retrieving of topic
+# data. Notice that this class does NOT perform any
+# validation, it trusts that the caller passes only
+# good data. 
 class TopicData
 
   @topics = null
   @contents = null
+  @nextId = null
 
   constructor: ->
     @topics = []
     @contents = []
+    @nextId = null
   
 
   _loadAll: =>
     if @topics.length is 0
       for i in [1..3]
-        t = new TopicMeta()
-        t.id = i
-        t.title = "topic #{i}"
-        t.url = "topic-#{i}"
-        t.summary = "topic #{i} summary"
-        t.createdOn = new Date("Jan #{i}, 2012")
-        t.updatedOn = new Date("Feb #{i}, 2012")
-        t.postedOn = new Date("March #{i}, 2012")
-        @topics.push t
+        topic = new TopicMeta()
+        topic.id = i
+        topic.title = "topic #{i}"
+        topic.url = "topic-#{i}"
+        topic.summary = "topic #{i} summary"
+        topic.createdOn = new Date("Jan #{i}, 2012")
+        topic.updatedOn = new Date("Feb #{i}, 2012")
+        topic.postedOn = new Date("March #{i}, 2012")
+        @topics.push topic
         @contents.push "content for topic #{i}"
+      @nextId = 4
     @topics
 
 
@@ -36,9 +43,9 @@ class TopicData
 
   findMeta: (id) =>
     topics = @_loadAll()
-    for t in topics
-      if t.id is id
-        return t
+    for topic in topics
+      if topic.id is id
+        return topic
     return null
 
 
@@ -51,22 +58,34 @@ class TopicData
 
 
   updateMeta: (id, newMeta) =>
-    t = @findMeta(id)
-    return null if t is null 
-    t.title = newMeta.title
-    t.url = newMeta.url
-    t.summary = newMeta.summary
-    t.createdOn = newMeta.createdOn
-    t.updatedOn = newMeta.updatedOn
-    t.postedOn = newMeta.postedOn
-    return t
+    topic = @findMeta(id)
+    return null if topic is null 
+    topic.title = newMeta.title
+    topic.url = newMeta.url
+    topic.summary = newMeta.summary
+    topic.createdOn = newMeta.createdOn
+    topic.updatedOn = newMeta.updatedOn
+    topic.postedOn = newMeta.postedOn
+    return topic
 
 
   updateContent: (meta, content, callback) =>
-    if meta.id? and meta.id in [1..3]
+    maxId = @nextId-1
+    if meta.id? and meta.id in [1..maxId]
       @contents[meta.id] = content
       callback null, {meta: meta, content: content}
     else
       callback "Invalid id #{meta.id}"
+
+
+  addNew: (meta, content, callback) =>
+    # Force @nextId to be initialized
+    @_loadAll()
+
+    meta.id = @nextId 
+    @topics.push meta
+    @contents.push content
+    @nextId++
+    callback null, {meta: meta, content: content}
 
 exports.TopicData = TopicData

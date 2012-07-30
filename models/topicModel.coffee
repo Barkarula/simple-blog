@@ -1,6 +1,11 @@
 {TopicData}  = require './topicData'
 
 class TopicModel
+  
+  @data = null
+
+  constructor: ->
+    @data = new TopicData()
 
   _getUrlFromTitle: (title) ->
     url = title.toLowerCase()
@@ -32,29 +37,27 @@ class TopicModel
 
 
   getAll: ->
-    data = new TopicData()
-    return data.getAll()
+    return @data.getAll()
 
 
   getRecent: ->
-    data = new TopicData()
-    return data.getRecent()
+    return @data.getRecent()
 
 
   getOne: (id, callback) ->
-    data = new TopicData()
-    meta = data.findMeta id
+    meta = @data.findMeta id
     if meta is null
       callback "Invalid ID #{id}"
     else
-      data.loadContent meta, callback
+      @data.loadContent meta, callback
 
-
-  save: (topic, callback) ->
-    data = new TopicData()
+  # topic must be in the form 
+  # {meta: {id: i, title: t, summary: s, ...}, content: c}
+  # notice that we need an id
+  save: (topic, callback) =>
 
     # Load the topic from the DB
-    meta = data.findMeta topic.meta.id
+    meta = @data.findMeta topic.meta.id
     if meta is null
       callback "could not find topic id #{topic.meta.id}" if meta is null
     else
@@ -69,10 +72,29 @@ class TopicModel
       isTopicValid = topic.errors is null
       if isTopicValid
         # Update the database (meta+content)
-        meta = data.updateMeta topic.meta.id, topic.meta
-        data.updateContent meta, topic.content, callback
+        meta = @data.updateMeta topic.meta.id, topic.meta
+        @data.updateContent meta, topic.content, callback
       else
         # should this be callback {meta: X, content: Y, errors: Z}
         callback topic.errors
+
+  # topic must be in the form 
+  # {meta: {title: t, summary: s, ...}, content: c}
+  # notice that we don't need an id
+  saveNew: (topic, callback) -> 
+    # Fill in values required for new topics
+    topic.meta.createdOn = new Date()
+    topic.meta.updatedOn = new Date()
+    topic.meta.url = @_getUrlFromTitle(topic.meta.title)
+
+    # Is the topic valid?
+    topic.errors = @_validate(topic)
+    isTopicValid = topic.errors is null
+    if isTopicValid
+      # Add topic to the database (meta+content)
+      @data.addNew topic.meta, topic.content, callback
+    else
+      # should this be callback {meta: X, content: Y, errors: Z}
+      callback topic.errors
 
 exports.TopicModel = TopicModel

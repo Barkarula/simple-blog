@@ -110,12 +110,38 @@ testSaveBadTopic = ->
 
   TestUtil.printTestResult "#{ns}.testSaveBadTopic", errors
 
+
+testSaveNewTopic = ->
+  errors = []
+  m = new TopicModel()
+  topics = m.getAll()
+  lastId = topics[topics.length-1].id  
+
+  newTopic = {
+    meta: {
+      title: "new test topic",
+      summary: "new summary for test topic"
+    }
+    content: "new content for test topic"
+  }
+  m.saveNew newTopic, (err, data) ->
+
+    errors.push "unexpected error #{err}" if err
+    errors.push "unexpected id #{data.id}" if data.meta.id isnt lastId + 1
+
+    m.saveNew newTopic, (err, data) ->
+      errors.push "unexpected error #{err}" if err
+      errors.push "unexpected id #{data.id}" if data.meta.id isnt lastId + 2
+
+  TestUtil.printTestResult "#{ns}.testSaveNewTopic", errors
+
 # -------------------
 testGetUrlFromTitle()
 testValidate()
 testGetters()
 testSaveGoodTopic()
 testSaveBadTopic()
+testSaveNewTopic()
 
 
 

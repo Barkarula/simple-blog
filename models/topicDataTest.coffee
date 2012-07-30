@@ -34,5 +34,15 @@ d.updateContent {id: 2}, "new content 2", (err, data) ->
 d.updateContent {id: 99}, "new content 99", (err, data) ->
   errors.push "updateContent invalid id" if err is null 
 
+newTopic = {
+  title: "new title",
+  url: "new-title",
+  summary: "new summary"
+}
+
+d.addNew newTopic, "new content", (err, data)->
+  errors.push "addNew (bad id)" if data.meta.id isnt 4
+  errors.push "addNew (bad data)" if d.findMeta(4).title isnt "new title" 
+  
 TestUtil.printTestResult "topicDataTest", errors
 
