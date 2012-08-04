@@ -1,14 +1,17 @@
 fs = require 'fs'
-{BlogModel} = require '../models/blogModel'
-{BlogTopic} = require '../models/blogTopic'
+{TopicModel} = require '../models/topicModel'
+{TopicMeta} = require '../models/topicMeta'
 
 
 renderNotFound = (res, error) -> 
+	#console.log "renderNotFound #{error}"
 	res.render '404', {status: 404, message: error}
 
 
 renderError = (res, error) ->
+	#console.log "renderError #{error}"
 	res.render '500', {status: 500, message: error}
+
 
 topicsToMatrix = (topics, cols) ->
 	rows = Math.ceil(topics.length / cols)
@@ -21,24 +24,28 @@ topicsToMatrix = (topics, cols) ->
 				matrix[r][c] = topics[i]
 	matrix
 
+
 requestToTopic = (req, id) ->
-	topic = new BlogTopic(req.body.title)
-	topic.id = parseInt(id)
-	topic.summary = req.body.summary
-	topic.content = req.body.content
-	topic.postedOn = new Date(req.body.postedOn + ' ' + req.body.postedAt)
+	topic = {}
+	topic.meta = new TopicMeta()
+	topic.meta.id = parseInt(id)
+	topic.meta.title = req.body?.title ? ""
+	topic.meta.summary = req.body?.summary ? ""
+	topic.meta.postedOn = new Date(req.body?.postedOn + ' ' + req.body?.postedAt)
+	topic.content = req.body?.content ? ""
+	# console.dir topic
 	return topic
 
 
 viewOne = (req, res) -> 
 
 	dataPath = res.app.settings.datapath
-	model = new BlogModel dataPath 
+	model = new TopicModel dataPath 
 	url = req.params.topicUrl
 	console.log "blogRoutes:viewOne #{url}"
 
 	if url
-		model.getTopicByUrl url, (err, topic) ->  
+		model.getOneByUrl url, (err, topic) ->  
 			if err
 				renderNotFound res, err
 			else
@@ -58,41 +65,41 @@ viewRecent = (req, res) ->
 	console.log "blogRoutes:viewRecent"
 
 	dataPath = res.app.settings.datapath
-	model = new BlogModel dataPath 
+	model = new TopicModel dataPath 
 
-	model.getRecentTopics (err, topics) -> 
-		if err
-			renderError res, err
-		else
-			matrix = topicsToMatrix(topics, 3)
-			# console.log "Matrix"
-			# console.dir matrix
-			# console.log "------"
-			res.render 'blogRecent', {
-				topics: topics,
-				matrix: matrix,
-				page:
-					title: "Recent Blog Posts" 
-					isReadOnly: req.app.settings.isReadOnly
-			}
+	topics = model.getRecent()
+	if topics.length is 0
+		renderError res, "No topics were found"
+	else
+		matrix = topicsToMatrix(topics, 3)
+		res.render 'blogRecent', {
+			topics: topics,
+			matrix: matrix,
+			page:
+				title: "Recent Blog Posts" 
+				isReadOnly: req.app.settings.isReadOnly
+		}
+
 
 viewAll = (req, res) -> 
 	console.log "blogRoutes:viewAll"
 
 	dataPath = res.app.settings.datapath
-	model = new BlogModel dataPath 
-	url = req.params.topicUrl
+	model = new TopicModel dataPath 
+	topics = model.getAll()
 
-	model.getAllTopics (err, topics) -> 
-		if err
-			renderError res, err
-		else
-			res.render 'blogAll', {
-				topics: topics
-				page:
-					title: "All Blog Posts" 
-					isReadOnly: req.app.settings.isReadOnly
-			}
+	if topics.length is 0
+		renderError res, "No topics were found"
+	else
+		matrix = topicsToMatrix(topics, 3)
+		res.render 'blogAll', {
+			topics: topics,
+			matrix: matrix,
+			page:
+				title: "All Blog Posts" 
+				isReadOnly: req.app.settings.isReadOnly
+		}
+
 
 edit = (req, res) -> 
 
@@ -104,8 +111,8 @@ edit = (req, res) ->
 	console.log "blogRoutes:edit #{url}"
 
 	dataPath = res.app.settings.datapath
-	model = new BlogModel dataPath 
-	model.getTopicByUrl url, (err, topic) -> 
+	model = new TopicModel dataPath 
+	model.getOneByUrl url, (err, topic) -> 
 		if err 
 			renderNotFound res, err
 		else 
@@ -124,18 +131,22 @@ save = (req, res) ->
 
 	dataPath = res.app.settings.datapath
 	topic = requestToTopic req, id
-	if topic.id is NaN
-		renderError res, "Could not save topic #{id}. Invalid Id was detected."
+	if isNaN(topic.meta.id)
+		renderError res, "Invalid id #{id} detected on save."
 	else
-		model = new BlogModel dataPath 
-		model.saveTopic topic, (err, savedTopic) -> 
-			debugger 
+		model = new TopicModel dataPath 
+		# console.dir topic
+		model.save topic, (err, savedTopic) -> 
 			if err
-				console.log "saveTopic failed. Error: ", err
-				res.render 'blogEdit', topic
+				if typeof(err) is 'string' && err.indexOf("Could not find topic id") is 0
+					# this should never happen, but if it does is either a bug or a hacker
+					res.redirect '/blog'
+				else
+					console.log "saveTopic failed. Error: ", err
+					res.render 'blogEdit', topic
 			else
 				console.log "Saved, redirecting to /blog/#{savedTopic.url}"
-				res.redirect '/blog/'+ savedTopic.url
+				res.redirect '/blog/'+ savedTopic.meta.url
 
 
 # Edit a new blog

@@ -1,23 +1,21 @@
 {TopicModel}  = require './topicModel'
-{TestUtil}  = require './testUtil'
+{TestUtil}  = require '../util/testUtil'
 
-ns = "topicModelTest" 
 
 testGetUrlFromTitle = ->
   m = new TopicModel()
-  errors = []
+  test = new TestUtil("topicModelTest.testGetUrlFromTitle")
 
-  errors.push "basic test" if m._getUrlFromTitle("hello") isnt "hello"
-  errors.push "lowercase test" if m._getUrlFromTitle("hello-World") isnt "hello-world"
-  errors.push "dots test" if m._getUrlFromTitle("hello-World.aspx") isnt "hello-world-aspx"
-  errors.push "c# test" if m._getUrlFromTitle("hello-c#-World.aspx") isnt "hello-csharp-world-aspx"
-  errors.push "pound (#) test" if m._getUrlFromTitle("this is #4") isnt "this-is--4"
-  TestUtil.printTestResult "#{ns}.testGetUrlFromTitle", errors
+  test.passIf m._getUrlFromTitle("hello") is "hello", "basic test"
+  test.passIf m._getUrlFromTitle("hello-World") is "hello-world", "lowercase test"
+  test.passIf m._getUrlFromTitle("hello-World.aspx") is "hello-world-aspx", "dots test"
+  test.passIf m._getUrlFromTitle("hello-c#-World.aspx") is "hello-csharp-world-aspx", "c# test"
+  test.passIf m._getUrlFromTitle("this is #4") is "this-is--4", "pound (#) test"
 
 
 testValidate = ->
   m = new TopicModel()
-  errors = []
+  test = new TestUtil("topicModelTest.testValidate")
 
   goodTopic = {
     meta: {
@@ -27,39 +25,40 @@ testValidate = ->
     }
     content: "hello world content"
   }
-  errors.push "good topic" if m._validate(goodTopic) isnt null
+
+  test.passIf m._validate(goodTopic) is null, "good topic" 
 
   emptyTopic = {}
-  errors.push "empty topic" if m._validate(emptyTopic) is null
+  test.passIf m._validate(emptyTopic) isnt null, "empty topic" 
 
   emptyTitleTopic = { meta: { id: 1, summary: "s"}, content: "c" }
-  errors.push "empty title" if m._validate(emptyTitleTopic) is null
-
-  TestUtil.printTestResult "#{ns}.testValidate", errors
+  errors = m._validate(emptyTitleTopic)
+  test.passIf errors.emptyTitle is true, "empty title"
 
 
 testGetters = ->
   m = new TopicModel()
-  errors = []
-  errors.push "getAll" unless m.getAll().length > 0
-  errors.push "getRecent" unless m.getRecent().length > 0
+  test = new TestUtil("topicModelTest.testGetters")
+
+  test.passIf m.getAll().length > 0, "getAll"
+  test.passIf m.getRecent().length > 0, "getRecent"
 
   m.getOne 2, (err, data) ->
-    if err isnt null 
-      errors.push "getOne valid id (#{err})"
-    else
-      errors.push "getOne valid id (unexpected id returned)" if data.meta.id isnt 2
+    test.passIf data.meta.id is 2, "getOne valid id"
 
   m.getOne 99, (err, data) ->
-    if err is null 
-      errors.push "getOne invalid id"
+    test.passIf err isnt null, "getOne invalid id"
 
-  TestUtil.printTestResult "#{ns}.testGetters", errors
+  m.getOneByUrl 'topic-3', (err, data) ->
+    test.passIf data.meta.url is "topic-3", "getOneByUrl valid id"
+
+  m.getOneByUrl 'topic-99', (err, data) ->
+    test.passIf err isnt null, "getOneByUrl invalid id"
 
 
 testSaveGoodTopic = ->
   m = new TopicModel()
-  errors = []
+  test = new TestUtil("topicModelTest.testSaveGoodTopic")
 
   goodTopic = {
     meta: {
@@ -71,13 +70,11 @@ testSaveGoodTopic = ->
   }
 
   m.save goodTopic, (err, data) ->
-    if err isnt null
-      if typeof err is 'string'
-        errorMsg = err 
-      else
-        errorMsg = JSON.stringify err, null, "\t"
-      errors.push "#{errorMsg}" 
+    if err
+      console.dir err
+      test.fail "goodTopic"
     else
+      errors = []
       if data.meta.id isnt 2
         errors.push "Invalid id received after save"
       if data.meta.title isnt "new title 2"
@@ -86,36 +83,31 @@ testSaveGoodTopic = ->
         errors.push "Invalid content after save"
       if data.meta.updatedOn? is false
         errors.push "Updated on not populated"
-  
-  TestUtil.printTestResult "#{ns}.testSaveGoodTopic", errors
+    
+      test.passIf errors.length is 0, "goodTopic"
+      if errors.length > 0
+        console.dir errors
 
 
 testSaveBadTopic = ->
   m = new TopicModel()
-  errors = []
+  test = new TestUtil("topicModelTest.testSaveBadTopic")
 
   notExistingTopic = {meta: {id: 99}}
   m.save notExistingTopic, (err, data) ->
-    if err is null
-      errors.push "not existing topic"
-    if typeof(err) isnt 'string'
-      errors.push "unexpected error (#{err})"
+    test.passIf err isnt null, "not existing topic"
 
   badData = {meta: {id: 2, title: ""}}
   m.save badData, (err, data) ->
-    if err is null
-      errors.push "not existing topic"
-    if typeof(err) isnt 'object'
-      errors.push "unexpected error (#{err})"
-
-  TestUtil.printTestResult "#{ns}.testSaveBadTopic", errors
+    test.passIf err isnt null, "empty title"
 
 
 testSaveNewTopic = ->
-  errors = []
   m = new TopicModel()
+  test = new TestUtil("topicModelTest.testSaveNewTopic")
+
   topics = m.getAll()
-  lastId = topics[topics.length-1].id  
+  lastId = topics[topics.length-1].id
 
   newTopic = {
     meta: {
@@ -124,16 +116,22 @@ testSaveNewTopic = ->
     }
     content: "new content for test topic"
   }
+
   m.saveNew newTopic, (err, data) ->
 
-    errors.push "unexpected error #{err}" if err
-    errors.push "unexpected id #{data.id}" if data.meta.id isnt lastId + 1
+    if err
+      test.fail "unexpected error #{err}" 
+    else if data.meta.id isnt lastId + 1
+      test.fail "unexpected id #{data.id}"
+    else
+      m.saveNew newTopic, (err, data) ->
+        if err
+          test.fail "unexpected error on second save #{err}"
+        else if data.meta.id isnt lastId + 2
+          test.fail "unexpected if #{data.id} on second save"
+        else
+          test.pass "new topic"
 
-    m.saveNew newTopic, (err, data) ->
-      errors.push "unexpected error #{err}" if err
-      errors.push "unexpected id #{data.id}" if data.meta.id isnt lastId + 2
-
-  TestUtil.printTestResult "#{ns}.testSaveNewTopic", errors
 
 # -------------------
 testGetUrlFromTitle()

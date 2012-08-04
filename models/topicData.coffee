@@ -49,12 +49,21 @@ class TopicData
     return null
 
 
+  findMetaByUrl: (url) =>
+    topics = @_loadAll()
+    for topic in topics
+      if topic.url is url
+        return topic
+    return null
+
+
   loadContent: (meta, callback) => 
-    content = @contents[meta.id-1]
-    if content
-      callback null, {meta: meta, content: content}
-    else 
-      callback "Invalid ID #{meta.id}"
+    process.nextTick =>
+      content = @contents[meta.id-1]
+      if content
+        callback null, {meta: meta, content: content}
+      else 
+        callback "Invalid ID #{meta.id}"
 
 
   updateMeta: (id, newMeta) =>
@@ -72,10 +81,12 @@ class TopicData
   updateContent: (meta, content, callback) =>
     maxId = @nextId-1
     if meta.id? and meta.id in [1..maxId]
-      @contents[meta.id] = content
-      callback null, {meta: meta, content: content}
+      process.nextTick =>
+        @contents[meta.id] = content
+        callback null, {meta: meta, content: content}
     else
-      callback "Invalid id #{meta.id}"
+      process.nextTick =>
+        callback "Invalid id #{meta.id}"
 
 
   addNew: (meta, content, callback) =>

@@ -4,7 +4,8 @@ class TopicModel
   
   @data = null
 
-  constructor: ->
+  constructor: (dataPath) ->
+    #TODO: pass the data path to TopicData
     @data = new TopicData()
 
   _getUrlFromTitle: (title) ->
@@ -51,6 +52,15 @@ class TopicModel
     else
       @data.loadContent meta, callback
 
+
+  getOneByUrl: (url, callback) ->
+    meta = @data.findMetaByUrl url
+    if meta is null
+      callback "Invalid Url #{url}"
+    else
+      @data.loadContent meta, callback
+
+
   # topic must be in the form 
   # {meta: {id: i, title: t, summary: s, ...}, content: c}
   # notice that we need an id
@@ -59,13 +69,13 @@ class TopicModel
     # Load the topic from the DB
     meta = @data.findMeta topic.meta.id
     if meta is null
-      callback "could not find topic id #{topic.meta.id}" if meta is null
+      callback "Could not find topic id #{topic.meta.id}" if meta is null
     else
       # Merge the topic that we received with the one 
       # on the DB
       topic.meta.createdOn = meta.createdOn
       topic.meta.updatedOn = new Date()
-      topic.meta.url = @_getUrlFromTitle(meta.title)
+      topic.meta.url = @_getUrlFromTitle(topic.meta.title)
 
       # Is the topic valid?
       topic.errors = @_validate(topic)
