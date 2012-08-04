@@ -4,6 +4,7 @@
 # data. Notice that this class does NOT perform any
 # validation, it trusts that the caller passes only
 # good data. 
+
 class TopicData
 
   @topics = null
@@ -39,6 +40,11 @@ class TopicData
 
   getRecent: =>
     return @_loadAll().slice(0,2)
+
+
+  getNew: =>
+    meta = new TopicMeta()
+    return {meta: meta, content: ""}
 
 
   findMeta: (id) =>
@@ -90,13 +96,13 @@ class TopicData
 
 
   addNew: (meta, content, callback) =>
-    # Force @nextId to be initialized
-    @_loadAll()
+    @_loadAll() # Forces @nextId to be initialized
 
     meta.id = @nextId 
     @topics.push meta
-    @contents.push content
-    @nextId++
-    callback null, {meta: meta, content: content}
+    process.nextTick =>
+      @contents.push content
+      @nextId++
+      callback null, {meta: meta, content: content}
 
 exports.TopicData = TopicData

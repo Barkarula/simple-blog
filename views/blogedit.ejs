@@ -1,9 +1,9 @@
-{{ postUrl = isNaN(id) ? "/blog/new" : "/blog/save/" + id }}
+{{ postUrl = isNaN(topic.meta.id) ? "/blog/new" : "/blog/save/" + topic.meta.id }}
 
 <h1>Blog</h1>
-<p>{{= title }}</p>
+<p>{{= topic.meta.title }}</p>
 
-{{ if(errors.hasErrors) { }}
+{{ if(topic.errors) { }}
 <div class="alert-box alert">
   Oops! Couldn't save this blog post. Fix the error(s) indicated below and try again.
   <a href="" class="close">&times;</a>
@@ -14,21 +14,21 @@
 <fieldset>
   <p>
   <label>Title</label> 
-  <input type="text" name="title" value="{{= title }}" placeholder="Blog title" />
-  {{ if(errors.title) { }}
+  <input type="text" name="title" value="{{= topic.meta.title }}" placeholder="Blog title" />
+  {{ if(false) { }}
   <small class="error">Enter a title for the blog post</small>
   {{ } }}
   </p>
 
   <p>
   <label>Summary (raw HTML)<label> 
-  <textarea name="summary", rows="4", cols="60" placeholder="Enter blog post summary">{{- summary }}</textarea>
+  <textarea name="summary", rows="4", cols="60" placeholder="Enter blog post summary">{{= topic.meta.summary }}</textarea>
   </p>
 
   <p>
   <label>Content (raw HTML)<label> 
-  <textarea name="content", rows="20", cols="60" placeholder="Enter blog post content">{{- content }}</textarea>
-  {{ if(errors.content) { }}
+  <textarea name="content", rows="20", cols="60" placeholder="Enter blog post content">{{- topic.content }}</textarea>
+  {{ if(false) { }}
   <small class="error">Enter the content of the blog post</small>
   {{ } }}
   </p>
@@ -36,29 +36,29 @@
   <div class="row">
     <div class="two columns">
       <label>Posted on</label>
-      <input type="date" name="postedOn" value="{{= postedOn.toDateString() }}" placeholder="mm/dd/yyyy" />
+      <input type="date" name="postedOn" value="{{= topic.meta.postedOn.toDateString() }}" placeholder="mm/dd/yyyy" />
     </div>
     <div class="two columns">
       <label>Posted at</label>
-      <input type="time", name="postedAt", value="{{= postedOn.toLocaleTimeString() }}" placeholder="hh:mm"/>
+      <input type="time", name="postedAt", value="{{= topic.meta.postedOn.toLocaleTimeString() }}" placeholder="hh:mm"/>
     </div>
     <div class="two columns">
     </div>
   </div>
   <div class="row">
     <div class="four columns">
-      {{ if(errors.postedOn) { }}
+      {{ if(false) { }}
       <small class="error">Enter a valid date and time</small>
       {{ } }}
     </div>
   </div>
 
   <p>
-    <a href="/blog/{{= url }}" class="alert button">Cancel</a>
+    <a href="/blog/{{= topic.meta.url }}" class="alert button">Cancel</a>
     <input type="submit" class="button" value="Save" />
   </p>
   
-  <p>ID {{= id }} <p/>
+  <p>ID {{= topic.meta.id }} <p/>
 
 </fieldset>
 </form>

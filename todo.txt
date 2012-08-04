@@ -1,6 +1,12 @@
-* Topic validation: title must not be duplicate
+(in progress) * Revisit blogModel and blogTopic
 
-* Revisit blogModel and blogTopic
+* Rename TopicData to TopicDataFake
+* Update unit tests to point to TopicDataFake
+
+* Create TopicDataFile to implement functionality
+but reading/writting to text file
+
+* Topic validation: title must not be duplicate
 
 * RSS feed
 
@@ -10,5 +16,5 @@
 
 * Versioning topics
 
-* A decent editor
+* A decent editor/use markdown
 

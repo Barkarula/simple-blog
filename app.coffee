@@ -38,11 +38,12 @@ app.get '/', siteRoutes.home
 app.get '/about', siteRoutes.about
 
 app.set "isReadOnly", if app.settings.env is "production" then true else false
+
 if not app.settings.isReadOnly
   # Only enable edits when in development (local)
   # until I integrate an authentication process
-  app.get '/blog/new', blogRoutes.newBlog
-  app.post '/blog/new', blogRoutes.add
+  app.get '/blog/new', blogRoutes.editNew
+  app.post '/blog/new', blogRoutes.saveNew
 
   app.get '/blog/edit/:topicUrl', blogRoutes.edit
   app.post '/blog/save/:id', blogRoutes.save

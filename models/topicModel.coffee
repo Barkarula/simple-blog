@@ -61,6 +61,10 @@ class TopicModel
       @data.loadContent meta, callback
 
 
+  getNew: ->
+    return @data.getNew()
+
+
   # topic must be in the form 
   # {meta: {id: i, title: t, summary: s, ...}, content: c}
   # notice that we need an id
@@ -85,8 +89,8 @@ class TopicModel
         meta = @data.updateMeta topic.meta.id, topic.meta
         @data.updateContent meta, topic.content, callback
       else
-        # should this be callback {meta: X, content: Y, errors: Z}
-        callback topic.errors
+        # topic has {meta: X, content: Y, errors: Z}
+        callback topic
 
   # topic must be in the form 
   # {meta: {title: t, summary: s, ...}, content: c}
@@ -104,7 +108,7 @@ class TopicModel
       # Add topic to the database (meta+content)
       @data.addNew topic.meta, topic.content, callback
     else
-      # should this be callback {meta: X, content: Y, errors: Z}
-      callback topic.errors
+        # topic has {meta: X, content: Y, errors: Z}
+      callback topic
 
 exports.TopicModel = TopicModel

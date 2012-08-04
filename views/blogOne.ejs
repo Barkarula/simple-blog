@@ -1,28 +1,28 @@
 <div class="row">
   <div class="twelve columns">
-    <h3>{{= topic.title }}</h3>
+    <h3>{{= topic.meta.title }}</h3>
     {{- topic.content }}
     <p></p>
     {{ if (!page.isReadOnly) { }} 
-    <p><a href='/blog/edit/{{= topic.url }}' class="button">Edit</a></p>  
+    <p><a href='/blog/edit/{{= topic.meta.url }}' class="button">Edit</a></p>  
     {{ } }}
   </div>
   <div class="two columns">
     <b>Posted on:</b><br>
-    {{= topic.postedOn.toDateString() }}<br>
-    at {{= topic.postedOn.toLocaleTimeString() }}
+    {{= topic.meta.postedOn.toDateString() }}<br>
+    at {{= topic.meta.postedOn.toLocaleTimeString() }}
   </div>
 
   <div class="two columns">
     <b>Created on:</b><br>
-    {{= topic.createdOn.toDateString() }}<br>
-    at {{= topic.createdOn.toLocaleTimeString() }}
+    {{= topic.meta.createdOn.toDateString() }}<br>
+    at {{= topic.meta.createdOn.toLocaleTimeString() }}
   </div>
 
   <div class="two columns">
     <b>Updated on:</b><br>
-    {{= topic.updatedOn.toDateString() }}<br>
-    at {{= topic.updatedOn.toLocaleTimeString() }}
+    {{= topic.meta.updatedOn.toDateString() }}<br>
+    at {{= topic.meta.updatedOn.toLocaleTimeString() }}
   </div>
   <div class="six columns">
   </div>
