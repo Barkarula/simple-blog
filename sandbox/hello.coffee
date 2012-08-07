@@ -1,10 +1,7 @@
-a = 10
-b = 20
-c = 3
+console.log __filename
+console.log __dirname
 
-if a is 10
-  console.log "a is 10"
-else if b is 20
-  console.log "b is 20"
-else
-  console.log "else"
+a = [1, 2, 3, 4, 5]
+for i in [0..a.length-1]
+  console.log a[i]
+  break if i is 2

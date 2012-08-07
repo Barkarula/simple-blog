@@ -1,11 +1,17 @@
 blogRoutes = require './blogRoutes'
 {TestUtil}  = require '../util/testUtil'
 
-test = new TestUtil("blogRoutesTest", false)
+verbose = true
+test = new TestUtil("blogRoutesTest", verbose)
 
 
 getBasicApp = ->
-  app: { settings: { datapath: "", isReadOnly: false } }
+  app: { 
+    settings: { 
+      datapath: __dirname + "/../data", 
+      isReadOnly: false 
+    } 
+  }
 
 
 getBasicRequest = ->
@@ -18,7 +24,7 @@ getBasicResponse = ->
 
 viewOneValid = ->
   req = getBasicRequest()
-  req.params = { topicUrl: "topic-1" }
+  req.params = { topicUrl: "title-1" }
 
   res = getBasicResponse()
   res.render = (page, viewModel) ->
@@ -81,11 +87,12 @@ editBadUrl = ->
 
 editGoodUrl = ->
   req = getBasicRequest()
-  req.params = {topicUrl: "topic-2"}
+  req.params = {topicUrl: "title-3"}
 
   res = getBasicResponse()
   res.render = (page, viewModel) ->
     test.passIf page is "blogEdit", "editGoodUrl"
+    #console.log page
 
   blogRoutes.edit req, res
 

@@ -5,8 +5,8 @@ class TopicModel
   @data = null
 
   constructor: (dataPath) ->
-    #TODO: pass the data path to TopicData
-    @data = new TopicData()
+    @data = new TopicData(dataPath)
+
 
   _getUrlFromTitle: (title) ->
     url = title.toLowerCase()
@@ -92,6 +92,7 @@ class TopicModel
         # topic has {meta: X, content: Y, errors: Z}
         callback topic
 
+
   # topic must be in the form 
   # {meta: {title: t, summary: s, ...}, content: c}
   # notice that we don't need an id
@@ -110,5 +111,6 @@ class TopicModel
     else
         # topic has {meta: X, content: Y, errors: Z}
       callback topic
+
 
 exports.TopicModel = TopicModel

@@ -1,10 +1,12 @@
 {TopicModel}  = require './topicModel'
 {TestUtil}  = require '../util/testUtil'
 
+verbose = true
+dataPath = __dirname + "/../data"
 
 testGetUrlFromTitle = ->
-  m = new TopicModel()
-  test = new TestUtil("topicModelTest.testGetUrlFromTitle")
+  m = new TopicModel(dataPath)
+  test = new TestUtil("topicModelTest.testGetUrlFromTitle", verbose)
 
   test.passIf m._getUrlFromTitle("hello") is "hello", "basic test"
   test.passIf m._getUrlFromTitle("hello-World") is "hello-world", "lowercase test"
@@ -14,8 +16,8 @@ testGetUrlFromTitle = ->
 
 
 testValidate = ->
-  m = new TopicModel()
-  test = new TestUtil("topicModelTest.testValidate")
+  m = new TopicModel(dataPath)
+  test = new TestUtil("topicModelTest.testValidate", verbose)
 
   goodTopic = {
     meta: {
@@ -37,8 +39,8 @@ testValidate = ->
 
 
 testGetters = ->
-  m = new TopicModel()
-  test = new TestUtil("topicModelTest.testGetters")
+  m = new TopicModel(dataPath)
+  test = new TestUtil("topicModelTest.testGetters", verbose)
 
   test.passIf m.getAll().length > 0, "getAll"
   test.passIf m.getRecent().length > 0, "getRecent"
@@ -49,16 +51,17 @@ testGetters = ->
   m.getOne 99, (err, data) ->
     test.passIf err isnt null, "getOne invalid id"
 
-  m.getOneByUrl 'topic-3', (err, data) ->
-    test.passIf data.meta.url is "topic-3", "getOneByUrl valid id"
+  topics = m.getAll()
+  m.getOneByUrl topics[0].url, (err, data) ->
+    test.passIf data.meta.url is topics[0].url, "getOneByUrl valid id"
 
   m.getOneByUrl 'topic-99', (err, data) ->
     test.passIf err isnt null, "getOneByUrl invalid id"
 
 
 testSaveGoodTopic = ->
-  m = new TopicModel()
-  test = new TestUtil("topicModelTest.testSaveGoodTopic")
+  m = new TopicModel(dataPath)
+  test = new TestUtil("topicModelTest.testSaveGoodTopic", verbose)
 
   goodTopic = {
     meta: {
@@ -90,8 +93,8 @@ testSaveGoodTopic = ->
 
 
 testSaveBadTopic = ->
-  m = new TopicModel()
-  test = new TestUtil("topicModelTest.testSaveBadTopic")
+  m = new TopicModel(dataPath)
+  test = new TestUtil("topicModelTest.testSaveBadTopic", verbose)
 
   notExistingTopic = {meta: {id: 99}}
   m.save notExistingTopic, (err, data) ->
@@ -103,11 +106,8 @@ testSaveBadTopic = ->
 
 
 testSaveNewTopic = ->
-  m = new TopicModel()
-  test = new TestUtil("topicModelTest.testSaveNewTopic")
-
-  topics = m.getAll()
-  lastId = topics[topics.length-1].id
+  m = new TopicModel(dataPath)
+  test = new TestUtil("topicModelTest.testSaveNewTopic", verbose)
 
   newTopic = {
     meta: {
@@ -118,17 +118,12 @@ testSaveNewTopic = ->
   }
 
   m.saveNew newTopic, (err, data) ->
-
     if err
       test.fail "unexpected error #{err}" 
-    else if data.meta.id isnt lastId + 1
-      test.fail "unexpected id #{data.id}"
-    else
-      m.saveNew newTopic, (err, data) ->
-        if err
-          test.fail "unexpected error on second save #{err}"
-        else if data.meta.id isnt lastId + 2
-          test.fail "unexpected if #{data.id} on second save"
+    else 
+      m.getOne data.meta.id, (err, data) ->
+        if err isnt null
+          test.fail "error retrieving new record id: #{data.meta.id} #{err}"
         else
           test.pass "new topic"
 

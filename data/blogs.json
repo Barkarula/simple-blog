@@ -1,59 +1,56 @@
-{ "nextId": 79, "blogs":[
+{ "nextId": 7, "blogs":[
 	{
-		"id": 77,
-		"title": "test one two three four five",
-		"content": "",
-		"createdOn": "2012-07-24T03:01:50.065Z",
-		"updatedOn": "2012-07-24T03:03:04.387Z",
-		"postedOn": "2012-07-24T03:01:50.000Z",
-		"url": "test-one-two-three-four-five",
-		"errors": {},
-		"summary": "new unit test summary Mon Jul 23 2012 23:01:50 GMT-0400 (EDT)"
+		"id": 1,
+		"title": "title 1",
+		"createdOn": "2012-08-06T02:21:43.662Z",
+		"updatedOn": "2012-08-07T02:13:23.627Z",
+		"postedOn": "2012-08-07T02:13:00.000Z",
+		"url": "title-1",
+		"summary": "summary 1"
 	},
 	{
-		"id": 76,
-		"title": "test one two three",
-		"content": "",
-		"createdOn": "2012-07-24T03:01:03.684Z",
-		"updatedOn": "2012-07-24T03:01:03.684Z",
-		"postedOn": "2012-07-24T03:01:03.679Z",
-		"url": "test-one-two-three",
-		"errors": {},
-		"summary": "new unit test summary Mon Jul 23 2012 23:01:03 GMT-0400 (EDT)"
+		"id": 3,
+		"title": "title 3",
+		"createdOn": "2012-08-06T02:21:43.662Z",
+		"updatedOn": "2012-08-07T02:13:23.627Z",
+		"postedOn": "2012-08-07T02:13:00.000Z",
+		"url": "title-3",
+		"summary": "summary 3"
+	},
+	{
+		"id": 2,
+		"title": "updated title 2",
+		"createdOn": "1970-01-01T00:00:00.000Z",
+		"updatedOn": "2012-08-07T03:09:16.428Z",
+		"postedOn": "1970-01-01T00:00:00.000Z",
+		"url": "updated-title-2",
+		"summary": "s1"
 	},
 	{
 		"id": 4,
-		"title": "unit test title",
-		"content": "",
-		"createdOn": "2012-07-18T00:21:36.844Z",
-		"updatedOn": "2012-07-24T02:45:01.983Z",
-		"postedOn": "2012-07-24T02:45:01.977Z",
-		"url": "unit-test-title",
-		"errors": {},
-		"summary": "unit test summary Mon Jul 23 2012 22:45:01 GMT-0400 (EDT)"
+		"title": "new title",
+		"createdOn": "1970-01-01T00:00:00.000Z",
+		"updatedOn": "1970-01-01T00:00:00.000Z",
+		"postedOn": "1970-01-01T00:00:00.000Z",
+		"url": "new-title",
+		"summary": "new summary"
 	},
 	{
-		"id": 73,
-		"title": "sample-topic",
-		"content": "",
-		"createdOn": "2012-07-18T00:21:36.844Z",
-		"updatedOn": "2012-07-24T00:59:39.770Z",
-		"postedOn": "2012-07-20T03:02:00.000Z",
-		"url": "sample-topic",
-		"errors": {},
-		"summary": "This is a small summary"
+		"id": 5,
+		"title": "new test topic",
+		"createdOn": "2012-08-07T03:09:15.831Z",
+		"updatedOn": "2012-08-07T03:09:15.831Z",
+		"postedOn": "1970-01-01T00:00:00.000Z",
+		"url": "new-test-topic",
+		"summary": "new summary for test topic"
 	},
 	{
-		"id": 78,
-		"title": "brand new",
-		"content": "brand new content",
-		"createdOn": "2012-07-24T03:03:27.025Z",
-		"updatedOn": "2012-07-24T03:03:27.025Z",
-		"postedOn": "2012-07-24T03:04:00.000Z",
-		"url": "brand-new",
-		"errors": {
-			"hasErrors": false
-		},
-		"summary": "brand new summary"
+		"id": 6,
+		"title": "new title",
+		"summary": "new summary",
+		"postedOn": null,
+		"createdOn": "2012-08-07T03:09:16.431Z",
+		"updatedOn": "2012-08-07T03:09:16.431Z",
+		"url": "new-title"
 	}
 ]}

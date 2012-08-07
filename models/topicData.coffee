@@ -1,3 +1,4 @@
+fs = require 'fs'
 {TopicMeta}  = require './topicMeta'
 
 # This class handles saving and retrieving of topic
@@ -7,31 +8,42 @@
 
 class TopicData
 
-  @topics = null
-  @contents = null
-  @nextId = null
-
-  constructor: ->
-    @topics = []
-    @contents = []
+  constructor: (@dataPath) ->
+    @blogListFilePath = "#{dataPath}/blogs.json"
     @nextId = null
   
 
+  # TODO: _loadAll should be async
   _loadAll: =>
-    if @topics.length is 0
-      for i in [1..3]
-        topic = new TopicMeta()
-        topic.id = i
-        topic.title = "topic #{i}"
-        topic.url = "topic-#{i}"
-        topic.summary = "topic #{i} summary"
-        topic.createdOn = new Date("Jan #{i}, 2012")
-        topic.updatedOn = new Date("Feb #{i}, 2012")
-        topic.postedOn = new Date("March #{i}, 2012")
-        @topics.push topic
-        @contents.push "content for topic #{i}"
-      @nextId = 4
-    @topics
+    text = fs.readFileSync @blogListFilePath, 'utf8'
+    data = JSON.parse text
+    @nextId = data.nextId
+
+    topics = []
+    for topic in data.blogs
+      meta = new TopicMeta()
+      meta.id = topic.id
+      meta.title = topic.title
+      meta.url = topic.url
+      meta.summary = topic.summary
+      meta.createdOn = new Date(topic.createdOn)
+      meta.updatedOn = new Date(topic.updatedOn)
+      meta.postedOn = new Date(topic.postedOn)
+      topics.push meta
+
+    # sort by date descending
+    topics.sort (x, y) ->
+      return -1 if x.postedOn > y.postedOn
+      return 1 if x.postedOn < y.postedOn
+      return 0
+
+    return topics
+
+
+  _saveMetaToDisk: (topics) =>
+    jsonText = JSON.stringify topics, null, "\t"
+    jsonText = '{ "nextId": ' + @nextId + ', "blogs":' + jsonText + '}'
+    fs.writeFileSync @blogListFilePath, jsonText, 'utf8'      
 
 
   getAll: =>
@@ -39,7 +51,11 @@ class TopicData
 
 
   getRecent: =>
-    return @_loadAll().slice(0,2)
+    howMany = 10
+    topics = @_loadAll()
+    if topics.length > howMany
+      topics = topics.slice(0, howMany) 
+    return topics
 
 
   getNew: =>
@@ -64,45 +80,46 @@ class TopicData
 
 
   loadContent: (meta, callback) => 
-    process.nextTick =>
-      content = @contents[meta.id-1]
-      if content
-        callback null, {meta: meta, content: content}
-      else 
-        callback "Invalid ID #{meta.id}"
+    filePath = @dataPath + '/blog.' + meta.id + '.html'  
+    fs.readFile filePath, 'utf8', (err, text) ->
+      if err 
+        callback "Could not retrieve content for id #{meta.id}"
+      else
+        callback null, {meta: meta, content: text}
 
 
   updateMeta: (id, newMeta) =>
-    topic = @findMeta(id)
-    return null if topic is null 
-    topic.title = newMeta.title
-    topic.url = newMeta.url
-    topic.summary = newMeta.summary
-    topic.createdOn = newMeta.createdOn
-    topic.updatedOn = newMeta.updatedOn
-    topic.postedOn = newMeta.postedOn
-    return topic
+    topics = @_loadAll()
+    for i in [0..topics.length-1]
+      if topics[i].id is id
+        # Update the meta data...
+        topics[i].title = newMeta.title
+        topics[i].url = newMeta.url
+        topics[i].summary = newMeta.summary
+        topics[i].createdOn = newMeta.createdOn
+        topics[i].updatedOn = newMeta.updatedOn
+        topics[i].postedOn = newMeta.postedOn
+        @_saveMetaToDisk topics
+        return topics[i]
+    return null
 
 
   updateContent: (meta, content, callback) =>
-    maxId = @nextId-1
-    if meta.id? and meta.id in [1..maxId]
-      process.nextTick =>
-        @contents[meta.id] = content
+    filePath = @dataPath + '/blog.' + meta.id + '.html'  
+    fs.writeFile filePath, content, 'utf8', (err) -> 
+      if err 
+        callback "Content for topic #{meta.id} could not be saved. Error #{err}"
+      else
         callback null, {meta: meta, content: content}
-    else
-      process.nextTick =>
-        callback "Invalid id #{meta.id}"
 
 
   addNew: (meta, content, callback) =>
-    @_loadAll() # Forces @nextId to be initialized
-
+    topics = @_loadAll() 
     meta.id = @nextId 
-    @topics.push meta
-    process.nextTick =>
-      @contents.push content
-      @nextId++
-      callback null, {meta: meta, content: content}
+    topics.push meta
+    @nextId++
+    @_saveMetaToDisk topics
+    @updateContent meta, content, callback
+
 
 exports.TopicData = TopicData

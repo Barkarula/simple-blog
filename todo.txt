@@ -1,7 +1,9 @@
-(in progress) * Revisit blogModel and blogTopic
+* Done with refactor for TopicModel/TopicData
 
-* Rename TopicData to TopicDataFake
-* Update unit tests to point to TopicDataFake
+  Still need to make sure dates are populated
+  correctly on updates and when adding a new
+  topic. See resulting data from unit tests
+
 
 * Create TopicDataFile to implement functionality
 but reading/writting to text file

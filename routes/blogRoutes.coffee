@@ -1,19 +1,18 @@
 fs = require 'fs'
 {TopicModel} = require '../models/topicModel'
-{TopicMeta} = require '../models/topicMeta'
 
-# console = {}
-# console.log = (x) ->
-# console.dir = (x) ->
+console = {}
+console.log = (x) ->
+console.dir = (x) ->
 
 
 renderNotFound = (res, error) -> 
-	#console.log "renderNotFound #{error}"
+	console.log "renderNotFound #{error}"
 	res.render '404', {status: 404, message: error}
 
 
 renderError = (res, error) ->
-	#console.log "renderError #{error}"
+	console.log "renderError #{error}"
 	res.render '500', {status: 500, message: error}
 
 
@@ -48,14 +47,15 @@ topicsToMatrix = (topics, cols) ->
 
 
 requestToTopic = (req, id) ->
-	topic = {}
-	topic.meta = new TopicMeta()
-	topic.meta.id = parseInt(id)
-	topic.meta.title = req.body?.title ? ""
-	topic.meta.summary = req.body?.summary ? ""
-	topic.meta.postedOn = new Date(req.body?.postedOn + ' ' + req.body?.postedAt)
-	topic.content = req.body?.content ? ""
-	# console.dir topic
+	topic = {
+		meta: {
+			id: parseInt(id)
+			title: req.body?.title ? ""
+			summary: req.body?.summary ? ""
+			postedOn: new Date(req.body?.postedOn + ' ' + req.body?.postedAt)
+		}
+		content: req.body?.content ? ""
+	}
 	return topic
 
 
@@ -149,11 +149,11 @@ save = (req, res) ->
 				else if typeof(err) is 'object'
 					# err has {meta: X, content: Y, errors: Z}
 					console.log "saveTopic failed."
-					console.dir err
+					# console.dir err
 					res.render 'blogEdit', viewModelForTopic(err, req.app)
 				else
 					console.log "WTF? Whacky error while saving"
-					console.dir err
+					# console.dir err
 					res.redirect '/blog'
 			else
 				console.log "Saved, redirecting to /blog/#{savedTopic.meta.url}"
@@ -165,7 +165,7 @@ editNew = (req, res) ->
 	dataPath = res.app.settings.datapath
 	model = new TopicModel dataPath 
 	topic = model.getNew()
-	console.dir viewModelForTopic(topic, req.app)
+	# console.dir viewModelForTopic(topic, req.app)
 	res.render 'blogEdit', viewModelForTopic(topic, req.app)
 
 
@@ -179,7 +179,7 @@ saveNew = (req, res) ->
 		if err
 			# err has {meta: X, content: Y, errors: Z}
 			console.log "saveNewTopic failed."
-			console.dir err
+			# console.dir err
 			res.render 'blogEdit', viewModelForTopic(err, req.app)
 		else
 			console.log "New topic added, redirecting to /blog/#{savedTopic.meta.url}"
