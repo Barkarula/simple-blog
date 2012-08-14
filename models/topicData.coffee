@@ -29,6 +29,7 @@ class TopicData
       meta.createdOn = new Date(topic.createdOn)
       meta.updatedOn = new Date(topic.updatedOn)
       meta.postedOn = new Date(topic.postedOn)
+      #console.log "#{meta.id} / #{meta.createdOn} / #{meta.updatedOn} / #{meta.postedOn}"
       topics.push meta
 
     # sort by date descending

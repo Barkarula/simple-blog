@@ -5,9 +5,6 @@
   topic. See resulting data from unit tests
 
 
-* Create TopicDataFile to implement functionality
-but reading/writting to text file
-
 * Topic validation: title must not be duplicate
 
 * RSS feed
@@ -20,3 +17,4 @@ but reading/writting to text file
 
 * A decent editor/use markdown
 
+d instanceof Date && isFinite(d)

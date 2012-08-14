@@ -18,6 +18,10 @@ class TopicModel
     url    
 
 
+  _isValidDate: (date) ->
+    return date instanceof Date && isFinite(date)
+
+
   _validate: (topic) ->
     valid = true
     errors = {
@@ -79,6 +83,7 @@ class TopicModel
       # on the DB
       topic.meta.createdOn = meta.createdOn
       topic.meta.updatedOn = new Date()
+      topic.meta.postedOn = if @_isValidDate(meta.postedOn) then meta.postedOn else new Date()
       topic.meta.url = @_getUrlFromTitle(topic.meta.title)
 
       # Is the topic valid?
@@ -100,6 +105,7 @@ class TopicModel
     # Fill in values required for new topics
     topic.meta.createdOn = new Date()
     topic.meta.updatedOn = new Date()
+    topic.meta.postedOn = if @_isValidDate(topic.meta.postedOn) then topic.meta.postedOn else new Date()
     topic.meta.url = @_getUrlFromTitle(topic.meta.title)
 
     # Is the topic valid?

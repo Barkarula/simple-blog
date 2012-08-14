@@ -45,9 +45,12 @@ d.updateContent {id: 2}, "new content 2", (err, data) ->
 #   test.passIf err isnt null, "updateContent invalid id" 
 
 newTopic = {
-  title: "new title",
-  url: "new-title",
-  summary: "new summary"
+  title: 'new title',
+  url: 'new-title',
+  summary: 'new summary',
+  createdOn: new Date(),
+  updatedOn: new Date(),
+  postedOn: new Date()
 }
 
 d.addNew newTopic, "new content", (err, data)->
