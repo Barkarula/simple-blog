@@ -4,18 +4,35 @@
 verbose = true
 test = new TestUtil("topicDataTest", verbose)
 
+
+badPath = __dirname + "/../badpath"
+d = new TopicData(badPath)
+d.getAll (err, topics) ->
+  test.passIf err isnt null, "getAllWithInvalidPath"
+
+
 dataPath = __dirname + "/../data"
 d = new TopicData(dataPath)
 
-test.passIf d.getAll().length > 0, "getAll"
-test.passIf d.getRecent().length > 0, "getRecent"
+d.getAll (err, topics) ->
+  test.passIf err is null and topics.length > 0, "getAll"
 
-topic2 = d.findMeta(2) 
-test.passIf topic2 isnt null, "findMeta valid id"
-test.passIf d.findMeta(-9) is null, "findMeta invalid id"
+d.getRecent (err, topics) ->
+  test.passIf err is null and topics.length > 0, "getRecent"
 
-test.passIf d.findMetaByUrl(topic2.url) isnt null, "findMetaByUrl valid url"
-test.passIf d.findMetaByUrl('topic-not-existing') is null, "findMetaByUrl invalid url"
+d.findMeta 2, (err, topic) ->
+  test.passIf topic isnt null, "findMeta valid id"
+
+d.findMeta -9, (err, topic) ->
+  test.passIf err isnt null, "findMeta invalid id"
+
+d.getRecent (err, topics) ->
+  urlToTest = topics[1].url
+  d.findMetaByUrl urlToTest, (err, topic) ->
+    test.passIf topic.url is urlToTest, "findMetaByUrl valid url"
+
+d.findMetaByUrl 'topic-not-existing', (err, topic) ->
+  test.passIf topic is null, "findMetaByUrl invalid url"
 
 d.loadContent {id: 2}, (err, data) -> 
   test.passIf err is null, "loadContent valid id"
@@ -29,20 +46,22 @@ newMeta = {
   summary: "updated summary 2", 
 }
 
-updatedTopic = d.updateMeta 2, newMeta
-test.passIf updatedTopic.title is newMeta.title, "updateMeta valid id" 
+d.updateMeta 2, newMeta, (err, topic) ->
+  test.passIf topic.title is newMeta.title, "updateMeta valid id" 
 
-updatedTopic = d.updateMeta -9, newMeta
-test.passIf updatedTopic is null, "updateMeta invalid id" 
+d.updateMeta -9, newMeta, (err, topic) ->
+  test.passIf topic is null, "updateMeta invalid id" 
 
 d.updateContent {id: 2}, "new content 2", (err, data) ->
   test.passIf err is null, "updateContent valid id"
 
-# Since topicData does not validate the ID
-# the following unit test will actually create
-# a text file "blog.-9.html"
+# Since topicData does not validate the ID the
+# following unit test will actually create a text
+# file "blog.-9.html" so we better don't run it :)
+#
 # d.updateContent {id: -9}, "new content 99", (err, data) ->
 #   test.passIf err isnt null, "updateContent invalid id" 
+# ----
 
 newTopic = {
   title: 'new title',
@@ -53,14 +72,14 @@ newTopic = {
   postedOn: new Date()
 }
 
-d.addNew newTopic, "new content", (err, data)->
+d.addNew newTopic, "new content", (err, newTopic)->
   if err
     test.fail "addNew (#{err})"
   else
-    meta = d.findMeta(data.meta.id)
-    if meta is null
-      test.fail "addNew (new topic #{data.meta.id} not found)"
-    else
-      test.passIf meta.title is "new title", "addNew"
+    d.findMeta newTopic.meta.id, (err, topic) ->
+      if err 
+        test.fail "addNew (#{err})"
+      else
+        test.passIf topic.title is "new title", "addNew"
 
 

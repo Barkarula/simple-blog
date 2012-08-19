@@ -5,6 +5,9 @@ fs = require 'fs'
 # data. Notice that this class does NOT perform any
 # validation, it trusts that the caller passes only
 # good data. 
+#
+# This class is akin to a database table. It fetches
+# and saves data but performs no validation.
 
 class TopicData
 
@@ -12,51 +15,58 @@ class TopicData
     @blogListFilePath = "#{dataPath}/blogs.json"
     @nextId = null
   
+  # TODO: make sort optional
+  _loadAll: (callback) =>
+    fs.readFile @blogListFilePath, 'utf8', (err, text) =>
 
-  # TODO: _loadAll should be async
-  _loadAll: =>
-    text = fs.readFileSync @blogListFilePath, 'utf8'
-    data = JSON.parse text
-    @nextId = data.nextId
+      if err
+        callback "Error reading topics: #{err}"
+      else
+        data = JSON.parse text
+        @nextId = data.nextId
 
-    topics = []
-    for topic in data.blogs
-      meta = new TopicMeta()
-      meta.id = topic.id
-      meta.title = topic.title
-      meta.url = topic.url
-      meta.summary = topic.summary
-      meta.createdOn = new Date(topic.createdOn)
-      meta.updatedOn = new Date(topic.updatedOn)
-      meta.postedOn = new Date(topic.postedOn)
-      #console.log "#{meta.id} / #{meta.createdOn} / #{meta.updatedOn} / #{meta.postedOn}"
-      topics.push meta
+        topics = []
+        for topic in data.blogs
+          meta = new TopicMeta()
+          meta.id = topic.id
+          meta.title = topic.title
+          meta.url = topic.url
+          meta.summary = topic.summary
+          meta.createdOn = new Date(topic.createdOn)
+          meta.updatedOn = new Date(topic.updatedOn)
+          meta.postedOn = new Date(topic.postedOn)
+          topics.push meta
 
-    # sort by date descending
-    topics.sort (x, y) ->
-      return -1 if x.postedOn > y.postedOn
-      return 1 if x.postedOn < y.postedOn
-      return 0
+        # sort by date descending
+        topics.sort (x, y) ->
+          return -1 if x.postedOn > y.postedOn
+          return 1 if x.postedOn < y.postedOn
+          return 0
 
-    return topics
+        callback null, topics
 
 
+  # This method is sync on purpose. We don't want anyone
+  # else to read/write the file while we are updating it.
   _saveMetaToDisk: (topics) =>
     jsonText = JSON.stringify topics, null, "\t"
     jsonText = '{ "nextId": ' + @nextId + ', "blogs":' + jsonText + '}'
     fs.writeFileSync @blogListFilePath, jsonText, 'utf8'      
 
 
-  getAll: =>
-    return @_loadAll()
+  getAll: (callback) =>
+    @_loadAll callback
 
 
-  getRecent: =>
+  getRecent: (callback) =>
     howMany = 10
-    topics = @_loadAll()
-    if topics.length > howMany
-      topics = topics.slice(0, howMany) 
-    return topics
+    @_loadAll (err, topics) =>
+      if err 
+        callback err
+      else
+        if topics.length > howMany
+          topics = topics.slice(0, howMany)
+        callback null, topics 
 
 
   getNew: =>
@@ -64,50 +74,72 @@ class TopicData
     return {meta: meta, content: ""}
 
 
-  findMeta: (id) =>
-    topics = @_loadAll()
-    for topic in topics
-      if topic.id is id
-        return topic
-    return null
+  findMeta: (id, callback) =>
+    @_loadAll (err, topics) => 
+      if err
+        callback err
+      else
+        err = "Topic id #{id} not found"
+        topic = null
+        for t in topics
+          if t.id is id
+            err = null
+            topic = t
+            break
+        callback err, topic
 
 
-  findMetaByUrl: (url) =>
-    topics = @_loadAll()
-    for topic in topics
-      if topic.url is url
-        return topic
-    return null
+  findMetaByUrl: (url, callback) =>
+    @_loadAll (err, topics) =>
+      if err
+        callback err
+      else
+        err = "Topic url #{url} not found"
+        topic = null
+        for t in topics
+          if t.url is url
+            err = null
+            topic = t
+            break
+        callback err, topic
 
 
   loadContent: (meta, callback) => 
     filePath = @dataPath + '/blog.' + meta.id + '.html'  
-    fs.readFile filePath, 'utf8', (err, text) ->
+    fs.readFile filePath, 'utf8', (err, text) =>
       if err 
         callback "Could not retrieve content for id #{meta.id}"
       else
         callback null, {meta: meta, content: text}
 
 
-  updateMeta: (id, newMeta) =>
-    topics = @_loadAll()
-    for i in [0..topics.length-1]
-      if topics[i].id is id
-        # Update the meta data...
-        topics[i].title = newMeta.title
-        topics[i].url = newMeta.url
-        topics[i].summary = newMeta.summary
-        topics[i].createdOn = newMeta.createdOn
-        topics[i].updatedOn = newMeta.updatedOn
-        topics[i].postedOn = newMeta.postedOn
-        @_saveMetaToDisk topics
-        return topics[i]
-    return null
+  updateMeta: (id, newMeta, callback) =>
+    @_loadAll (err, topics) => 
+      if err
+        callback err
+      else
+        err = "Topid id #{id} not found"
+        topic = null
+        for i in [0..topics.length-1]
+          if topics[i].id is id
+            # Update the meta data...
+            topics[i].title = newMeta.title
+            topics[i].url = newMeta.url
+            topics[i].summary = newMeta.summary
+            topics[i].createdOn = newMeta.createdOn
+            topics[i].updatedOn = newMeta.updatedOn
+            topics[i].postedOn = newMeta.postedOn
+            @_saveMetaToDisk topics
+            # ...and return the updated topic
+            err = null
+            topic = topics[i]
+            break
+        callback err, topic
 
 
   updateContent: (meta, content, callback) =>
     filePath = @dataPath + '/blog.' + meta.id + '.html'  
-    fs.writeFile filePath, content, 'utf8', (err) -> 
+    fs.writeFile filePath, content, 'utf8', (err) => 
       if err 
         callback "Content for topic #{meta.id} could not be saved. Error #{err}"
       else
@@ -115,12 +147,15 @@ class TopicData
 
 
   addNew: (meta, content, callback) =>
-    topics = @_loadAll() 
-    meta.id = @nextId 
-    topics.push meta
-    @nextId++
-    @_saveMetaToDisk topics
-    @updateContent meta, content, callback
+    @_loadAll (err, topics) => 
+      if err
+        callback err
+      else
+        meta.id = @nextId 
+        topics.push meta
+        @nextId++
+        @_saveMetaToDisk topics
+        @updateContent meta, content, callback
 
 
 exports.TopicData = TopicData

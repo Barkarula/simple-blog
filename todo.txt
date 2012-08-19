@@ -1,9 +1,4 @@
-* Done with refactor for TopicModel/TopicData
-
-  Still need to make sure dates are populated
-  correctly on updates and when adding a new
-  topic. See resulting data from unit tests
-
+* Make getAll async
 
 * Topic validation: title must not be duplicate
 
@@ -17,4 +12,3 @@
 
 * A decent editor/use markdown
 
-d instanceof Date && isFinite(d)
