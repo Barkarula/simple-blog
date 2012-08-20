@@ -4,8 +4,8 @@ class TopicModel
   
   @data = null
 
-  constructor: (dataPath) ->
-    @data = new TopicData(dataPath)
+  constructor: (dataOptions) ->
+    @data = new TopicData(dataOptions)
 
 
   _getUrlFromTitle: (title) ->
@@ -41,31 +41,31 @@ class TopicModel
     return if valid then null else errors
 
 
-  getAll: ->
-    return @data.getAll()
+  getAll: (callback) =>
+    @data.getAll callback
 
 
-  getRecent: ->
-    return @data.getRecent()
+  getRecent: (callback) =>
+    @data.getRecent callback
 
 
-  getOne: (id, callback) ->
-    meta = @data.findMeta id
-    if meta is null
-      callback "Invalid ID #{id}"
-    else
-      @data.loadContent meta, callback
+  getOne: (id, callback) =>
+    @data.findMeta id, (err, meta) =>
+      if err 
+        callback err
+      else
+        @data.loadContent meta, callback
 
 
-  getOneByUrl: (url, callback) ->
-    meta = @data.findMetaByUrl url
-    if meta is null
-      callback "Invalid Url #{url}"
-    else
-      @data.loadContent meta, callback
+  getOneByUrl: (url, callback) =>
+    @data.findMetaByUrl url, (err, meta) =>
+      if err 
+        callback err
+      else
+        @data.loadContent meta, callback
 
 
-  getNew: ->
+  getNew: =>
     return @data.getNew()
 
 
@@ -75,33 +75,38 @@ class TopicModel
   save: (topic, callback) =>
 
     # Load the topic from the DB
-    meta = @data.findMeta topic.meta.id
-    if meta is null
-      callback "Could not find topic id #{topic.meta.id}" if meta is null
-    else
-      # Merge the topic that we received with the one 
-      # on the DB
-      topic.meta.createdOn = meta.createdOn
-      topic.meta.updatedOn = new Date()
-      topic.meta.postedOn = if @_isValidDate(meta.postedOn) then meta.postedOn else new Date()
-      topic.meta.url = @_getUrlFromTitle(topic.meta.title)
+    @data.findMeta topic.meta.id, (err, meta) => 
 
-      # Is the topic valid?
-      topic.errors = @_validate(topic)
-      isTopicValid = topic.errors is null
-      if isTopicValid
-        # Update the database (meta+content)
-        meta = @data.updateMeta topic.meta.id, topic.meta
-        @data.updateContent meta, topic.content, callback
+      if err
+        callback err
       else
-        # topic has {meta: X, content: Y, errors: Z}
-        callback topic
+        # Merge the topic that we received with the one 
+        # on the DB
+        topic.meta.createdOn = meta.createdOn
+        topic.meta.updatedOn = new Date()
+        topic.meta.postedOn = if @_isValidDate(meta.postedOn) then meta.postedOn else new Date()
+        topic.meta.url = @_getUrlFromTitle(topic.meta.title)
+
+        # Is the topic valid?
+        topic.errors = @_validate(topic)
+        isTopicValid = topic.errors is null
+        if isTopicValid
+          # Update the meta data...
+          @data.updateMeta topic.meta.id, topic.meta, (err, updatedMeta) =>
+            if err
+              callback err
+            else  
+              # ... and the content
+              @data.updateContent updatedMeta, topic.content, callback
+        else
+          # topic has {meta: X, content: Y, errors: Z}
+          callback null, topic
 
 
   # topic must be in the form 
   # {meta: {title: t, summary: s, ...}, content: c}
   # notice that we don't need an id
-  saveNew: (topic, callback) -> 
+  saveNew: (topic, callback) => 
     # Fill in values required for new topics
     topic.meta.createdOn = new Date()
     topic.meta.updatedOn = new Date()
@@ -116,7 +121,7 @@ class TopicModel
       @data.addNew topic.meta, topic.content, callback
     else
         # topic has {meta: X, content: Y, errors: Z}
-      callback topic
+      callback null, topic
 
 
 exports.TopicModel = TopicModel

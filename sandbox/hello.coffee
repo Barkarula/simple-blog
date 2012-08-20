@@ -1,7 +1,16 @@
-console.log __filename
-console.log __dirname
+test = (options) ->
+  
+  if typeof options is 'object'
+    console.log "object"
+    console.log options.dataPath ? "N/A"
 
-a = [1, 2, 3, 4, 5]
-for i in [0..a.length-1]
-  console.log a[i]
-  break if i is 2
+    if options.createData is true
+      console.log "createData"
+    else
+      console.log "don't create data"
+
+  else 
+    throw "Invalid options object received"
+
+
+test({dataPath: "x", xxcreateData: true})

@@ -84,12 +84,14 @@ viewRecent = (req, res) ->
 	dataPath = res.app.settings.datapath
 	model = new TopicModel dataPath 
 
-	topics = model.getRecent()
-	if topics.length is 0
-		renderError res, "No topics were found"
-	else
-		viewModel = viewModelForTopics topics, "Recent Blog Posts", req.app
-		res.render 'blogRecent', viewModel
+	model.getRecent (err, topics) -> 
+		if err 
+			renderError res, "Error getting recent topics"
+		else if topics.length is 0
+			renderError res, "No topics were found"
+		else
+			viewModel = viewModelForTopics topics, "Recent Blog Posts", req.app
+			res.render 'blogRecent', viewModel
 
 
 viewAll = (req, res) -> 
@@ -97,13 +99,14 @@ viewAll = (req, res) ->
 
 	dataPath = res.app.settings.datapath
 	model = new TopicModel dataPath 
-	topics = model.getAll()
-
-	if topics.length is 0
-		renderError res, "No topics were found"
-	else
-		viewModel = viewModelForTopics topics, "All Blog Posts", req.app
-		res.render 'blogAll', viewModel
+	model.getAll (err, topics) -> 
+		if err 
+			renderError res, "Error getting topics"
+		else if topics.length is 0
+			renderError res, "No topics were found"
+		else
+			viewModel = viewModelForTopics topics, "All Blog Posts", req.app
+			res.render 'blogAll', viewModel
 
 
 edit = (req, res) -> 
@@ -141,20 +144,12 @@ save = (req, res) ->
 		model = new TopicModel dataPath 
 		model.save topic, (err, savedTopic) -> 
 			if err
-				if typeof(err) is 'string' && err.indexOf("Could not find topic id") is 0
-					# this should never happen, but if it does is 
-					# either a bug or a hacker
-					console.log "WTF? Id not found while saving."
-					res.redirect '/blog'
-				else if typeof(err) is 'object'
-					# err has {meta: X, content: Y, errors: Z}
-					console.log "saveTopic failed."
-					# console.dir err
-					res.render 'blogEdit', viewModelForTopic(err, req.app)
-				else
-					console.log "WTF? Whacky error while saving"
-					# console.dir err
-					res.redirect '/blog'
+				# Unexpected error, send user to blogs main page
+				console.log "Error while saving #{err}"
+				res.redirect '/blog'
+			else if typeof savedTopic.errors isnt 'undefined'
+				# Validation error, send user to edit this topic
+				res.render 'blogEdit', viewModelForTopic(savedTopic, req.app)
 			else
 				console.log "Saved, redirecting to /blog/#{savedTopic.meta.url}"
 				res.redirect '/blog/'+ savedTopic.meta.url
@@ -177,10 +172,13 @@ saveNew = (req, res) ->
 	model = new TopicModel dataPath 
 	model.saveNew topic, (err, savedTopic) ->
 		if err
-			# err has {meta: X, content: Y, errors: Z}
-			console.log "saveNewTopic failed."
-			# console.dir err
-			res.render 'blogEdit', viewModelForTopic(err, req.app)
+			# Unexpected error, send user to blogs main page
+			console.log "Error while saving #{err}"
+			res.redirect '/blog'
+		else if typeof savedTopic.errors isnt 'undefined'
+			# Validation error, send user to edit this topic
+			# savedTopic is in the form {meta: X, content: Y, errors: Z}
+			res.render 'blogEdit', viewModelForTopic(savedTopic, req.app)
 		else
 			console.log "New topic added, redirecting to /blog/#{savedTopic.meta.url}"
 			res.redirect '/blog/'+ savedTopic.meta.url

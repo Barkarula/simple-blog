@@ -26,7 +26,7 @@ class TestUtil
     if condition is true
       @_logFail "#{@namespace}#{testName}"
     else
-      @_logFail "#{@namespace}#{testName}"
+      @_logPass "#{@namespace}#{testName}"
 
 
   fail: (testName) =>

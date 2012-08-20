@@ -87,12 +87,11 @@ editBadUrl = ->
 
 editGoodUrl = ->
   req = getBasicRequest()
-  req.params = {topicUrl: "title-3"}
+  req.params = {topicUrl: "title-1"}
 
   res = getBasicResponse()
   res.render = (page, viewModel) ->
     test.passIf page is "blogEdit", "editGoodUrl"
-    #console.log page
 
   blogRoutes.edit req, res
 

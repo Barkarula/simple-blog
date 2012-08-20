@@ -11,10 +11,29 @@ fs = require 'fs'
 
 class TopicData
 
-  constructor: (@dataPath) ->
-    @blogListFilePath = "#{dataPath}/blogs.json"
+  constructor: (options) ->
+
+    if typeof options isnt "object"
+      throw "Invalid options parameter received" 
+
+    if typeof options.dataPath isnt "string"
+      throw "Options object does not have string dataPath property"
+
+    @dataPath = options.dataPath
+    @blogListFilePath = "#{options.dataPath}/blogs.json"
     @nextId = null
-  
+
+    if options.createDataFileIfNotFound is true
+      @_createDataFileIfNotAvailable()
+
+
+  _createDataFileIfNotAvailable: =>
+    if fs.existsSync(@blogListFilePath) is false
+      @nextId = 1
+      topics = []
+      @_saveMetaToDisk topics 
+
+
   # TODO: make sort optional
   _loadAll: (callback) =>
     fs.readFile @blogListFilePath, 'utf8', (err, text) =>
