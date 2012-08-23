@@ -61,8 +61,8 @@ requestToTopic = (req, id) ->
 
 viewOne = (req, res) -> 
 
-	dataPath = res.app.settings.datapath
-	model = new TopicModel dataPath 
+	dataOptions = res.app.settings.dataOptions
+	model = new TopicModel dataOptions 
 	url = req.params.topicUrl
 	console.log "blogRoutes:viewOne #{url}"
 
@@ -81,8 +81,8 @@ viewOne = (req, res) ->
 viewRecent = (req, res) -> 
 	console.log "blogRoutes:viewRecent"
 
-	dataPath = res.app.settings.datapath
-	model = new TopicModel dataPath 
+	dataOptions = res.app.settings.dataOptions
+	model = new TopicModel dataOptions 
 
 	model.getRecent (err, topics) -> 
 		if err 
@@ -97,8 +97,9 @@ viewRecent = (req, res) ->
 viewAll = (req, res) -> 
 	console.log "blogRoutes:viewAll"
 
-	dataPath = res.app.settings.datapath
-	model = new TopicModel dataPath 
+	dataOptions = res.app.settings.dataOptions
+	model = new TopicModel dataOptions 
+
 	model.getAll (err, topics) -> 
 		if err 
 			renderError res, "Error getting topics"
@@ -118,8 +119,9 @@ edit = (req, res) ->
 		return
 	console.log "blogRoutes:edit #{url}"
 
-	dataPath = res.app.settings.datapath
-	model = new TopicModel dataPath 
+	dataOptions = res.app.settings.dataOptions
+	model = new TopicModel dataOptions 
+
 	model.getOneByUrl url, (err, topic) -> 
 		if err 
 			renderNotFound res, err
@@ -136,12 +138,12 @@ save = (req, res) ->
 		return
 	console.log "blogRoutes:save #{id}"
 
-	dataPath = res.app.settings.datapath
 	topic = requestToTopic req, id
 	if isNaN(topic.meta.id)
 		renderError res, "Invalid id #{id} detected on save."
 	else
-		model = new TopicModel dataPath 
+		dataOptions = res.app.settings.dataOptions
+		model = new TopicModel dataOptions 
 		model.save topic, (err, savedTopic) -> 
 			if err
 				# Unexpected error, send user to blogs main page
@@ -157,8 +159,8 @@ save = (req, res) ->
 
 editNew = (req, res) ->
 	console.log "blogRoutes:editNew"
-	dataPath = res.app.settings.datapath
-	model = new TopicModel dataPath 
+	dataOptions = res.app.settings.dataOptions
+	model = new TopicModel dataOptions 
 	topic = model.getNew()
 	# console.dir viewModelForTopic(topic, req.app)
 	res.render 'blogEdit', viewModelForTopic(topic, req.app)
@@ -168,8 +170,9 @@ saveNew = (req, res) ->
 	console.log "blogRoutes:saveNew"
 	id = null
 	topic = requestToTopic req, id
-	dataPath = res.app.settings.datapath
-	model = new TopicModel dataPath 
+	dataOptions = res.app.settings.dataOptions
+	model = new TopicModel dataOptions 
+
 	model.saveNew topic, (err, savedTopic) ->
 		if err
 			# Unexpected error, send user to blogs main page

@@ -1,4 +1,6 @@
-* Make getAll async
+
+* Start adding real topics once we've got the whole
+thing working with the data_test for unit tests
 
 * Topic validation: title must not be duplicate
 

@@ -1,17 +1,35 @@
+# Tests for blogRoutes class.
+#
+# Notice that these tests must be run in order
+# in order so that the first ones add data that 
+# the next ones can use.
+
+fs = require 'fs'
 blogRoutes = require './blogRoutes'
 {TestUtil}  = require '../util/testUtil'
 
 verbose = true
 test = new TestUtil("blogRoutesTest", verbose)
 
+dataOptions = { 
+  dataPath: __dirname + "/../data_test"
+  createDataFileIfNotFound: true
+}
+
 
 getBasicApp = ->
   app: { 
     settings: { 
-      datapath: __dirname + "/../data", 
+      dataOptions: dataOptions
       isReadOnly: false 
     } 
   }
+
+
+# Delete the current data file (if any)
+dataFile = dataOptions.dataPath + '/blogs.json'
+if fs.existsSync dataFile
+  fs.unlinkSync dataFile
 
 
 getBasicRequest = ->
@@ -22,13 +40,26 @@ getBasicResponse = ->
   return getBasicApp()
 
 
+saveNew = ->
+  req = getBasicRequest()
+  req.body = {title: "title one", summary: "new summary", content: "new content"}
+
+  res = getBasicResponse()
+  res.redirect = (url) ->
+    test.passIf url is "/blog/title-one", "saveNew"
+    viewOneValid() # fire next test
+
+  blogRoutes.saveNew req, res
+
+
 viewOneValid = ->
   req = getBasicRequest()
-  req.params = { topicUrl: "title-1" }
+  req.params = { topicUrl: "title-one" }
 
   res = getBasicResponse()
   res.render = (page, viewModel) ->
     test.passIf page is "blogOne", "viewOneValid"
+    viewOneInvalid() # fire next test
 
   blogRoutes.viewOne req, res
 
@@ -40,6 +71,7 @@ viewOneInvalid = ->
   res = getBasicResponse()
   res.render = (page, viewModel) ->
     test.passIf page is "404", "viewOneInvalid"
+    viewRecent() # fire next test
 
   blogRoutes.viewOne req, res
 
@@ -49,7 +81,7 @@ viewRecent = ->
   res = getBasicResponse()
   res.render = (page, viewModel) ->
     test.passIf page is "blogRecent", "viewRecent"
-    #console.dir data
+    viewAll() # fire next test
 
   blogRoutes.viewRecent req, res
 
@@ -59,8 +91,8 @@ viewAll = ->
   res = getBasicResponse()
   res.render = (page, viewModel) ->
     test.passIf page is "blogAll", "viewAll"
-    #console.dir data
-    
+    editNoUrl()
+
   blogRoutes.viewAll req, res
 
 
@@ -70,7 +102,8 @@ editNoUrl = ->
   res = getBasicResponse()
   res.redirect = (redirUrl) ->
     test.passIf redirUrl is "/blog", "editNoUrl"
-    
+    editBadUrl()
+
   blogRoutes.edit req, res
 
 
@@ -81,17 +114,19 @@ editBadUrl = ->
   res = getBasicResponse()
   res.render = (page, viewModel) ->
     test.passIf page is "404", "editBadUrl"
+    editGoodUrl() 
 
   blogRoutes.edit req, res
 
 
 editGoodUrl = ->
   req = getBasicRequest()
-  req.params = {topicUrl: "title-1"}
+  req.params = {topicUrl: "title-one"}
 
   res = getBasicResponse()
   res.render = (page, viewModel) ->
     test.passIf page is "blogEdit", "editGoodUrl"
+    saveNoId()
 
   blogRoutes.edit req, res
 
@@ -104,6 +139,7 @@ saveNoId = ->
   res = getBasicResponse()
   res.redirect = (redirUrl) ->
     test.passIf redirUrl is "/blog", "saveNoId"
+    saveBadId()
 
   blogRoutes.save req, res
 
@@ -117,6 +153,7 @@ saveBadId = ->
   res = getBasicResponse()
   res.render = (page, viewModel) ->
     test.passIf page is "500", "saveBadId"
+    saveNonExistingId()
 
   blogRoutes.save req, res
 
@@ -130,6 +167,7 @@ saveNonExistingId = ->
   res = getBasicResponse()
   res.redirect = (url) ->
     test.passIf url is "/blog", "saveNonExistingId"
+    saveNoBody()
 
   blogRoutes.save req, res
 
@@ -137,11 +175,12 @@ saveNonExistingId = ->
 saveNoBody = ->
 
   req = getBasicRequest()
-  req.params = {id: 2}
+  req.params = {id: 1}
 
   res = getBasicResponse()
   res.render = (page, viewModel) ->
     test.passIf page is "blogEdit" and viewModel.topic.errors.emptyTitle, "saveNoBody"
+    saveIncompleteData()
 
   blogRoutes.save req, res
 
@@ -149,7 +188,7 @@ saveNoBody = ->
 saveIncompleteData = ->
 
   req = getBasicRequest()
-  req.params = {id: 2}
+  req.params = {id: 1}
   req.body = {title: "", summary: "s1", content: ""}
 
   res = getBasicResponse()
@@ -157,6 +196,7 @@ saveIncompleteData = ->
     test.passIf page is "blogEdit" and 
       viewModel.topic.errors.emptyTitle and 
       viewModel.topic.errors.emptyContent, "saveIncompleteData"
+      saveCompleteData()
 
   blogRoutes.save req, res
 
@@ -164,13 +204,13 @@ saveIncompleteData = ->
 saveCompleteData = ->
 
   req = getBasicRequest()
-  req.params = {id: 2}
+  req.params = {id: 1}
   req.body = {title: "updated title 2", summary: "s1", content: "c2"}
 
   res = getBasicResponse()
   res.redirect = (url) ->
     test.passIf url is "/blog/updated-title-2", "saveCompleteData"
-    # console.log url
+    editNew()
 
   blogRoutes.save req, res
 
@@ -181,20 +221,9 @@ editNew = ->
   res = getBasicResponse()
   res.render = (page, viewModel) ->
     test.passIf page is "blogEdit", "editNew"
-    #console.log data
+    saveNewWithErrors()
 
   blogRoutes.editNew req, res
-
-
-saveNew = ->
-  req = getBasicRequest()
-  req.body = {title: "new title", summary: "new summary", content: "new content"}
-
-  res = getBasicResponse()
-  res.redirect = (url) ->
-    test.passIf url is "/blog/new-title", "saveNew"
-
-  blogRoutes.saveNew req, res
 
 
 saveNewWithErrors = ->
@@ -209,24 +238,7 @@ saveNewWithErrors = ->
   blogRoutes.saveNew req, res
 
 
-# ------------------
-viewOneValid()
-viewOneInvalid()
-viewRecent()
-viewAll()
-
-editNoUrl()
-editBadUrl()
-editGoodUrl()
-
-saveNoId()
-saveBadId()
-saveNonExistingId()
-saveNoBody()
-saveIncompleteData()
-saveCompleteData()
-
-editNew()
-
+# -------------------
+# Kick off the tests
 saveNew()
-saveNewWithErrors()
+

@@ -14,6 +14,7 @@ class TopicData
   constructor: (options) ->
 
     if typeof options isnt "object"
+      console.dir options
       throw "Invalid options parameter received" 
 
     if typeof options.dataPath isnt "string"
