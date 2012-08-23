@@ -38,6 +38,10 @@ app.get '/', siteRoutes.home
 app.get '/about', siteRoutes.about
 
 app.set "isReadOnly", if app.settings.env is "production" then true else false
+app.set "dataOptions", { 
+  dataPath: __dirname + "/data"
+  createDataFileIfNotFound: false
+}
 
 if not app.settings.isReadOnly
   # Only enable edits when in development (local)

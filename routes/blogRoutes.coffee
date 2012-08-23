@@ -1,9 +1,9 @@
 fs = require 'fs'
 {TopicModel} = require '../models/topicModel'
 
-console = {}
-console.log = (x) ->
-console.dir = (x) ->
+# console = {}
+# console.log = (x) ->
+# console.dir = (x) ->
 
 
 renderNotFound = (res, error) -> 
