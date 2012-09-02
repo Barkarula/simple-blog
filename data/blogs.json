@@ -1,4 +1,4 @@
-{ "nextId": 21, "blogs":[
+{ "nextId": 30, "blogs":[
 	{
 		"id": 1,
 		"title": "A Decaf Introduction to CoffeeScript",
@@ -173,10 +173,91 @@
 	{
 		"id": 20,
 		"title": "Password Recovery in an ASP.NET MVC Project",
-		"summary": "This post describes how to add the option to reset your password for an ASP.NET MVC project. ",
-		"postedOn": "2010-05-17T03:13:00.000Z",
 		"createdOn": "2012-09-02T03:14:06.702Z",
 		"updatedOn": "2012-09-02T03:14:06.702Z",
-		"url": "password-recovery-in-an-asp-net-mvc-project"
+		"postedOn": "2010-05-17T03:13:00.000Z",
+		"url": "password-recovery-in-an-asp-net-mvc-project",
+		"summary": "This post describes how to add the option to reset your password for an ASP.NET MVC project. "
+	},
+	{
+		"id": 27,
+		"title": "Expose your data as an RSS Feed with .NET 3.5 ",
+		"createdOn": "2012-09-02T03:57:51.447Z",
+		"updatedOn": "2012-09-02T03:57:51.447Z",
+		"postedOn": "2009-01-07T03:14:00.000Z",
+		"url": "expose-your-data-as-an-rss-feed-with--net-3-5-",
+		"summary": "How to expose your data as an RSS Feed with .NET 3.5"
+	},
+	{
+		"id": 28,
+		"title": "Flickr Library in C#",
+		"createdOn": "2012-09-02T04:00:17.680Z",
+		"updatedOn": "2012-09-02T04:00:17.680Z",
+		"postedOn": "2008-11-30T17:27:00.000Z",
+		"url": "flickr-library-in-csharp",
+		"summary": "A light-weight C# class library that provides the ability to retrieve the list of photosets in your Flickr account and retrieve information about the photos in a photoset."
+	},
+	{
+		"id": 24,
+		"title": "DevConnections 2008",
+		"createdOn": "2012-09-02T03:47:41.188Z",
+		"updatedOn": "2012-09-02T03:47:41.188Z",
+		"postedOn": "2008-11-11T10:03:00.000Z",
+		"url": "devconnections-2008",
+		"summary": "Summary of sessions that I attended at DevConnections 2008"
+	},
+	{
+		"id": 23,
+		"title": "Computer Museum (Paris)",
+		"createdOn": "2012-09-02T03:39:50.009Z",
+		"updatedOn": "2012-09-02T03:39:50.009Z",
+		"postedOn": "2008-09-03T13:11:00.000Z",
+		"url": "computer-museum-(paris)",
+		"summary": "Pictures from the Computer Museum in Paris."
+	},
+	{
+		"id": 25,
+		"title": "DotWiki 2.0",
+		"createdOn": "2012-09-02T03:50:10.990Z",
+		"updatedOn": "2012-09-02T03:51:50.816Z",
+		"postedOn": "2008-07-27T14:59:00.000Z",
+		"url": "dotwiki-2-0",
+		"summary": "DotWiki 2.0 released"
+	},
+	{
+		"id": 26,
+		"title": "Estimates on Software Projects",
+		"createdOn": "2012-09-02T03:54:28.095Z",
+		"updatedOn": "2012-09-02T03:54:28.095Z",
+		"postedOn": "2008-01-09T04:25:00.000Z",
+		"url": "estimates-on-software-projects",
+		"summary": "Software Estimates is one of the most controversial topics on software development, including the process to calculate them and the value that they add to the software development process. In this post I give a few guidelines on how to go about them.\r\n"
+	},
+	{
+		"id": 21,
+		"title": "Binary Tree in C#",
+		"createdOn": "2012-09-02T03:27:00.815Z",
+		"updatedOn": "2012-09-02T03:27:00.815Z",
+		"postedOn": "2006-11-27T14:42:00.000Z",
+		"url": "binary-tree-in-csharp",
+		"summary": "A C# program to draw a binary tree. This program implements a binary tree class using C# Generics and also a Windows Form application to draw it on the screen."
+	},
+	{
+		"id": 22,
+		"title": "Book review: Lean Software Development",
+		"createdOn": "2012-09-02T03:29:12.307Z",
+		"updatedOn": "2012-09-02T03:29:12.307Z",
+		"postedOn": "2006-05-08T06:38:00.000Z",
+		"url": "book-review:-lean-software-development",
+		"summary": "A review of the book Lean Software Development by Mary and Tom Poppendieck."
+	},
+	{
+		"id": 29,
+		"title": "Flow: Second Generation Lean Product Development",
+		"summary": "A review of the book The Principles of Product Development Flow by Donald Reinertsen",
+		"postedOn": "2010-03-01T03:28:00.000Z",
+		"createdOn": "2012-09-02T04:03:27.028Z",
+		"updatedOn": "2012-09-02T04:03:27.028Z",
+		"url": "flow:-second-generation-lean-product-development"
 	}
 ]}
