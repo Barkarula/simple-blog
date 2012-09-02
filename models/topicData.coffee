@@ -56,6 +56,9 @@ class TopicData
           meta.updatedOn = new Date(topic.updatedOn)
           meta.postedOn = new Date(topic.postedOn)
           topics.push meta
+          # console.log "------"
+          # console.dir topic
+          # console.dir meta
 
         # sort by date descending
         topics.sort (x, y) ->

@@ -71,6 +71,7 @@ viewOne = (req, res) ->
 			if err
 				renderNotFound res, err
 			else
+				#console.dir topic
 				res.render 'blogOne', viewModelForTopic(topic, req.app)
 	else
 		# we shouldn't get here
@@ -87,8 +88,8 @@ viewRecent = (req, res) ->
 	model.getRecent (err, topics) -> 
 		if err 
 			renderError res, "Error getting recent topics"
-		else if topics.length is 0
-			renderError res, "No topics were found"
+		# else if topics.length is 0
+		# 	renderError res, "No topics were found"
 		else
 			viewModel = viewModelForTopics topics, "Recent Blog Posts", req.app
 			res.render 'blogRecent', viewModel
@@ -139,6 +140,7 @@ save = (req, res) ->
 	console.log "blogRoutes:save #{id}"
 
 	topic = requestToTopic req, id
+	#console.dir topic
 	if isNaN(topic.meta.id)
 		renderError res, "Invalid id #{id} detected on save."
 	else

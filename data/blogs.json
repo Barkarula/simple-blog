@@ -1,101 +1,182 @@
-{ "nextId": 30, "blogs":[
-	{
-		"id": 29,
-		"title": "topic XYZ",
-		"createdOn": "2012-08-19T20:45:50.146Z",
-		"updatedOn": "2012-08-19T20:45:50.146Z",
-		"postedOn": "2012-08-19T20:45:35.000Z",
-		"url": "topic-xyz",
-		"summary": "Topic xyz"
-	},
-	{
-		"id": 28,
-		"title": "new title",
-		"createdOn": "2012-08-19T20:42:36.971Z",
-		"updatedOn": "2012-08-19T20:42:36.971Z",
-		"postedOn": "2012-08-19T20:42:36.971Z",
-		"url": "new-title",
-		"summary": "new summary"
-	},
-	{
-		"id": 27,
-		"title": "topic ABC",
-		"createdOn": "2012-08-19T20:42:36.342Z",
-		"updatedOn": "2012-08-19T20:46:04.341Z",
-		"postedOn": "2012-08-19T20:42:36.342Z",
-		"url": "topic-abc",
-		"summary": "new summary for test topic"
-	},
-	{
-		"id": 26,
-		"title": "new title",
-		"createdOn": "2012-08-19T20:42:35.576Z",
-		"updatedOn": "2012-08-19T20:42:35.577Z",
-		"postedOn": "2012-08-19T20:42:35.577Z",
-		"url": "new-title",
-		"summary": "new summary"
-	},
-	{
-		"id": 25,
-		"title": "new title",
-		"createdOn": "2012-08-19T20:41:51.780Z",
-		"updatedOn": "2012-08-19T20:41:51.780Z",
-		"postedOn": "2012-08-19T20:41:51.780Z",
-		"url": "new-title",
-		"summary": "new summary"
-	},
-	{
-		"id": 24,
-		"title": "new title",
-		"createdOn": "2012-08-19T20:34:17.759Z",
-		"updatedOn": "2012-08-19T20:34:17.759Z",
-		"postedOn": "2012-08-19T20:34:17.759Z",
-		"url": "new-title",
-		"summary": "new summary"
-	},
-	{
-		"id": 23,
-		"title": "new title",
-		"createdOn": "2012-08-19T20:32:14.951Z",
-		"updatedOn": "2012-08-19T20:32:14.951Z",
-		"postedOn": "2012-08-19T20:32:14.951Z",
-		"url": "new-title",
-		"summary": "new summary"
-	},
-	{
-		"id": 22,
-		"title": "new test topic",
-		"createdOn": "2012-08-19T19:54:51.318Z",
-		"updatedOn": "2012-08-19T19:54:51.318Z",
-		"postedOn": "2012-08-19T19:54:51.318Z",
-		"url": "new-test-topic",
-		"summary": "new summary for test topic"
-	},
-	{
-		"id": 21,
-		"title": "new title",
-		"createdOn": "2012-08-19T19:54:48.011Z",
-		"updatedOn": "2012-08-19T19:54:48.011Z",
-		"postedOn": "2012-08-19T19:54:48.011Z",
-		"url": "new-title",
-		"summary": "new summary"
-	},
+{ "nextId": 21, "blogs":[
 	{
 		"id": 1,
-		"title": "title 1",
-		"createdOn": "2012-08-01T02:21:43.662Z",
-		"updatedOn": "2012-08-01T02:13:23.627Z",
-		"postedOn": "2012-08-01T02:13:00.000Z",
-		"url": "title-1",
-		"summary": "summary 1"
+		"title": "A Decaf Introduction to CoffeeScript",
+		"createdOn": "2012-09-02T00:48:28.234Z",
+		"updatedOn": "2012-09-02T02:45:03.498Z",
+		"postedOn": "2012-06-19T01:22:00.000Z",
+		"url": "a-decaf-introduction-to-coffeescript",
+		"summary": "Slides to the Decaf Introduction to CoffeeScript presentation that I gave at Penn State Web Conference and Pittsburgh Tech Fest 2012"
 	},
 	{
 		"id": 2,
-		"title": "updated title 2",
-		"createdOn": "1970-01-01T00:00:00.000Z",
-		"updatedOn": "2012-08-19T20:42:36.978Z",
-		"postedOn": "1970-01-01T00:00:00.000Z",
-		"url": "updated-title-2",
-		"summary": "s1"
+		"title": "Compiling CoffeeScript from Sublime Text 2",
+		"createdOn": "2012-09-02T00:55:43.898Z",
+		"updatedOn": "2012-09-02T00:55:43.898Z",
+		"postedOn": "2012-05-23T01:22:00.000Z",
+		"url": "compiling-coffeescript-from-sublime-text-2",
+		"summary": "A sample configuration file for Sublime Text 2 to compile CoffeeScript files"
+	},
+	{
+		"id": 3,
+		"title": "Drawing a Binary Tree in CoffeeScript",
+		"createdOn": "2012-09-02T01:21:06.915Z",
+		"updatedOn": "2012-09-02T02:53:46.853Z",
+		"postedOn": "2012-05-22T02:24:00.000Z",
+		"url": "drawing-a-binary-tree-in-coffeescript",
+		"summary": "A small CoffeeScript program to draw binary trees on a web page. The page is drawn using the HTML 5 Canvas element."
+	},
+	{
+		"id": 4,
+		"title": "JavaScript Async Programming for Sync Heads",
+		"createdOn": "2012-09-02T01:34:26.653Z",
+		"updatedOn": "2012-09-02T03:08:58.954Z",
+		"postedOn": "2012-04-20T00:14:00.000Z",
+		"url": "javascript-async-programming-for-sync-heads",
+		"summary": "This blog post compares how a particular synchronous piece of server side JavaScript code in Node.js looks and feels against against its asynchronous counterpart."
+	},
+	{
+		"id": 5,
+		"title": "Web Development on the Mac OS X (part II)",
+		"createdOn": "2012-09-02T01:37:59.932Z",
+		"updatedOn": "2012-09-02T01:37:59.932Z",
+		"postedOn": "2012-04-09T02:10:00.000Z",
+		"url": "web-development-on-the-mac-os-x-(part-ii)",
+		"summary": "Last year I blogged about my first impressions using a Mac for web development from the point of view of somebody with a strong Windows/C# background. This blog post is a long overdue continuation to that post with my thoughts on the subject 18 months later.\r\n"
+	},
+	{
+		"id": 6,
+		"title": "Functional Asynchronicity Explained",
+		"createdOn": "2012-09-02T01:43:21.272Z",
+		"updatedOn": "2012-09-02T02:15:26.495Z",
+		"postedOn": "2012-01-29T02:52:00.000Z",
+		"url": "functional-asynchronicity-explained",
+		"summary": "Understanding setTimeout in JavaScript and how CoffeeScript \"do\" keyword helps when making asynchronous calls inside a loop."
+	},
+	{
+		"id": 7,
+		"title": "Sliding-in a Full Page Panel with CSS and jQuery",
+		"createdOn": "2012-09-02T01:57:47.430Z",
+		"updatedOn": "2012-09-02T02:14:42.591Z",
+		"postedOn": "2011-11-22T04:13:00.000Z",
+		"url": "sliding-in-a-full-page-panel-with-css-and-jquery",
+		"summary": "In this blog post I show how to use CSS and jQuery to slide-in a panel \r\nfull page on top of another and then slide back in the original content."
+	},
+	{
+		"id": 8,
+		"title": "Future Directions for C# and Visual Basic",
+		"createdOn": "2012-09-02T02:02:43.699Z",
+		"updatedOn": "2012-09-02T03:05:39.881Z",
+		"postedOn": "2011-09-15T16:34:00.000Z",
+		"url": "future-directions-for-csharp-and-visual-basic",
+		"summary": "These are my notes from Anders Hejlsberg session on Future Directions for C# and Visual Basic at Build Windows 2011\r\n"
+	},
+	{
+		"id": 9,
+		"title": " 8 Traits of Great Metro Style Apps",
+		"createdOn": "2012-09-02T02:04:07.285Z",
+		"updatedOn": "2012-09-02T02:11:44.617Z",
+		"postedOn": "2011-09-13T20:00:00.000Z",
+		"url": "-8-traits-of-great-metro-style-apps",
+		"summary": "These are my notes from Jensen Harris session at Build Windows conference on \r\nTuesday September 13th, 2011.  Jensen is the Director of Program Management for the Microsoft Windows User Experience Team."
+	},
+	{
+		"id": 10,
+		"title": " Simple Branching Strategies for Team Foundation Server",
+		"createdOn": "2012-09-02T02:40:53.462Z",
+		"updatedOn": "2012-09-02T02:40:53.462Z",
+		"postedOn": "2011-08-28T01:43:00.000Z",
+		"url": "-simple-branching-strategies-for-team-foundation-server",
+		"summary": "In this blog post I describe some branching strategies that I've found useful when using traditional source control systems like Team Foundation Server (TFS)."
+	},
+	{
+		"id": 11,
+		"title": " Running Visual Studio inside Mac OS X",
+		"createdOn": "2012-09-02T02:43:12.841Z",
+		"updatedOn": "2012-09-02T02:44:07.806Z",
+		"postedOn": "2011-08-27T01:55:00.000Z",
+		"url": "-running-visual-studio-inside-mac-os-x",
+		"summary": "A quick explanation on how I got Microsoft Visual Studio Web Developer Express on my MacAir by using a Virtual Machine with VirtualBox"
+	},
+	{
+		"id": 12,
+		"title": "Finder Error -36 on a NAS",
+		"createdOn": "2012-09-02T02:48:11.093Z",
+		"updatedOn": "2012-09-02T03:05:12.815Z",
+		"postedOn": "2011-06-06T03:56:00.000Z",
+		"url": "finder-error--36-on-a-nas",
+		"summary": "A work around for the annoying Finder Error -36 when working with a NAS"
+	},
+	{
+		"id": 13,
+		"title": "Drawing a Binary Tree in Ruby",
+		"createdOn": "2012-09-02T02:51:09.662Z",
+		"updatedOn": "2012-09-02T02:53:01.268Z",
+		"postedOn": "2011-04-11T03:59:00.000Z",
+		"url": "drawing-a-binary-tree-in-ruby",
+		"summary": "A small Ruby program to draw binary trees on a web page. This program uses Sinatra to host the web page and HTML 5 Canvas element to do the drawing. "
+	},
+	{
+		"id": 14,
+		"title": "Git Basics",
+		"createdOn": "2012-09-02T02:55:46.301Z",
+		"updatedOn": "2012-09-02T02:55:46.301Z",
+		"postedOn": "2011-02-21T03:06:00.000Z",
+		"url": "git-basics",
+		"summary": "A beginners' guide (written by a git beginner) on how to perform basic version control operations with git including initializing a repository, adding files to it, and using branches."
+	},
+	{
+		"id": 15,
+		"title": "Ruby Development on the Mac OS X",
+		"createdOn": "2012-09-02T02:58:23.920Z",
+		"updatedOn": "2012-09-02T03:06:19.691Z",
+		"postedOn": "2011-01-24T05:21:00.000Z",
+		"url": "ruby-development-on-the-mac-os-x",
+		"summary": "My experiences getting started with web development on a Mac from somebody with a strong Windows background."
+	},
+	{
+		"id": 16,
+		"title": "Returning HTTP 404 in ASP.NET MVC",
+		"createdOn": "2012-09-02T03:00:55.588Z",
+		"updatedOn": "2012-09-02T03:00:55.588Z",
+		"postedOn": "2010-11-29T05:13:00.000Z",
+		"url": "returning-http-404-in-asp-net-mvc",
+		"summary": "How to properly handle page not found errors in ASP.NET MVC project by returning the proper HTTP status code."
+	},
+	{
+		"id": 17,
+		"title": "Log4net Thread-Safe but not Process-Safe",
+		"createdOn": "2012-09-02T03:03:48.961Z",
+		"updatedOn": "2012-09-02T03:03:48.961Z",
+		"postedOn": "2010-11-08T02:10:00.000Z",
+		"url": "log4net-thread-safe-but-not-process-safe",
+		"summary": "How I troubleshooted an issue where log4net was logging some entries but not others in a ASP.NET MVC application."
+	},
+	{
+		"id": 18,
+		"title": "Encrypt and Decrypt a string in C#",
+		"createdOn": "2012-09-02T03:08:04.978Z",
+		"updatedOn": "2012-09-02T03:08:04.978Z",
+		"postedOn": "2010-10-29T03:46:00.000Z",
+		"url": "encrypt-and-decrypt-a-string-in-csharp",
+		"summary": "This blog posts presents an easy to use C# class to encrypt and decrypt strings in .NET."
+	},
+	{
+		"id": 19,
+		"title": "AJAX calls with jQuery in ASP.NET MVC",
+		"createdOn": "2012-09-02T03:11:20.299Z",
+		"updatedOn": "2012-09-02T03:11:20.299Z",
+		"postedOn": "2010-09-27T00:53:00.000Z",
+		"url": "ajax-calls-with-jquery-in-asp-net-mvc",
+		"summary": "In this blog post I show how to execute AJAX calls with jQuery from an ASP.NET MVC application. The first example shows how to do it with an HTTP GET call and the second one uses an HTTP POST call. Both examples use JSON in the return type.\r\n"
+	},
+	{
+		"id": 20,
+		"title": "Password Recovery in an ASP.NET MVC Project",
+		"summary": "This post describes how to add the option to reset your password for an ASP.NET MVC project. ",
+		"postedOn": "2010-05-17T03:13:00.000Z",
+		"createdOn": "2012-09-02T03:14:06.702Z",
+		"updatedOn": "2012-09-02T03:14:06.702Z",
+		"url": "password-recovery-in-an-asp-net-mvc-project"
 	}
 ]}
