@@ -2,8 +2,6 @@
 
 * RSS feed
 
-* Handle corrupted json list
-
 * Session & authentication
 
 * Versioning topics

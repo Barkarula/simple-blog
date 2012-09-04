@@ -1,18 +1,21 @@
 fs = require 'fs'
 {TopicModel} = require '../models/topicModel'
+{Logger} = require '../util/logger'
 
-# console = {}
-# console.log = (x) ->
-# console.dir = (x) ->
+
+_normalizeTopicTitle = (title) ->
+	title = title.trim().toLowerCase()
+	title = title.replace('.aspx', '')
+	title
 
 
 renderNotFound = (res, error) -> 
-	console.log "renderNotFound #{error}"
+	Logger.error "renderNotFound #{error}"
 	res.render '404', {status: 404, message: error}
 
 
 renderError = (res, error) ->
-	console.log "renderError #{error}"
+	Logger.error "renderError #{error}"
 	res.render '500', {status: 500, message: error}
 
 
@@ -64,48 +67,51 @@ viewOne = (req, res) ->
 	dataOptions = res.app.settings.dataOptions
 	model = new TopicModel dataOptions 
 	url = req.params.topicUrl
-	console.log "blogRoutes:viewOne #{url}"
+	Logger.info "blogRoutes:viewOne #{url}"
 
 	if url
 		model.getOneByUrl url, (err, topic) ->  
 			if err
-				renderNotFound res, err
+				normalizedTitle = _normalizeTopicTitle(url)
+				model.getOneByUrl normalizedTitle, (err2, topic2) ->
+					if err2
+						renderNotFound res, err
+					else
+						Logger.info "Redirecting to #{normalizedTitle}"
+						res.redirect '/blog/' + normalizedTitle, 301
 			else
-				#console.dir topic
 				res.render 'blogOne', viewModelForTopic(topic, req.app)
 	else
 		# we shouldn't get here
-		console.log "viewOne without a URL was detected"
+		Logger.warn "viewOne without a URL was detected"
 		viewRecent()
 
 
 viewRecent = (req, res) -> 
-	console.log "blogRoutes:viewRecent"
+	Logger.info "blogRoutes:viewRecent"
 
 	dataOptions = res.app.settings.dataOptions
 	model = new TopicModel dataOptions 
 
 	model.getRecent (err, topics) -> 
 		if err 
+			Logger.error err
 			renderError res, "Error getting recent topics"
-		# else if topics.length is 0
-		# 	renderError res, "No topics were found"
 		else
 			viewModel = viewModelForTopics topics, "Recent Blog Posts", req.app
 			res.render 'blogRecent', viewModel
 
 
 viewAll = (req, res) -> 
-	console.log "blogRoutes:viewAll"
+	Logger.info "blogRoutes:viewAll"
 
 	dataOptions = res.app.settings.dataOptions
 	model = new TopicModel dataOptions 
 
 	model.getAll (err, topics) -> 
 		if err 
+			Logger.error err
 			renderError res, "Error getting topics"
-		else if topics.length is 0
-			renderError res, "No topics were found"
 		else
 			viewModel = viewModelForTopics topics, "All Blog Posts", req.app
 			res.render 'blogAll', viewModel
@@ -115,16 +121,17 @@ edit = (req, res) ->
 
 	url = req.params.topicUrl
 	if url is undefined
-		console.log 'Edit without a URL was detected. Redirecting to blog list.'
+		Logger.warn 'Edit without a URL was detected. Redirecting to blog list.'
 		res.redirect '/blog'
 		return
-	console.log "blogRoutes:edit #{url}"
+	Logger.info "blogRoutes:edit #{url}"
 
 	dataOptions = res.app.settings.dataOptions
 	model = new TopicModel dataOptions 
 
 	model.getOneByUrl url, (err, topic) -> 
-		if err 
+		if err
+			Logger.error err
 			renderNotFound res, err
 		else 
 			res.render 'blogEdit', viewModelForTopic(topic, req.app)
@@ -134,13 +141,12 @@ save = (req, res) ->
 
 	id = req.params.id
 	if id is undefined
-		console.log 'Save without an Id was detected. Redirecting to blog list.'
+		Logger.warn 'Save without an Id was detected. Redirecting to blog list.'
 		res.redirect '/blog'
 		return
-	console.log "blogRoutes:save #{id}"
+	Logger.info "blogRoutes:save #{id}"
 
 	topic = requestToTopic req, id
-	#console.dir topic
 	if isNaN(topic.meta.id)
 		renderError res, "Invalid id #{id} detected on save."
 	else
@@ -149,27 +155,26 @@ save = (req, res) ->
 		model.save topic, (err, savedTopic) -> 
 			if err
 				# Unexpected error, send user to blogs main page
-				console.log "Error while saving #{err}"
+				Logger.warn "Error while saving: #{err}"
 				res.redirect '/blog'
 			else if typeof savedTopic.errors isnt 'undefined'
 				# Validation error, send user to edit this topic
 				res.render 'blogEdit', viewModelForTopic(savedTopic, req.app)
 			else
-				console.log "Saved, redirecting to /blog/#{savedTopic.meta.url}"
+				Logger.info "Saved, redirecting to /blog/#{savedTopic.meta.url}"
 				res.redirect '/blog/'+ savedTopic.meta.url
 
 
 editNew = (req, res) ->
-	console.log "blogRoutes:editNew"
+	Logger.info "blogRoutes:editNew"
 	dataOptions = res.app.settings.dataOptions
 	model = new TopicModel dataOptions 
 	topic = model.getNew()
-	# console.dir viewModelForTopic(topic, req.app)
 	res.render 'blogEdit', viewModelForTopic(topic, req.app)
 
 
 saveNew = (req, res) -> 
-	console.log "blogRoutes:saveNew"
+	Logger.info "blogRoutes:saveNew"
 	id = null
 	topic = requestToTopic req, id
 	dataOptions = res.app.settings.dataOptions
@@ -178,14 +183,14 @@ saveNew = (req, res) ->
 	model.saveNew topic, (err, savedTopic) ->
 		if err
 			# Unexpected error, send user to blogs main page
-			console.log "Error while saving #{err}"
+			Logger.warn "Error while saving #{err}"
 			res.redirect '/blog'
 		else if typeof savedTopic.errors isnt 'undefined'
 			# Validation error, send user to edit this topic
 			# savedTopic is in the form {meta: X, content: Y, errors: Z}
 			res.render 'blogEdit', viewModelForTopic(savedTopic, req.app)
 		else
-			console.log "New topic added, redirecting to /blog/#{savedTopic.meta.url}"
+			Logger.info "New topic added, redirecting to /blog/#{savedTopic.meta.url}"
 			res.redirect '/blog/'+ savedTopic.meta.url
 
 
@@ -196,6 +201,7 @@ module.exports = {
 	edit: edit,
 	save: save,
 	editNew: editNew,
-	saveNew: saveNew
+	saveNew: saveNew,
+	_normalizeTopicTitle: _normalizeTopicTitle
 }
 

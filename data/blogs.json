@@ -1,4 +1,4 @@
-{ "nextId": 30, "blogs":[
+{ "nextId": 31, "blogs":[
 	{
 		"id": 1,
 		"title": "A Decaf Introduction to CoffeeScript",
@@ -39,7 +39,7 @@
 		"id": 5,
 		"title": "Web Development on the Mac OS X (part II)",
 		"createdOn": "2012-09-02T01:37:59.932Z",
-		"updatedOn": "2012-09-02T01:37:59.932Z",
+		"updatedOn": "2012-09-03T17:40:21.577Z",
 		"postedOn": "2012-04-09T02:10:00.000Z",
 		"url": "web-development-on-the-mac-os-x-(part-ii)",
 		"summary": "Last year I blogged about my first impressions using a Mac for web development from the point of view of somebody with a strong Windows/C# background. This blog post is a long overdue continuation to that post with my thoughts on the subject 18 months later.\r\n"
@@ -73,38 +73,38 @@
 	},
 	{
 		"id": 9,
-		"title": " 8 Traits of Great Metro Style Apps",
+		"title": "8 Traits of Great Metro Style Apps",
 		"createdOn": "2012-09-02T02:04:07.285Z",
-		"updatedOn": "2012-09-02T02:11:44.617Z",
+		"updatedOn": "2012-09-03T17:40:49.634Z",
 		"postedOn": "2011-09-13T20:00:00.000Z",
-		"url": "-8-traits-of-great-metro-style-apps",
+		"url": "8-traits-of-great-metro-style-apps",
 		"summary": "These are my notes from Jensen Harris session at Build Windows conference on \r\nTuesday September 13th, 2011.  Jensen is the Director of Program Management for the Microsoft Windows User Experience Team."
 	},
 	{
 		"id": 10,
-		"title": " Simple Branching Strategies for Team Foundation Server",
+		"title": "Simple Branching Strategies for Team Foundation Server",
 		"createdOn": "2012-09-02T02:40:53.462Z",
-		"updatedOn": "2012-09-02T02:40:53.462Z",
+		"updatedOn": "2012-09-03T17:41:08.600Z",
 		"postedOn": "2011-08-28T01:43:00.000Z",
-		"url": "-simple-branching-strategies-for-team-foundation-server",
+		"url": "simple-branching-strategies-for-team-foundation-server",
 		"summary": "In this blog post I describe some branching strategies that I've found useful when using traditional source control systems like Team Foundation Server (TFS)."
 	},
 	{
 		"id": 11,
-		"title": " Running Visual Studio inside Mac OS X",
+		"title": "Running Visual Studio inside Mac OS X",
 		"createdOn": "2012-09-02T02:43:12.841Z",
-		"updatedOn": "2012-09-02T02:44:07.806Z",
+		"updatedOn": "2012-09-03T17:41:35.562Z",
 		"postedOn": "2011-08-27T01:55:00.000Z",
-		"url": "-running-visual-studio-inside-mac-os-x",
+		"url": "running-visual-studio-inside-mac-os-x",
 		"summary": "A quick explanation on how I got Microsoft Visual Studio Web Developer Express on my MacAir by using a Virtual Machine with VirtualBox"
 	},
 	{
 		"id": 12,
 		"title": "Finder Error -36 on a NAS",
 		"createdOn": "2012-09-02T02:48:11.093Z",
-		"updatedOn": "2012-09-02T03:05:12.815Z",
+		"updatedOn": "2012-09-03T17:42:04.601Z",
 		"postedOn": "2011-06-06T03:56:00.000Z",
-		"url": "finder-error--36-on-a-nas",
+		"url": "finder-error-36-on-a-nas",
 		"summary": "A work around for the annoying Finder Error -36 when working with a NAS"
 	},
 	{
@@ -138,7 +138,7 @@
 		"id": 16,
 		"title": "Returning HTTP 404 in ASP.NET MVC",
 		"createdOn": "2012-09-02T03:00:55.588Z",
-		"updatedOn": "2012-09-02T03:00:55.588Z",
+		"updatedOn": "2012-09-03T17:42:36.614Z",
 		"postedOn": "2010-11-29T05:13:00.000Z",
 		"url": "returning-http-404-in-asp-net-mvc",
 		"summary": "How to properly handle page not found errors in ASP.NET MVC project by returning the proper HTTP status code."
@@ -180,12 +180,21 @@
 		"summary": "This post describes how to add the option to reset your password for an ASP.NET MVC project. "
 	},
 	{
+		"id": 29,
+		"title": "Flow: Second Generation Lean Product Development",
+		"createdOn": "2012-09-02T04:03:27.028Z",
+		"updatedOn": "2012-09-03T17:43:11.781Z",
+		"postedOn": "2010-03-01T03:28:00.000Z",
+		"url": "flow-second-generation-lean-product-development",
+		"summary": "A review of the book The Principles of Product Development Flow by Donald Reinertsen"
+	},
+	{
 		"id": 27,
 		"title": "Expose your data as an RSS Feed with .NET 3.5 ",
 		"createdOn": "2012-09-02T03:57:51.447Z",
-		"updatedOn": "2012-09-02T03:57:51.447Z",
+		"updatedOn": "2012-09-03T17:43:38.946Z",
 		"postedOn": "2009-01-07T03:14:00.000Z",
-		"url": "expose-your-data-as-an-rss-feed-with--net-3-5-",
+		"url": "expose-your-data-as-an-rss-feed-with-net-3-5",
 		"summary": "How to expose your data as an RSS Feed with .NET 3.5"
 	},
 	{
@@ -210,7 +219,7 @@
 		"id": 23,
 		"title": "Computer Museum (Paris)",
 		"createdOn": "2012-09-02T03:39:50.009Z",
-		"updatedOn": "2012-09-02T03:39:50.009Z",
+		"updatedOn": "2012-09-03T17:44:17.579Z",
 		"postedOn": "2008-09-03T13:11:00.000Z",
 		"url": "computer-museum-(paris)",
 		"summary": "Pictures from the Computer Museum in Paris."
@@ -246,18 +255,9 @@
 		"id": 22,
 		"title": "Book review: Lean Software Development",
 		"createdOn": "2012-09-02T03:29:12.307Z",
-		"updatedOn": "2012-09-02T03:29:12.307Z",
+		"updatedOn": "2012-09-03T17:34:37.694Z",
 		"postedOn": "2006-05-08T06:38:00.000Z",
-		"url": "book-review:-lean-software-development",
+		"url": "book-review-lean-software-development",
 		"summary": "A review of the book Lean Software Development by Mary and Tom Poppendieck."
-	},
-	{
-		"id": 29,
-		"title": "Flow: Second Generation Lean Product Development",
-		"summary": "A review of the book The Principles of Product Development Flow by Donald Reinertsen",
-		"postedOn": "2010-03-01T03:28:00.000Z",
-		"createdOn": "2012-09-02T04:03:27.028Z",
-		"updatedOn": "2012-09-02T04:03:27.028Z",
-		"url": "flow:-second-generation-lean-product-development"
 	}
 ]}

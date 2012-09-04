@@ -9,12 +9,25 @@ class TopicModel
 
 
   _getUrlFromTitle: (title) ->
-    url = title.toLowerCase()
-    url = url.replace(/\s/g, "-")
-    url = url.replace(/\./g, "-")
-    url = url.replace(/\//g, "-")
-    url = url.replace(/c#/g, "csharp")
-    url = url.replace(/#/g, "-")
+    title = title.trim()
+    title = title.toLowerCase()
+    title = title.replace('c#', 'csharp')
+
+    url = ""
+    for i in [0..title.length-1]
+      c = title[i]
+      if c >= 'a' and c <= 'z'
+        url += c
+      else if c >= '0' and c <= '9'
+        url += c
+      else if c is '(' or c is ')'
+        url += c
+      else
+        url += '-'
+
+    while url.indexOf('--') > -1
+      url = url.replace('--', '-')
+
     url    
 
 

@@ -7,9 +7,11 @@
 fs = require 'fs'
 blogRoutes = require './blogRoutes'
 {TestUtil}  = require '../util/testUtil'
+{Logger} = require '../util/logger'
 
 verbose = true
 test = new TestUtil("blogRoutesTest", verbose)
+Logger.setLevel 'NONE'
 
 dataOptions = { 
   dataPath: __dirname + "/../data_test"
@@ -38,6 +40,12 @@ getBasicRequest = ->
 
 getBasicResponse = ->
   return getBasicApp()
+
+
+_normalizeTopicTitle = ->
+  test.passIf blogRoutes._normalizeTopicTitle('a-TOPIC-name') is 'a-topic-name', "_normalizeTopicTitle - mixed case"
+  test.passIf blogRoutes._normalizeTopicTitle('a-TOPIC-name.aspx') is 'a-topic-name', "_normalizeTopicTitle - .aspx"
+  saveNew() # fire next test
 
 
 saveNew = ->
@@ -240,5 +248,5 @@ saveNewWithErrors = ->
 
 # -------------------
 # Kick off the tests
-saveNew()
+_normalizeTopicTitle()
 

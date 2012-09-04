@@ -42,31 +42,33 @@ class TopicData
       if err
         callback "Error reading topics: #{err}"
       else
-        data = JSON.parse text
-        @nextId = data.nextId
 
-        topics = []
-        for topic in data.blogs
-          meta = new TopicMeta()
-          meta.id = topic.id
-          meta.title = topic.title
-          meta.url = topic.url
-          meta.summary = topic.summary
-          meta.createdOn = new Date(topic.createdOn)
-          meta.updatedOn = new Date(topic.updatedOn)
-          meta.postedOn = new Date(topic.postedOn)
-          topics.push meta
-          # console.log "------"
-          # console.dir topic
-          # console.dir meta
+        try
+          data = JSON.parse text
+          @nextId = data.nextId
 
-        # sort by date descending
-        topics.sort (x, y) ->
-          return -1 if x.postedOn > y.postedOn
-          return 1 if x.postedOn < y.postedOn
-          return 0
+          topics = []
+          for topic in data.blogs
+            meta = new TopicMeta()
+            meta.id = topic.id
+            meta.title = topic.title
+            meta.url = topic.url
+            meta.summary = topic.summary
+            meta.createdOn = new Date(topic.createdOn)
+            meta.updatedOn = new Date(topic.updatedOn)
+            meta.postedOn = new Date(topic.postedOn)
+            topics.push meta
 
-        callback null, topics
+          # sort by date descending
+          topics.sort (x, y) ->
+            return -1 if x.postedOn > y.postedOn
+            return 1 if x.postedOn < y.postedOn
+            return 0
+
+          callback null, topics
+
+        catch error
+          callback "Error parsing data file. Error: #{error}"
 
 
   # This method is sync on purpose. We don't want anyone
