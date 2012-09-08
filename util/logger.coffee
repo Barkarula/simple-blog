@@ -15,8 +15,8 @@ class Logger
   @_getTimestamp: =>
     now = new Date()
 
-    day = now.getDay()
-    month = now.getMonth()
+    day = now.getDate()
+    month = now.getMonth() + 1
     date = now.getFullYear() + '-' + @_pad(month, 2) + '-' + @_pad(day, 2) 
 
     if @_logPath isnt null
