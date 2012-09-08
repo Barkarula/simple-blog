@@ -67,7 +67,9 @@ app.get '/blog', blogRoutes.viewRecent
 
 app.get '/blog/:topicUrl', blogRoutes.viewOne
 
-app.get '/logs/current', logRoutes.current
+app.get '/logs/current', logRoutes.viewCurrent
+app.get '/logs/:logDate', logRoutes.viewSpecific
+app.get '/logs/', logRoutes.viewCurrent
 
 app.get '*', siteRoutes.notFound
 

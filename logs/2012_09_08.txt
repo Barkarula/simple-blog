@@ -21,3 +21,21 @@
 18 2012-09-08 10:58:58.050 INFO: blogRoutes:viewOne web-development-on-the-mac-os-x-(part-ii)
 19 2012-09-08 10:59:59.343 INFO: blogRoutes:viewRecent
 20 2012-09-08 10:59:59.896 INFO: blogRoutes:viewOne javascript-async-programming-for-sync-heads
+2012-09-08 11:31:31.680 INFO: Express server listening on http://localhost:3000 in development mode
+2012-09-08 11:31:31.261 INFO: blogRoutes:viewOne javascript-async-programming-for-sync-heads
+2012-09-08 11:33:33.199 INFO: Express server listening on http://localhost:3000 in development mode
+2012-09-08 11:33:33.668 INFO: Express server listening on http://localhost:3000 in development mode
+2012-09-08 11:34:34.988 INFO: Express server listening on http://localhost:3000 in development mode
+2012-09-08 11:35:35.859 INFO: Express server listening on http://localhost:3000 in development mode
+2012-09-08 11:35:35.452 INFO: Express server listening on http://localhost:3000 in development mode
+2012-09-08 11:35:35.128 ERROR: logRoutes.viewSpecific: Error reading log file ./logs/2012-09-08.txt
+Error: ENOENT, open './logs/2012-09-08.txt'
+2012-09-08 11:36:36.869 ERROR: logRoutes.viewSpecific: Invalid log date received 2012_09_08
+2012-09-08 11:40:40.968 INFO: Express server listening on http://localhost:3000 in development mode
+2012-09-08 11:44:44.705 INFO: Express server listening on http://localhost:3000 in development mode
+2012-09-08 11:44:44.947 ERROR: logRoutes.viewSpecific: Invalid log date received 2012-09-0822
+2012-09-08 11:44:44.319 INFO: blogRoutes:viewRecent
+2012-09-08 11:45:45.916 INFO: blogRoutes:viewAll
+2012-09-08 11:45:45.069 INFO: blogRoutes:viewOne dotwiki-2-0
+2012-09-08 11:45:45.263 INFO: blogRoutes:viewRecent
+2012-09-08 11:45:45.286 INFO: blogRoutes:viewRecent
