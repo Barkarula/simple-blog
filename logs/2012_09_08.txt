@@ -39,3 +39,28 @@ Error: ENOENT, open './logs/2012-09-08.txt'
 2012-09-08 11:45:45.069 INFO: blogRoutes:viewOne dotwiki-2-0
 2012-09-08 11:45:45.263 INFO: blogRoutes:viewRecent
 2012-09-08 11:45:45.286 INFO: blogRoutes:viewRecent
+2012-09-08 15:09:09.431 INFO: Express server listening on http://localhost:3000 in development mode
+2012-09-08 15:09:09.050 INFO: blogRoutes:viewOne 8-traits-of-great-metro-style-apps
+2012-09-08 15:09:09.096 INFO: blogRoutes:viewRecent
+2012-09-08 15:09:09.645 INFO: blogRoutes:viewOne beyond-hello-world-with-node-js-express-js-and-coffeescript
+2012-09-08 15:09:09.112 INFO: blogRoutes:edit beyond-hello-world-with-node-js-express-js-and-coffeescript
+2012-09-08 15:10:10.926 INFO: Express server listening on http://localhost:3000 in development mode
+2012-09-08 15:10:10.415 INFO: blogRoutes:edit beyond-hello-world-with-node-js-express-js-and-coffeescript
+2012-09-08 15:10:10.503 INFO: blogRoutes:save 31
+2012-09-08 15:10:10.515 INFO: Saved, redirecting to /blog/beyond-hello-world-with-node-js-express-js-and-coffeescript
+2012-09-08 15:10:10.532 INFO: blogRoutes:viewOne beyond-hello-world-with-node-js-express-js-and-coffeescript
+2012-09-08 15:10:10.091 INFO: blogRoutes:edit beyond-hello-world-with-node-js-express-js-and-coffeescript
+2012-09-08 15:11:11.404 INFO: blogRoutes:save 31
+2012-09-08 15:12:12.030 INFO: blogRoutes:save 31
+2012-09-08 15:14:14.335 INFO: blogRoutes:save 31
+2012-09-08 15:14:14.425 INFO: Saved, redirecting to /blog/beyond-hello-world
+2012-09-08 15:14:14.462 INFO: blogRoutes:viewOne beyond-hello-world
+2012-09-08 15:14:14.595 INFO: blogRoutes:edit beyond-hello-world
+2012-09-08 15:14:14.306 INFO: blogRoutes:save 31
+2012-09-08 15:16:16.586 INFO: blogRoutes:save 31
+2012-09-08 15:17:17.256 INFO: blogRoutes:save 31
+2012-09-08 15:18:18.186 INFO: blogRoutes:save 31
+2012-09-08 15:18:18.274 INFO: blogRoutes:save 31
+2012-09-08 15:18:18.299 INFO: Saved, redirecting to /blog/beyond-hello-world
+2012-09-08 15:18:18.356 INFO: blogRoutes:viewOne beyond-hello-world
+2012-09-08 15:18:18.342 INFO: blogRoutes:viewRecent

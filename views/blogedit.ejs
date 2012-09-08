@@ -15,20 +15,28 @@
   <p>
   <label>Title</label> 
   <input type="text" name="title" value="{{= topic.meta.title }}" placeholder="Blog title" />
-  {{ if(false) { }}
-  <small class="error">Enter a title for the blog post</small>
+  {{ if(topic.errors && topic.errors.emptyTitle) { }}
+  <small class="error">Enter a title for the blog post.</small>
+  {{ } }}
+  {{ if(topic.errors && topic.errors.duplicateTitle) { }}
+  <small class="error">There is a already another topic with the exact same title. 
+    Please enter a different title for this one.</small>
   {{ } }}
   </p>
 
   <p>
   <label>Summary (raw HTML)<label> 
   <textarea name="summary", rows="4", cols="60" placeholder="Enter blog post summary">{{= topic.meta.summary }}</textarea>
+  {{ if(topic.errors && topic.errors.emptySummary) { }}
+  <small class="error">Enter a short summary for the blog post.</small>
+  {{ } }}
+
   </p>
 
   <p>
   <label>Content (raw HTML)<label> 
   <textarea name="content", rows="20", cols="60" placeholder="Enter blog post content">{{- topic.content }}</textarea>
-  {{ if(false) { }}
+  {{ if(topic.errors && topic.errors.emptyContent) { }}
   <small class="error">Enter the content of the blog post</small>
   {{ } }}
   </p>

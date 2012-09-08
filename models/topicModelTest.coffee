@@ -31,12 +31,11 @@ testGetUrlFromTitle = ->
   test.passIf model._getUrlFromTitle("hello-World.aspx") is "hello-world-aspx", "dots test"
   test.passIf model._getUrlFromTitle("hello-c#-World.aspx") is "hello-csharp-world-aspx", "c# test"
   test.passIf model._getUrlFromTitle("this is #4") is "this-is-4", "pound (#) test"
-  testValidate()
+  testValidateGoodTopic()
 
 
-testValidate = ->
-  test = new TestUtil("topicModelTest.testValidate", verbose)
-
+testValidateGoodTopic = ->
+  test = new TestUtil("topicModelTest.testValidateGoodTopic", verbose)
   goodTopic = {
     meta: {
       id: 1
@@ -46,21 +45,29 @@ testValidate = ->
     content: "hello world content"
   }
 
-  test.passIf model._validate(goodTopic) is null, "good topic" 
+  model._validateTopic goodTopic, (err, validationErrors) ->
+    test.passIf err is null and validationErrors is null, "good topic" 
+    testValidateEmptyTopic()
 
+
+testValidateEmptyTopic = ->
+  test = new TestUtil("topicModelTest.testValidateEmptyTopic", verbose)
   emptyTopic = {}
-  test.passIf model._validate(emptyTopic) isnt null, "empty topic" 
+  model._validateTopic emptyTopic, (err, validationErrors) ->
+    test.passIf validationErrors isnt null, "empty topic" 
+    testValidateEmptyTitle()
 
+
+testValidateEmptyTitle = ->
+  test = new TestUtil("topicModelTest.testValidate", verbose)
   emptyTitleTopic = { meta: { id: 1, summary: "s"}, content: "c" }
-  errors = model._validate(emptyTitleTopic)
-  test.passIf errors.emptyTitle is true, "empty title"
-
-  testSaveNewGoodTopic()
+  model._validateTopic emptyTitleTopic, (err, validationErrors) ->
+    test.passIf validationErrors.emptyTitle is true, "empty title"
+    testSaveNewGoodTopic()
 
 
 testSaveNewGoodTopic = ->
   test = new TestUtil("topicModelTest.testSaveNewGoodTopic", verbose)
-
   newTopic = {
     meta: {
       title: "new test topic",
@@ -78,6 +85,34 @@ testSaveNewGoodTopic = ->
           test.fail "error retrieving new record id: #{data.meta.id} #{err}"
         else
           test.pass ""
+        testIsDuplicateTitleNew()  
+
+
+testIsDuplicateTitleNew = ->
+  test = new TestUtil("topicModelTest.testIsDuplicateTitleNew", verbose)
+
+  newTopic = {
+    meta: {
+      title: "new test topic",
+      summary: "new summary for test topic 2"
+    }
+    content: "new content for test topic 2"
+  }
+
+  model._isDuplicateTitle newTopic, (err, isDuplicate) ->
+    test.passIf isDuplicate, ""
+    testIsDuplicateTitleExisting()  
+
+
+testIsDuplicateTitleExisting = ->
+  test = new TestUtil("topicModelTest.testIsDuplicateTitleExisting", verbose)
+
+  model.getOne 1, (err, topic) ->
+    if err
+      test.fail err
+    else
+      model._isDuplicateTitle topic, (err, isDuplicate) ->
+        test.failIf isDuplicate, ""
         testSaveNewBadTopic()  
 
 

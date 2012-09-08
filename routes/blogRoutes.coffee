@@ -148,8 +148,7 @@ edit = (req, res) ->
 			Logger.error err
 			renderNotFound res, err
 		else 
-			res.render 'blogEdit', null
-			#res.render 'blogEdit', viewModelForTopic(topic, req.app)
+			res.render 'blogEdit', viewModelForTopic(topic, req.app)
 
 
 save = (req, res) -> 
@@ -170,10 +169,11 @@ save = (req, res) ->
 		model.save topic, (err, savedTopic) -> 
 			if err
 				# Unexpected error, send user to blogs main page
-				Logger.warn "Error while saving: #{err}"
+				Logger.error "Error while saving: #{err}"
 				res.redirect '/blog'
 			else if typeof savedTopic.errors isnt 'undefined'
 				# Validation error, send user to edit this topic
+				Logger.info "Validation errors detected"
 				res.render 'blogEdit', viewModelForTopic(savedTopic, req.app)
 			else
 				Logger.info "Saved, redirecting to /blog/#{savedTopic.meta.url}"
@@ -198,11 +198,12 @@ saveNew = (req, res) ->
 	model.saveNew topic, (err, savedTopic) ->
 		if err
 			# Unexpected error, send user to blogs main page
-			Logger.warn "Error while saving #{err}"
+			Logger.error "Error while saving #{err}"
 			res.redirect '/blog'
 		else if typeof savedTopic.errors isnt 'undefined'
 			# Validation error, send user to edit this topic
 			# savedTopic is in the form {meta: X, content: Y, errors: Z}
+			Logger.info "Validation errors detected"
 			res.render 'blogEdit', viewModelForTopic(savedTopic, req.app)
 		else
 			Logger.info "New topic added, redirecting to /blog/#{savedTopic.meta.url}"
