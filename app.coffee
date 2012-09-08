@@ -4,6 +4,7 @@ ejs = require 'ejs'
 {Logger} = require './util/logger'
 siteRoutes = require './routes/siteRoutes'
 blogRoutes = require './routes/blogRoutes'
+logRoutes = require './routes/logRoutes'
 
 app = module.exports = express.createServer()
 
@@ -65,6 +66,8 @@ app.get '/blog/rss', blogRoutes.rssList
 app.get '/blog', blogRoutes.viewRecent
 
 app.get '/blog/:topicUrl', blogRoutes.viewOne
+
+app.get '/logs/current', logRoutes.current
 
 app.get '*', siteRoutes.notFound
 

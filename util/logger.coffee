@@ -4,8 +4,8 @@ class Logger
 
 
   @_logLevel = 'INFO'
-  @_logPath = './logs/'
-  @_logFile = ''
+  @_logPath = './logs/'   # set up null to prevent log to text file
+  @_logFile = ''          # calculated in _getTimestamp()
 
 
   @_pad: (number, zeroes) =>
@@ -75,6 +75,11 @@ class Logger
       text = text + "\r\n#{exception}" if exception?
       @_doLog 'ERROR', "#{text}"
 
+  @currentLogFile: => 
+    return null if @_logPath is null
+    # Make sure @_logFile has been set
+    @_getTimestamp() 
+    return @_logPath + @_logFile
 
 exports.Logger = Logger
 
