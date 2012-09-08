@@ -14,7 +14,7 @@ class TopicRss
 
 
   toRss: (topics, callback) =>
-    settings = _getFeedSettings()
+    settings = @_getFeedSettings()
     feed = new RSS(settings)
     for t in topics
       # TODO: Get the topic content rather than the summary
