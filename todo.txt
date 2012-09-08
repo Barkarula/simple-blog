@@ -1,6 +1,11 @@
+* Update to Express 3.x
+
 * RSS feed with full feeds (rather than just summaries)
 
 * Session & authentication
+
+* Error handling on EJS views (or a better understanding
+  of global error handling in Express)
 
 * Topic validation: title must not be duplicate
 

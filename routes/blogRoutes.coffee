@@ -132,12 +132,12 @@ rssList = (req, res) ->
 
 
 edit = (req, res) -> 
-
 	url = req.params.topicUrl
 	if url is undefined
 		Logger.warn 'Edit without a URL was detected. Redirecting to blog list.'
 		res.redirect '/blog'
 		return
+
 	Logger.info "blogRoutes:edit #{url}"
 
 	dataOptions = res.app.settings.dataOptions
@@ -148,16 +148,17 @@ edit = (req, res) ->
 			Logger.error err
 			renderNotFound res, err
 		else 
-			res.render 'blogEdit', viewModelForTopic(topic, req.app)
+			res.render 'blogEdit', null
+			#res.render 'blogEdit', viewModelForTopic(topic, req.app)
 
 
 save = (req, res) -> 
-
 	id = req.params.id
 	if id is undefined
 		Logger.warn 'Save without an Id was detected. Redirecting to blog list.'
 		res.redirect '/blog'
 		return
+		
 	Logger.info "blogRoutes:save #{id}"
 
 	topic = requestToTopic req, id

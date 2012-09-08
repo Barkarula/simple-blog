@@ -1,12 +1,14 @@
 # Module dependencies.
 express = require 'express'
-siteRoutes = require './routes/siteRoutes'
-blogRoutes = require './routes/blogRoutes' 
 ejs = require 'ejs'
+{Logger} = require './util/logger'
+siteRoutes = require './routes/siteRoutes'
+blogRoutes = require './routes/blogRoutes'
 
-# Configuration
 app = module.exports = express.createServer()
 
+
+# Configuration
 app.configure -> 
   app.set 'views', __dirname + '/views'
   app.set 'datapath', __dirname + '/data'
@@ -22,16 +24,19 @@ app.configure ->
   app.use express.static(__dirname + '/public') # must come before app.router!
   app.use app.router
 
+
 app.error (err, req, res, next) ->
-  console.log "Custom error hit"
-  console.dir err
+  Logger.error err
   res.render '500.ejs', { status: 500, message: "TBD" }
+
 
 app.configure 'development', -> 
   app.use express.errorHandler({ dumpExceptions: true, showStack: true })
 
+
 app.configure 'production', ->
   app.use express.errorHandler()
+
 
 # Routes
 app.get '/', siteRoutes.home
@@ -42,6 +47,7 @@ app.set "dataOptions", {
   dataPath: __dirname + "/data"
   createDataFileIfNotFound: false
 }
+
 
 if not app.settings.isReadOnly
   # Only enable edits when in development (local)
@@ -65,7 +71,7 @@ app.get '*', siteRoutes.notFound
 # Fire it up!
 app.listen process.env.PORT || 3000, ->
   address = "http://localhost:#{app.address().port}"
-  console.log "Express server listening on #{address} in #{app.settings.env} mode"
+  Logger.info "Express server listening on #{address} in #{app.settings.env} mode"
 
 
 
