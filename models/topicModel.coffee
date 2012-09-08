@@ -1,4 +1,5 @@
 {TopicData}  = require './topicData'
+{TopicRss}  = require './topicRss'
 
 class TopicModel
   
@@ -28,7 +29,7 @@ class TopicModel
     while url.indexOf('--') > -1
       url = url.replace('--', '-')
 
-    url    
+    return url    
 
 
   _isValidDate: (date) ->
@@ -81,6 +82,14 @@ class TopicModel
   getNew: =>
     return @data.getNew()
 
+
+  getRssList: (callback) =>
+    @data.getAll (err, topics) ->
+      if err
+        callback err
+      else
+        rss = new TopicRss()
+        rss.toRss topics, callback
 
   # topic must be in the form 
   # {meta: {id: i, title: t, summary: s, ...}, content: c}

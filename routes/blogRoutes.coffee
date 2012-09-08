@@ -117,6 +117,20 @@ viewAll = (req, res) ->
 			res.render 'blogAll', viewModel
 
 
+rssList = (req, res) -> 
+	Logger.info "blogRoutes:rssList"
+
+	dataOptions = res.app.settings.dataOptions
+	model = new TopicModel dataOptions 
+
+	model.getRssList (err, xml) -> 
+		if err 
+			Logger.error err
+			renderError res, "Error getting topics"
+		else
+			res.send xml, { 'Content-Type': 'application/atom+xml' }, 200
+
+
 edit = (req, res) -> 
 
 	url = req.params.topicUrl
@@ -202,6 +216,7 @@ module.exports = {
 	save: save,
 	editNew: editNew,
 	saveNew: saveNew,
+	rssList: rssList
 	_normalizeTopicTitle: _normalizeTopicTitle
 }
 

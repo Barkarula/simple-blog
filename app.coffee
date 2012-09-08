@@ -54,6 +54,8 @@ if not app.settings.isReadOnly
 
 app.get '/blog/list', blogRoutes.viewAll
 
+app.get '/blog/rss', blogRoutes.rssList
+
 app.get '/blog', blogRoutes.viewRecent
 
 app.get '/blog/:topicUrl', blogRoutes.viewOne

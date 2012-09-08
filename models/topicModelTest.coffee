@@ -185,13 +185,18 @@ testSaveNonExistingTopic = ->
   notExistingTopic = {meta: {id: 99}}
   model.save notExistingTopic, (err, data) ->
     test.passIf err isnt null, "testSaveNonExistingTopic"
+    testRssList()
 
+
+testRssList = ->
+  test = new TestUtil("topicModelTest", verbose)
+  model.getRssList (err, xml) ->
+    test.passIf err is null, "testRssList"
 
 
 # -------------------
 # Kick off the tests
 testGetUrlFromTitle()
-
 
 
 

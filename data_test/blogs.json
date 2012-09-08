@@ -1,11 +1,11 @@
 { "nextId": 2, "blogs":[
 	{
 		"id": 1,
-		"title": "updated title 2",
-		"createdOn": "2012-09-04T04:00:24.887Z",
-		"updatedOn": "2012-09-04T04:00:24.956Z",
-		"postedOn": "2012-09-04T04:00:24.956Z",
-		"url": "updated-title-2",
-		"summary": "s1"
+		"title": "new title 1",
+		"createdOn": "2012-09-08T02:40:36.379Z",
+		"updatedOn": "2012-09-08T02:40:36.389Z",
+		"postedOn": "2012-09-08T02:40:36.389Z",
+		"url": "new-title-1",
+		"summary": "new summary 1"
 	}
 ]}

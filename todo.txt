@@ -1,8 +1,8 @@
-* Topic validation: title must not be duplicate
-
-* RSS feed
+* RSS feed with full feeds (rather than just summaries)
 
 * Session & authentication
+
+* Topic validation: title must not be duplicate
 
 * Versioning topics
 
