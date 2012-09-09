@@ -12,6 +12,7 @@ verbose = true
 dataOptions = { 
   dataPath: __dirname + "/../data_test"
   createDataFileIfNotFound: true
+  showDrafts: true
 }
 
 

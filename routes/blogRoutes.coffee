@@ -55,11 +55,11 @@ requestToTopic = (req, id) ->
 			id: parseInt(id)
 			title: req.body?.title ? ""
 			summary: req.body?.summary ? ""
-			postedOn: new Date(req.body?.postedOn + ' ' + req.body?.postedAt)
 		}
 		content: req.body?.content ? ""
 	}
 	return topic
+#postedOn: new Date(req.body?.postedOn + ' ' + req.body?.postedAt)
 
 
 viewOne = (req, res) -> 
@@ -148,10 +148,12 @@ edit = (req, res) ->
 			Logger.error err
 			renderNotFound res, err
 		else 
+			# console.dir viewModelForTopic(topic, req.app)
 			res.render 'blogEdit', viewModelForTopic(topic, req.app)
 
 
 save = (req, res) -> 
+
 	id = req.params.id
 	if id is undefined
 		Logger.warn 'Save without an Id was detected. Redirecting to blog list.'
@@ -164,6 +166,8 @@ save = (req, res) ->
 	if isNaN(topic.meta.id)
 		renderError res, "Invalid id #{id} detected on save."
 	else
+		isFinal = if req.body?.final then true else false
+		topic.meta.postedOn = if isFinal then new Date() else null
 		dataOptions = res.app.settings.dataOptions
 		model = new TopicModel dataOptions 
 		model.save topic, (err, savedTopic) -> 

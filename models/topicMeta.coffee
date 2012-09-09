@@ -4,7 +4,7 @@ class TopicMeta
     @title = ""
     @createdOn = new Date()
     @updatedOn = new Date()
-    @postedOn = new Date()
+    @postedOn = null
     @url = ""
     @summary = ""
 

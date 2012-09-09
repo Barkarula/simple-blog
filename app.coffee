@@ -47,6 +47,7 @@ app.set "isReadOnly", if app.settings.env is "production" then true else false
 app.set "dataOptions", { 
   dataPath: __dirname + "/data"
   createDataFileIfNotFound: false
+  showDrafts: app.settings.env isnt "production" 
 }
 
 

@@ -8,9 +8,13 @@
     {{ } }}
   </div>
   <div class="two columns">
-    <b>Posted on:</b><br>
-    {{= topic.meta.postedOn.toDateString() }}<br>
-    at {{= topic.meta.postedOn.toLocaleTimeString() }}
+    {{ if (topic.meta.postedOn === null) { }} 
+      <b>Draft Post</b>
+    {{ } else { }}
+      <b>Posted on:</b><br>
+      {{= topic.meta.postedOn.toDateString() }}<br>
+      at {{= topic.meta.postedOn.toLocaleTimeString() }}
+    {{ } }}
   </div>
 
   <div class="two columns">

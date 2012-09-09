@@ -16,6 +16,7 @@ Logger.setLevel 'NONE'
 dataOptions = { 
   dataPath: __dirname + "/../data_test"
   createDataFileIfNotFound: true
+  showDrafts: true
 }
 
 

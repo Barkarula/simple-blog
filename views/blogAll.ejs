@@ -14,7 +14,11 @@
       <div class="four columns">
       <h3><a href='/blog/{{= topic.url }}'>{{= topic.title }}</a></h3>
       <p>{{= topic.summary }}</p>
-      <p><i>{{= topic.postedOn }}</i></p>
+      {{ if(topic.postedOn === null) { }}
+        <p><i>Draft</i></p>
+      {{ } else { }}
+        <p><i>{{= topic.postedOn }}</i></p>
+      {{ } }}
       </div>
   {{ } }}
   </div>

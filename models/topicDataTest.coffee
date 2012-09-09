@@ -12,7 +12,8 @@ verbose = true
 test = new TestUtil("topicDataTest", verbose)
 dataOptions = { 
   dataPath: __dirname + "/../data_test"
-  createDataFileIfNotFound: true
+  createDataFileIfNotFound: true,
+  showDrafts: true
 }
 
 

@@ -42,28 +42,25 @@
   </p>
 
   <div class="row">
-    <div class="two columns">
-      <label>Posted on</label>
-      <input type="date" name="postedOn" value="{{= topic.meta.postedOn.toDateString() }}" placeholder="mm/dd/yyyy" />
-    </div>
-    <div class="two columns">
-      <label>Posted at</label>
-      <input type="time", name="postedAt", value="{{= topic.meta.postedOn.toLocaleTimeString() }}" placeholder="hh:mm"/>
-    </div>
-    <div class="two columns">
-    </div>
-  </div>
-  <div class="row">
     <div class="four columns">
-      {{ if(false) { }}
-      <small class="error">Enter a valid date and time</small>
+      {{ if(topic.meta.postedOn === null) { }}
+        <b>Draft Post</b>
+      {{ } else { }}
+        <b>Posted on:</b> 
+        {{= topic.meta.postedOn.toDateString() }}
+        <b>at</b> {{= topic.meta.postedOn.toLocaleTimeString() }}
       {{ } }}
     </div>
   </div>
 
   <p>
-    <a href="/blog/{{= topic.meta.url }}" class="alert button">Cancel</a>
-    <input type="submit" class="button" value="Save" />
+    {{ if(topic.meta.postedOn === null) { }}
+    <input type="submit" class="button" name = "draft" value="Save Draft" />
+    <input type="submit" class="button" name = "final" value="Publish" />
+    {{ } else { }}
+    <input type="submit" class="button" name = "draft" value="Save Draft" />
+    <input type="submit" class="button" name = "final" value="Publish" />
+    {{ } }}
   </p>
   
   <p>ID {{= topic.meta.id }} <p/>

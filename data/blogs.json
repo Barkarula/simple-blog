@@ -1,11 +1,11 @@
 { "nextId": 32, "blogs":[
 	{
 		"id": 31,
-		"title": "beyond hello world",
+		"title": "beyond hello world pu",
 		"createdOn": "2012-09-08T14:01:12.964Z",
-		"updatedOn": "2012-09-08T19:18:42.281Z",
-		"postedOn": "2012-09-08T13:59:19.000Z",
-		"url": "beyond-hello-world",
+		"updatedOn": "2012-09-09T20:51:27.964Z",
+		"postedOn": null,
+		"url": "beyond-hello-world-pu",
 		"summary": "this is the summary"
 	},
 	{

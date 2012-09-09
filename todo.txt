@@ -7,8 +7,6 @@
 * Error handling on EJS views (or a better understanding
   of global error handling in Express)
 
-* Topic validation: title must not be duplicate
-
 * Versioning topics
 
 * A decent editor/use markdown

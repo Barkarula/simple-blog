@@ -146,7 +146,7 @@ class TopicModel
         # on the DB
         topic.meta.createdOn = meta.createdOn
         topic.meta.updatedOn = new Date()
-        topic.meta.postedOn = if @_isValidDate(topic.meta.postedOn) then topic.meta.postedOn else new Date()
+        #topic.meta.postedOn = null if @_isValidDate(topic.meta.postedOn) is false
         topic.meta.url = @_getUrlFromTitle(topic.meta.title)
 
         # ...make sure the topic is valid
@@ -176,7 +176,7 @@ class TopicModel
     # Fill in values required for new topics
     topic.meta.createdOn = new Date()
     topic.meta.updatedOn = new Date()
-    topic.meta.postedOn = if @_isValidDate(topic.meta.postedOn) then topic.meta.postedOn else new Date()
+    #topic.meta.postedOn = null if @_isValidDate(topic.meta.postedOn) is false
     topic.meta.url = @_getUrlFromTitle(topic.meta.title)
 
     # ...make sure the topic is valid

@@ -23,6 +23,9 @@ class TopicData
     @dataPath = options.dataPath
     @blogListFilePath = "#{options.dataPath}/blogs.json"
     @nextId = null
+    @showDrafts = false
+    if options.showDrafts? 
+      @showDrafts = options.showDrafts is true
 
     if options.createDataFileIfNotFound is true
       @_createDataFileIfNotAvailable()
@@ -56,14 +59,24 @@ class TopicData
             meta.summary = topic.summary
             meta.createdOn = new Date(topic.createdOn)
             meta.updatedOn = new Date(topic.updatedOn)
-            meta.postedOn = new Date(topic.postedOn)
-            topics.push meta
+            
+            isPosted = topic.postedOn?
+            if isPosted
+              meta.postedOn = new Date(topic.postedOn)
+            
+            if @showDrafts
+              topics.push meta
+            else if isPosted
+              topics.push meta 
 
-          # sort by date descending
+          # Sort most recently published topics on top
+          # Force un-published (draft) topics to the top
           topics.sort (x, y) ->
-            return -1 if x.postedOn > y.postedOn
-            return 1 if x.postedOn < y.postedOn
-            return 0
+            xDate = if x.postedOn is null then new Date() else x.postedOn
+            yDate = if y.postedOn is null then new Date() else y.postedOn
+            return -1 if xDate > yDate
+            return 1 if xDate < yDate
+            return 0 
 
           callback null, topics
 
