@@ -66,7 +66,7 @@ This is a very rough work in progress as I learn and play with Node.js.
 
 Feel free to contact me with questions or comments about this project.
 
-You can see a live running version of this code here:
+You can see a running version version of this code here:
 
   [http://simple-blog.jitsu.com](http://simple-blog.jitsu.com){:target="_blank"}
 
