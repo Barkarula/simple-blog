@@ -115,3 +115,27 @@
 2012-09-09 18:39:39.386 INFO: Express server listening on http://localhost:3000 in development mode
 2012-09-09 18:39:39.002 INFO: blogRoutes:viewAll
 2012-09-09 18:52:52.273 INFO: blogRoutes:viewOne beyond-hello-world-pu
+2012-09-09 21:39:39.161 INFO: Express server listening on http://localhost:3000 in development mode
+2012-09-09 21:39:39.393 INFO: blogRoutes:viewRecent
+2012-09-09 21:39:39.401 INFO: blogRoutes:viewOne a-decaf-introduction-to-coffeescript
+2012-09-09 21:42:42.538 INFO: blogRoutes:viewOne a-decaf-introduction-to-coffeescript
+2012-09-09 21:49:49.803 INFO: blogRoutes:viewRecent
+2012-09-09 21:50:50.604 INFO: blogRoutes:viewRecent
+2012-09-09 21:50:50.926 INFO: blogRoutes:viewAll
+2012-09-09 21:52:52.194 INFO: blogRoutes:viewAll
+2012-09-09 21:52:52.719 INFO: blogRoutes:viewRecent
+2012-09-09 21:52:52.826 INFO: blogRoutes:viewAll
+2012-09-09 21:53:53.967 INFO: blogRoutes:viewAll
+2012-09-09 21:53:53.724 INFO: blogRoutes:viewRecent
+2012-09-09 21:53:53.091 INFO: blogRoutes:viewOne a-decaf-introduction-to-coffeescript
+2012-09-09 21:53:53.758 INFO: blogRoutes:edit a-decaf-introduction-to-coffeescript
+2012-09-09 21:53:53.535 INFO: blogRoutes:viewRecent
+2012-09-09 21:53:53.568 INFO: blogRoutes:viewOne beyond-hello-world-pu
+2012-09-09 21:53:53.591 INFO: blogRoutes:edit beyond-hello-world-pu
+2012-09-09 21:53:53.986 INFO: blogRoutes:save 31
+2012-09-09 21:53:53.079 INFO: Saved, redirecting to /blog/beyond-hello-world-xxx
+2012-09-09 21:53:53.121 INFO: blogRoutes:viewOne beyond-hello-world-xxx
+2012-09-09 21:53:53.652 INFO: blogRoutes:viewRecent
+2012-09-09 21:54:54.438 INFO: blogRoutes:viewRecent
+2012-09-09 21:54:54.537 INFO: blogRoutes:viewOne beyond-hello-world-xxx
+2012-09-09 21:54:54.789 INFO: blogRoutes:viewRecent

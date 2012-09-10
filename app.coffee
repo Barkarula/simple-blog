@@ -1,34 +1,47 @@
 # Module dependencies.
 express = require 'express'
+path = require 'path'
 ejs = require 'ejs'
+http = require 'http'
+
 {Logger} = require './util/logger'
 siteRoutes = require './routes/siteRoutes'
 blogRoutes = require './routes/blogRoutes'
 logRoutes = require './routes/logRoutes'
 
-app = module.exports = express.createServer()
+
+app = express()
 
 
 # Configuration
 app.configure -> 
-  app.set 'views', __dirname + '/views'
-  app.set 'datapath', __dirname + '/data'
+  app.set 'port', process.env.PORT || 3000
+  app.set 'views', path.join(__dirname, 'views')
+  app.set 'datapath', path.join(__dirname, 'data')
 
   # Configure view engine options
   ejs.open = '{{'
   ejs.close = '}}'
   app.set 'view engine', 'ejs'
 
-  #app.use express.logger() # logs HTTP requests
+  app.use express.favicon()
+  app.use express.logger('dev')
+
   app.use express.bodyParser()
   app.use express.methodOverride()
-  app.use express.static(__dirname + '/public') # must come before app.router!
+
+  app.use express.cookieParser('your secret here')
+  app.use express.session()
+
+  # static handler must come before app.router!
+  app.use express.static path.join(__dirname, 'public')   
+
   app.use app.router
 
 
-app.error (err, req, res, next) ->
-  Logger.error err
-  res.render '500.ejs', { status: 500, message: "TBD" }
+# app.error (err, req, res, next) ->
+#   Logger.error err
+#   res.render '500.ejs', { status: 500, message: "TBD" }
 
 
 app.configure 'development', -> 
@@ -39,10 +52,7 @@ app.configure 'production', ->
   app.use express.errorHandler()
 
 
-# Routes
-app.get '/', siteRoutes.home
-app.get '/about', siteRoutes.about
-
+# Application settings
 app.set "isReadOnly", if app.settings.env is "production" then true else false
 app.set "dataOptions", { 
   dataPath: __dirname + "/data"
@@ -50,6 +60,10 @@ app.set "dataOptions", {
   showDrafts: app.settings.env isnt "production" 
 }
 
+
+# Routes
+app.get '/', siteRoutes.home
+app.get '/about', siteRoutes.about
 
 if not app.settings.isReadOnly
   # Only enable edits when in development (local)
@@ -75,14 +89,8 @@ app.get '/logs/', logRoutes.viewCurrent
 app.get '*', siteRoutes.notFound
 
 # Fire it up!
-app.listen process.env.PORT || 3000, ->
-  address = "http://localhost:#{app.address().port}"
+server = http.createServer(app)
+port = app.get('port')
+server.listen port, ->
+  address = "http://localhost:#{port}"
   Logger.info "Express server listening on #{address} in #{app.settings.env} mode"
-
-
-
-
-
-
-
-
