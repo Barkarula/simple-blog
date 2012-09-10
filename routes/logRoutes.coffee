@@ -48,7 +48,7 @@ viewSpecific = (req, res) ->
         Logger.error "logRoutes.viewSpecific: Error reading log file #{logFile}\r\n#{err}"
         res.render '500', {status: 500, message: "Could not read log file: #{logFile}"}
       else
-        text = text.replace(/\r\n/g, '<br/>')
+        text = text.toString().replace(/\r\n/g, '<br/>')
         res.send text
   else
     Logger.error "logRoutes.viewSpecific: Invalid log date received #{logDate}"
