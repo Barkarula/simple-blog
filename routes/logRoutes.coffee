@@ -40,7 +40,7 @@ viewSpecific = (req, res) ->
 
   logDate = req.params.logDate
   if _isValidLogDate logDate
-    Logger.info 'logRoutes.viewSpecific #{logDate}'
+    Logger.info "logRoutes.viewSpecific #{logDate}"
     logDate = logDate.replace(/-/g, '_')
     logFile = './logs/' + logDate + '.txt'
     fs.readFile logFile, (err, text) ->
