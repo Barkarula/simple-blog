@@ -75,11 +75,13 @@ class Logger
       text = text + "\r\n#{exception}" if exception?
       @_doLog 'ERROR', "#{text}"
 
+
   @currentLogFile: => 
     return null if @_logPath is null
     # Make sure @_logFile has been set
     @_getTimestamp() 
     return @_logPath + @_logFile
+
 
 exports.Logger = Logger
 

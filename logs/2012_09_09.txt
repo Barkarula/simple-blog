@@ -139,3 +139,49 @@
 2012-09-09 21:54:54.438 INFO: blogRoutes:viewRecent
 2012-09-09 21:54:54.537 INFO: blogRoutes:viewOne beyond-hello-world-xxx
 2012-09-09 21:54:54.789 INFO: blogRoutes:viewRecent
+2012-09-09 22:05:05.971 INFO: Express server listening on http://localhost:3000 in development mode
+2012-09-09 22:15:15.212 INFO: Express server listening on http://localhost:3000 in development mode
+2012-09-09 22:16:16.033 INFO: Express server listening on http://localhost:3000 in development mode
+2012-09-09 22:17:17.725 INFO: Express server listening on http://localhost:3000 in development mode
+2012-09-09 22:17:17.516 INFO: logRoutes.viewCurrent
+2012-09-09 22:17:17.049 INFO: Express server listening on http://localhost:3000 in development mode
+2012-09-09 22:18:18.458 INFO: logRoutes.viewCurrent
+2012-09-09 22:26:26.587 INFO: logRoutes.viewCurrent
+2012-09-09 22:26:26.952 INFO: logRoutes.viewCurrent
+2012-09-09 22:26:26.778 INFO: logRoutes.viewCurrent
+2012-09-09 22:26:26.654 INFO: logRoutes.viewCurrent
+2012-09-09 22:28:28.244 INFO: blogRoutes:rssList
+2012-09-09 22:29:29.536 INFO: blogRoutes:rssList
+2012-09-09 22:29:29.393 INFO: blogRoutes:rssList
+2012-09-09 22:42:42.265 INFO: Express server listening on http://localhost:3000 in development mode
+2012-09-09 22:42:42.713 INFO: logRoutes.viewCurrent
+2012-09-09 22:43:43.775 INFO: Express server listening on http://localhost:3000 in development mode
+2012-09-09 22:43:43.592 INFO: logRoutes.viewCurrent
+2012-09-09 22:43:43.661 INFO: logRoutes.viewCurrent
+2012-09-09 22:43:43.991 INFO: logRoutes.viewCurrent
+2012-09-09 22:44:44.061 INFO: logRoutes.viewCurrent
+2012-09-09 22:44:44.896 INFO: Express server listening on http://localhost:3000 in development mode
+2012-09-09 22:45:45.567 INFO: logRoutes.viewCurrent
+2012-09-09 22:45:45.325 INFO: logRoutes.viewCurrent
+2012-09-09 22:52:52.890 INFO: Express server listening on http://localhost:3000 in development mode
+2012-09-09 22:52:52.825 INFO: logRoutes.viewCurrent
+2012-09-09 22:53:53.623 INFO: Express server listening on http://localhost:3000 in development mode
+2012-09-09 22:53:53.901 INFO: logRoutes.viewCurrent
+2012-09-09 22:53:53.650 INFO: Express server listening on http://localhost:3000 in development mode
+2012-09-09 22:53:53.271 INFO: logRoutes.viewCurrent
+2012-09-09 22:53:53.305 INFO: Express server listening on http://localhost:3000 in development mode
+2012-09-09 22:53:53.030 INFO: logRoutes.viewCurrent
+2012-09-09 22:54:54.251 INFO: Express server listening on http://localhost:3000 in development mode
+2012-09-09 22:54:54.810 INFO: logRoutes.viewCurrent
+2012-09-09 22:55:55.313 INFO: Express server listening on http://localhost:3000 in development mode
+2012-09-09 22:55:55.136 INFO: logRoutes.viewCurrent
+2012-09-09 22:56:56.414 INFO: Express server listening on http://localhost:3000 in development mode
+2012-09-09 22:56:56.841 INFO: logRoutes.viewCurrent
+2012-09-09 23:01:01.797 INFO: Express server listening on http://localhost:3000 in development mode
+2012-09-09 23:01:01.449 INFO: logRoutes.viewCurrent
+2012-09-09 23:01:01.456 ERROR: logRoutes.viewSpecific: Error reading log file ./logs/2012_09_09.txt
+null
+2012-09-09 23:01:01.626 INFO: Express server listening on http://localhost:3000 in development mode
+2012-09-09 23:01:01.373 INFO: logRoutes.viewCurrent
+2012-09-09 23:01:01.374 ERROR: logRoutes.viewSpecific: Error reading log file ./logs/2012_09_09.txt
+null

@@ -21,36 +21,35 @@ _isValidLogDate = (text) ->
   return false
 
 
+#TODO: This code should use streams rather than reading the
+# entire log file to memory. 
 viewCurrent = (req, res) ->  
 
   logFile = Logger.currentLogFile()
+  Logger.info 'logRoutes.viewCurrent'
   fs.readFile logFile, (err, text) ->
     if err
-      html = "<html><body>" 
-      html += "<p>Could not read log file <b>#{logFile}</b></p>"
-      html += "<p>#{err}</p>"
-      html += "</body></html>"
-      res.send html, 500
+      Logger.error "logRoutes.viewSpecific: Error reading log file #{logFile}\r\n#{err}"
+      res.render '500', {status: 500, message: "Could not read log file: #{logFile}"}
     else
-      res.send text, { 'Content-Type': 'text/plain' }, 200
+      text = text.toString().replace(/\r\n/g, '<br/>')
+      res.send text
 
 
 viewSpecific = (req, res) ->  
 
   logDate = req.params.logDate
   if _isValidLogDate logDate
+    Logger.info 'logRoutes.viewSpecific #{logDate}'
     logDate = logDate.replace(/-/g, '_')
     logFile = './logs/' + logDate + '.txt'
     fs.readFile logFile, (err, text) ->
       if err
         Logger.error "logRoutes.viewSpecific: Error reading log file #{logFile}\r\n#{err}"
-        html = "<html><body>" 
-        html += "<p>Could not read log file <b>#{logFile}</b></p>"
-        html += "<p>#{err}</p>"
-        html += "</body></html>"
-        res.send html, 500
+        res.render '500', {status: 500, message: "Could not read log file: #{logFile}"}
       else
-        res.send text, { 'Content-Type': 'text/plain' }, 200
+        text = text.replace(/\r\n/g, '<br/>')
+        res.send text
   else
     Logger.error "logRoutes.viewSpecific: Invalid log date received #{logDate}"
     res.redirect '/'
