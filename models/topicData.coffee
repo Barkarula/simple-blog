@@ -148,6 +148,8 @@ class TopicData
       if err 
         callback "Could not retrieve content for id #{meta.id}"
       else
+        # console.log "LOAD: ------------------"
+        # console.log text
         callback null, {meta: meta, content: text}
 
 
