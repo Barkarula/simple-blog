@@ -1,12 +1,21 @@
-{ "nextId": 32, "blogs":[
+{ "nextId": 38, "blogs":[
 	{
 		"id": 31,
-		"title": "beyond hello world xxx",
+		"title": "Using layouts with EJS in Express 3.x",
 		"createdOn": "2012-09-08T14:01:12.964Z",
-		"updatedOn": "2012-09-10T01:53:50.991Z",
+		"updatedOn": "2012-09-16T17:24:36.526Z",
 		"postedOn": null,
-		"url": "beyond-hello-world-xxx",
-		"summary": "this is the summary"
+		"url": "using-layouts-with-ejs-in-express-3.x",
+		"summary": "An example on how to emulate layouts with Express 3.x and EJS "
+	},
+	{
+		"id": 37,
+		"title": "Software Developers and Process Improvement",
+		"createdOn": "2012-09-16T19:44:48.091Z",
+		"updatedOn": "2012-09-16T19:47:36.102Z",
+		"postedOn": "2007-10-30T23:58:36.099Z",
+		"url": "software-developers-and-process-improvement",
+		"summary": "Software Development Process Improvements should be tackled by more than just developers and QA, make sure to include project managers, product managers, and business owners in the process."
 	},
 	{
 		"id": 1,
@@ -198,6 +207,15 @@
 		"summary": "A review of the book The Principles of Product Development Flow by Donald Reinertsen"
 	},
 	{
+		"id": 36,
+		"title": "Rubber Band Reports with Pivot Tables (reprint)",
+		"createdOn": "2012-09-16T19:35:15.474Z",
+		"updatedOn": "2012-09-16T19:35:37.255Z",
+		"postedOn": "2009-01-13T03:43:37.254Z",
+		"url": "rubber-band-reports-with-pivot-tables-(reprint)",
+		"summary": "How to use Excel Pivot tables to provider flexible reports to your users."
+	},
+	{
 		"id": 27,
 		"title": "Expose your data as an RSS Feed with .NET 3.5 ",
 		"createdOn": "2012-09-02T03:57:51.447Z",
@@ -205,6 +223,15 @@
 		"postedOn": "2009-01-07T03:14:00.000Z",
 		"url": "expose-your-data-as-an-rss-feed-with-net-3-5",
 		"summary": "How to expose your data as an RSS Feed with .NET 3.5"
+	},
+	{
+		"id": 34,
+		"title": "Multiple Endpoints for a WCF Service",
+		"createdOn": "2012-09-16T18:48:00.043Z",
+		"updatedOn": "2012-09-16T19:26:04.164Z",
+		"postedOn": "2008-12-23T02:56:04.164Z",
+		"url": "multiple-endpoints-for-a-wcf-service",
+		"summary": "An example on how to expose a WCF service through multiple end points, for example through HTTP and through TCP"
 	},
 	{
 		"id": 28,
@@ -223,6 +250,33 @@
 		"postedOn": "2008-11-11T10:03:00.000Z",
 		"url": "devconnections-2008",
 		"summary": "Summary of sessions that I attended at DevConnections 2008"
+	},
+	{
+		"id": 33,
+		"title": "Managing and Leading (The One Thing)",
+		"createdOn": "2012-09-16T18:40:31.975Z",
+		"updatedOn": "2012-09-16T18:41:17.738Z",
+		"postedOn": "2008-11-10T03:24:17.736Z",
+		"url": "managing-and-leading-(the-one-thing)",
+		"summary": "A short review on the book Managing and Leading (The One Thing) by Marcus Buckingham"
+	},
+	{
+		"id": 32,
+		"title": "Introduction to Scrum",
+		"createdOn": "2008-10-04T23:53:32.274Z",
+		"updatedOn": "2012-09-16T18:36:29.008Z",
+		"postedOn": "2008-10-04T23:53:32.274Z",
+		"url": "introduction-to-scrum",
+		"summary": "Plug for my article Introduction to Scrum in CoDe magazine"
+	},
+	{
+		"id": 35,
+		"title": "Skeletons, Mona Lisa, and Problem Solving",
+		"createdOn": "2012-09-16T19:01:30.560Z",
+		"updatedOn": "2012-09-16T19:41:55.600Z",
+		"postedOn": "2008-09-16T02:41:55.598Z",
+		"url": "skeletons-mona-lisa-and-problem-solving",
+		"summary": "Thoughts on the value of always having a running version of your application (even if incomplete) and the difference between iterative and incremental development."
 	},
 	{
 		"id": 23,
