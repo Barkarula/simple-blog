@@ -78,7 +78,8 @@ app.get '/blog/list', blogRoutes.viewAll
 
 app.get '/blog/rss', blogRoutes.rssList
 
-app.get '/blog', blogRoutes.viewRecent
+# Switch to viewRecent when blog list gets too long
+app.get '/blog', blogRoutes.viewAll
 
 app.get '/blog/:topicUrl', blogRoutes.viewOne
 
