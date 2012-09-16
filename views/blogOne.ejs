@@ -2,35 +2,43 @@
 
 <div class="row">
   <div class="twelve columns">
-    <h3>{{= topic.meta.title }}</h3>
+    <h1>{{= topic.meta.title }}</h1>
     {{- topic.content }}
     <p></p>
     {{ if (!page.isReadOnly) { }} 
     <p><a href='/blog/edit/{{= topic.meta.url }}' class="button">Edit</a></p>  
     {{ } }}
   </div>
-  <div class="two columns">
+  <div class="four columns">
     {{ if (topic.meta.postedOn === null) { }} 
-      <b>Draft Post</b>
+      <p><b>Draft Post</b></p>
     {{ } else { }}
-      <b>Posted on:</b><br>
-      {{= topic.meta.postedOn.toDateString() }}<br>
+      <p>
+      <b>Posted on:</b>
+      {{= topic.meta.postedOn.toDateString() }}
       at {{= topic.meta.postedOn.toLocaleTimeString() }}
+      </p>
     {{ } }}
   </div>
 
-  <div class="two columns">
-    <b>Created on:</b><br>
-    {{= topic.meta.createdOn.toDateString() }}<br>
-    at {{= topic.meta.createdOn.toLocaleTimeString() }}
+  <div class="four columns">
+    {{ if (!page.isReadOnly) { }} 
+      <p>
+      <b>Created on:</b>
+      {{= topic.meta.createdOn.toDateString() }}
+      at {{= topic.meta.createdOn.toLocaleTimeString() }}
+      </p>
+    {{ } }}
   </div>
 
-  <div class="two columns">
-    <b>Updated on:</b><br>
-    {{= topic.meta.updatedOn.toDateString() }}<br>
-    at {{= topic.meta.updatedOn.toLocaleTimeString() }}
-  </div>
-  <div class="six columns">
+  <div class="four columns">
+    {{ if (!page.isReadOnly) { }} 
+      <p>
+      <b>Updated on:</b>
+      {{= topic.meta.updatedOn.toDateString() }}
+      at {{= topic.meta.updatedOn.toLocaleTimeString() }}
+      </p>
+    {{ } }}
   </div>
 </div>
 
