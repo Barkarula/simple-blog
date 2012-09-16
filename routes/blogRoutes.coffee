@@ -9,6 +9,16 @@ _normalizeTopicTitle = (title) ->
 	title
 
 
+# encode &lt; and &gt; as &amp;lt and &amp;gt;
+_encodeContent = (content) -> 
+  content.replace(/&gt;/g, '&amp;gt;').replace(/&lt;/g, '&amp;lt;')
+
+
+# restore &amp;lt and &amp;gt; to &lt; and &gt; 
+_decodeContent = (content) -> 
+  content.replace(/&amp;gt;/g, '&gt;').replace(/&amp;lt;/g, '&lt;')
+
+
 renderNotFound = (res, error) -> 
 	Logger.error "renderNotFound #{error}"
 	res.render '404', {status: 404, message: error}
@@ -80,7 +90,10 @@ viewOne = (req, res) ->
 						Logger.info "Redirecting to #{normalizedTitle}"
 						res.redirect '/blog/' + normalizedTitle, 301
 			else
-				res.render 'blogOne', viewModelForTopic(topic, req.app)
+				topic.content = _decodeContent(topic.content)
+				viewModel = viewModelForTopic(topic, req.app)
+				# console.dir viewModel
+				res.render 'blogOne', viewModel
 	else
 		# we shouldn't get here
 		Logger.warn "viewOne without a URL was detected"
@@ -148,8 +161,9 @@ edit = (req, res) ->
 			Logger.error err
 			renderNotFound res, err
 		else 
-			# console.dir viewModelForTopic(topic, req.app)
-			res.render 'blogEdit', viewModelForTopic(topic, req.app)
+			viewModel = viewModelForTopic(topic, req.app)
+			# console.dir viewModel
+			res.render 'blogEdit', viewModel
 
 
 save = (req, res) -> 
@@ -166,8 +180,10 @@ save = (req, res) ->
 	if isNaN(topic.meta.id)
 		renderError res, "Invalid id #{id} detected on save."
 	else
+		# console.dir topic
 		isFinal = if req.body?.final then true else false
 		topic.meta.postedOn = if isFinal then new Date() else null
+		topic.content = _encodeContent(topic.content)
 		dataOptions = res.app.settings.dataOptions
 		model = new TopicModel dataOptions 
 		model.save topic, (err, savedTopic) -> 
@@ -178,6 +194,7 @@ save = (req, res) ->
 			else if typeof savedTopic.errors isnt 'undefined'
 				# Validation error, send user to edit this topic
 				Logger.info "Validation errors detected"
+				console.dir savedTopic
 				res.render 'blogEdit', viewModelForTopic(savedTopic, req.app)
 			else
 				Logger.info "Saved, redirecting to /blog/#{savedTopic.meta.url}"
@@ -196,6 +213,9 @@ saveNew = (req, res) ->
 	Logger.info "blogRoutes:saveNew"
 	id = null
 	topic = requestToTopic req, id
+	isFinal = if req.body?.final then true else false
+	topic.meta.postedOn = if isFinal then new Date() else null
+	topic.content = _encodeContent(topic.content)
 	dataOptions = res.app.settings.dataOptions
 	model = new TopicModel dataOptions 
 
@@ -208,6 +228,7 @@ saveNew = (req, res) ->
 			# Validation error, send user to edit this topic
 			# savedTopic is in the form {meta: X, content: Y, errors: Z}
 			Logger.info "Validation errors detected"
+			console.dir savedTopic
 			res.render 'blogEdit', viewModelForTopic(savedTopic, req.app)
 		else
 			Logger.info "New topic added, redirecting to /blog/#{savedTopic.meta.url}"
