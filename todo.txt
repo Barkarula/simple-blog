@@ -1,5 +1,3 @@
-* Update to Express 3.x
-
 * RSS feed with full feeds (rather than just summaries)
 
 * Session & authentication
