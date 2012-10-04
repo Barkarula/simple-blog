@@ -1,7 +1,7 @@
 fs = require 'fs'
-{TopicModel} = require '../models/topicModel'
 {Logger} = require '../util/logger'
-
+{TopicModel} = require '../models/topicModel'
+authModel = require '../models/authModel'
 
 _normalizeTopicTitle = (title) ->
 	title = title.trim().toLowerCase()
@@ -29,21 +29,21 @@ renderError = (res, error) ->
 	res.render '500', {status: 500, message: error}
 
 
-viewModelForTopic = (topic, app) ->
+viewModelForTopic = (topic, isReadOnly) ->
 	{ 
 		topic: topic
 		page:
 			title: topic?.meta?.title 
-			isReadOnly: app.settings.isReadOnly
+			isReadOnly: isReadOnly
 	}
 
 
-viewModelForTopics = (topics, title, app) ->
+viewModelForTopics = (topics, title, isReadOnly) ->
 	{
 		matrix: topicsToMatrix(topics, 3),
 		page:
 			title: title 
-			isReadOnly: app.settings.isReadOnly
+			isReadOnly: isReadOnly
 	}
 
 
@@ -74,6 +74,7 @@ requestToTopic = (req, id) ->
 
 viewOne = (req, res) -> 
 
+	dataPath = req.app.get('datapath')
 	dataOptions = res.app.settings.dataOptions
 	model = new TopicModel dataOptions 
 	url = req.params.topicUrl
@@ -91,7 +92,8 @@ viewOne = (req, res) ->
 						res.redirect '/blog/' + normalizedTitle, 301
 			else
 				topic.content = _decodeContent(topic.content)
-				viewModel = viewModelForTopic(topic, req.app)
+				isReadOnly = authModel.isAuthenticated(req, dataPath) is false
+				viewModel = viewModelForTopic(topic, isReadOnly)
 				# console.dir viewModel
 				res.render 'blogOne', viewModel
 	else
@@ -103,6 +105,7 @@ viewOne = (req, res) ->
 viewRecent = (req, res) -> 
 	Logger.info "blogRoutes:viewRecent"
 
+	dataPath = req.app.get('datapath')
 	dataOptions = res.app.settings.dataOptions
 	model = new TopicModel dataOptions 
 
@@ -111,13 +114,15 @@ viewRecent = (req, res) ->
 			Logger.error err
 			renderError res, "Error getting recent topics"
 		else
-			viewModel = viewModelForTopics topics, "Recent Blog Posts", req.app
+			isReadOnly = authModel.isAuthenticated(req, dataPath) is false
+			viewModel = viewModelForTopics topics, "Recent Blog Posts", isReadOnly
 			res.render 'blogRecent', viewModel
 
 
 viewAll = (req, res) -> 
 	Logger.info "blogRoutes:viewAll"
 
+	dataPath = req.app.get('datapath')
 	dataOptions = res.app.settings.dataOptions
 	model = new TopicModel dataOptions 
 
@@ -126,7 +131,8 @@ viewAll = (req, res) ->
 			Logger.error err
 			renderError res, "Error getting topics"
 		else
-			viewModel = viewModelForTopics topics, "All Blog Posts", req.app
+			isReadOnly = authModel.isAuthenticated(req, dataPath) is false
+			viewModel = viewModelForTopics topics, "All Blog Posts", isReadOnly
 			res.render 'blogAll', viewModel
 
 
@@ -145,9 +151,16 @@ rssList = (req, res) ->
 
 
 edit = (req, res) -> 
+
 	url = req.params.topicUrl
 	if url is undefined
 		Logger.warn 'Edit without a URL was detected. Redirecting to blog list.'
+		res.redirect '/blog'
+		return
+
+	dataPath = req.app.get('datapath')
+	if authModel.isAuthenticated(req, dataPath) is false
+		Logger.warn "Unauthenticated user attempted to edit topic #{url}"
 		res.redirect '/blog'
 		return
 
@@ -161,7 +174,7 @@ edit = (req, res) ->
 			Logger.error err
 			renderNotFound res, err
 		else 
-			viewModel = viewModelForTopic(topic, req.app)
+			viewModel = viewModelForTopic(topic, false)
 			# console.dir viewModel
 			res.render 'blogEdit', viewModel
 
@@ -173,7 +186,13 @@ save = (req, res) ->
 		Logger.warn 'Save without an Id was detected. Redirecting to blog list.'
 		res.redirect '/blog'
 		return
-		
+	
+	dataPath = req.app.get('datapath')
+	if authModel.isAuthenticated(req, dataPath) is false
+		Logger.warn "Unauthenticated user attempted to save topic #{id}"
+		res.redirect '/blog'
+		return
+
 	Logger.info "blogRoutes:save #{id}"
 
 	topic = requestToTopic req, id
@@ -195,21 +214,35 @@ save = (req, res) ->
 				# Validation error, send user to edit this topic
 				Logger.info "Validation errors detected"
 				console.dir savedTopic
-				res.render 'blogEdit', viewModelForTopic(savedTopic, req.app)
+				res.render 'blogEdit', viewModelForTopic(savedTopic, false)
 			else
 				Logger.info "Saved, redirecting to /blog/#{savedTopic.meta.url}"
 				res.redirect '/blog/'+ savedTopic.meta.url
 
 
 editNew = (req, res) ->
+
+	dataPath = req.app.get('datapath')
+	if authModel.isAuthenticated(req, dataPath) is false
+		Logger.warn "Unauthenticated user attempted to add new topic"
+		res.redirect '/blog'
+		return
+
 	Logger.info "blogRoutes:editNew"
 	dataOptions = res.app.settings.dataOptions
 	model = new TopicModel dataOptions 
 	topic = model.getNew()
-	res.render 'blogEdit', viewModelForTopic(topic, req.app)
+	res.render 'blogEdit', viewModelForTopic(topic, false)
 
 
 saveNew = (req, res) -> 
+
+	dataPath = req.app.get('datapath')
+	if authModel.isAuthenticated(req, dataPath) is false
+		Logger.warn "Unauthenticated user attempted to save new topic"
+		res.redirect '/blog'
+		return
+
 	Logger.info "blogRoutes:saveNew"
 	id = null
 	topic = requestToTopic req, id
@@ -229,7 +262,7 @@ saveNew = (req, res) ->
 			# savedTopic is in the form {meta: X, content: Y, errors: Z}
 			Logger.info "Validation errors detected"
 			console.dir savedTopic
-			res.render 'blogEdit', viewModelForTopic(savedTopic, req.app)
+			res.render 'blogEdit', viewModelForTopic(savedTopic, false)
 		else
 			Logger.info "New topic added, redirecting to /blog/#{savedTopic.meta.url}"
 			res.redirect '/blog/'+ savedTopic.meta.url

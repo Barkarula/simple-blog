@@ -8,7 +8,7 @@ http = require 'http'
 siteRoutes = require './routes/siteRoutes'
 blogRoutes = require './routes/blogRoutes'
 logRoutes = require './routes/logRoutes'
-
+authRoutes = require './routes/authRoutes'
 
 app = express()
 
@@ -53,7 +53,7 @@ app.configure 'production', ->
 
 
 # Application settings
-app.set "isReadOnly", if app.settings.env is "production" then true else false
+# TODO: make showDrafs depending on user logged in
 app.set "dataOptions", { 
   dataPath: __dirname + "/data"
   createDataFileIfNotFound: false
@@ -65,14 +65,11 @@ app.set "dataOptions", {
 app.get '/', siteRoutes.home
 app.get '/about', siteRoutes.about
 
-if not app.settings.isReadOnly
-  # Only enable edits when in development (local)
-  # until I integrate an authentication process
-  app.get '/blog/new', blogRoutes.editNew
-  app.post '/blog/new', blogRoutes.saveNew
+app.get '/blog/new', blogRoutes.editNew
+app.post '/blog/new', blogRoutes.saveNew
 
-  app.get '/blog/edit/:topicUrl', blogRoutes.edit
-  app.post '/blog/save/:id', blogRoutes.save
+app.get '/blog/edit/:topicUrl', blogRoutes.edit
+app.post '/blog/save/:id', blogRoutes.save
 
 app.get '/blog/list', blogRoutes.viewAll
 
@@ -86,6 +83,12 @@ app.get '/blog/:topicUrl', blogRoutes.viewOne
 app.get '/logs/current', logRoutes.viewCurrent
 app.get '/logs/:logDate', logRoutes.viewSpecific
 app.get '/logs/', logRoutes.viewCurrent
+ 
+app.get '/login/:key', authRoutes.loginConfirm
+app.get '/login', authRoutes.loginGet
+app.post '/login', authRoutes.loginPost
+
+app.get '/logout', authRoutes.logout
 
 app.get '*', siteRoutes.notFound
 
