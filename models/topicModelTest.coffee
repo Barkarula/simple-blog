@@ -29,8 +29,6 @@ testGetUrlFromTitle = ->
   test = new TestUtil("topicModelTest.testGetUrlFromTitle", verbose)
   test.passIf model._getUrlFromTitle("hello") is "hello", "basic test"
   test.passIf model._getUrlFromTitle("hello-World") is "hello-world", "lowercase test"
-  test.passIf model._getUrlFromTitle("hello-World.aspx") is "hello-world-aspx", "dots test"
-  test.passIf model._getUrlFromTitle("hello-c#-World.aspx") is "hello-csharp-world-aspx", "c# test"
   test.passIf model._getUrlFromTitle("this is #4") is "this-is-4", "pound (#) test"
   testValidateGoodTopic()
 

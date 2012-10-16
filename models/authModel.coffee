@@ -62,7 +62,7 @@ readAuthData = (filePath) ->
     data = JSON.parse text
   else
     # TODO: initialize with admin user name.
-    # data = { user: adminUserEmail }
+    # data = { "user": "somebody@gmail.com" }
     data = {}
   return data
 

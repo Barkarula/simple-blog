@@ -1,6 +1,9 @@
-* RSS feed with full feeds (rather than just summaries)
+* Add module to e-mail loginKey to user
+* Make e-mail account configurable
 
-* Session & authentication
+* Search option (biggie)
+
+* RSS feed with full feeds (rather than just summaries)
 
 * Error handling on EJS views (or a better understanding
   of global error handling in Express)

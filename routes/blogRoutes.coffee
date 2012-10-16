@@ -3,11 +3,6 @@ fs = require 'fs'
 {TopicModel} = require '../models/topicModel'
 authModel = require '../models/authModel'
 
-_normalizeTopicTitle = (title) ->
-	title = title.trim().toLowerCase()
-	title = title.replace('.aspx', '')
-	title
-
 
 # encode &lt; and &gt; as &amp;lt and &amp;gt;
 _encodeContent = (content) -> 
@@ -83,13 +78,7 @@ viewOne = (req, res) ->
 	if url
 		model.getOneByUrl url, (err, topic) ->  
 			if err
-				normalizedTitle = _normalizeTopicTitle(url)
-				model.getOneByUrl normalizedTitle, (err2, topic2) ->
-					if err2
-						renderNotFound res, err
-					else
-						Logger.info "Redirecting to #{normalizedTitle}"
-						res.redirect '/blog/' + normalizedTitle, 301
+				renderNotFound res, err
 			else
 				topic.content = _decodeContent(topic.content)
 				isReadOnly = authModel.isAuthenticated(req, dataPath) is false
@@ -269,14 +258,13 @@ saveNew = (req, res) ->
 
 
 module.exports = {
-	viewOne: viewOne,
-	viewRecent: viewRecent,
-	viewAll: viewAll,
-	edit: edit,
-	save: save,
-	editNew: editNew,
-	saveNew: saveNew,
+	viewOne: viewOne
+	viewRecent: viewRecent
+	viewAll: viewAll
+	edit: edit
+	save: save
+	editNew: editNew
+	saveNew: saveNew
 	rssList: rssList
-	_normalizeTopicTitle: _normalizeTopicTitle
 }
 
